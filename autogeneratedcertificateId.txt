@@ -1,0 +1,54 @@
+USE [Khajna]
+GO
+/****** Object:  StoredProcedure [dbo].[GenerateCertificateNumber]    Script Date: 1/24/2024 3:12:56 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Muhammad Abdul kadir>
+-- Create date: <Create 1/14/2024 2:47:40 PM,,>
+-- Description:	<This sp is used to generate certificateNo from signature table for VdsPurchase,,>
+-- =============================================
+ALTER PROCEDURE [dbo].[GenerateCertificateNumber]
+    @UpdateDate DATETIME,
+	@branchId INT
+AS
+BEGIN
+    DECLARE @LastNumber INT;
+    
+    -- Update the LastNumber for the certificateNo function_name EXEC GenerateCertificateNumber @UpdateDate = '2026-02-11',@branchId=1;
+    UPDATE s
+    SET s.LastNumber = s.LastNumber + 1,
+		s.last_date = @UpdateDate
+    FROM Khajna.dbo.[3X2_signature] s
+    INNER JOIN Khajna.dbo.[2J1_sv_fiscal_year_info] fy ON s.fy_id = fy.id
+    WHERE s.function_name = 'Certificate No'
+        AND @UpdateDate BETWEEN fy.from_date AND fy.to_date;
+
+--		PRINT 'Before Update';
+--SELECT * FROM Khajna.dbo.[3X2_signature] WHERE function_name = 'Certificate No';
+
+  -- If a new financial year started, insert a new row for certificateNo
+IF NOT EXISTS (SELECT 1 FROM Khajna.dbo.[3X2_signature] s
+    INNER JOIN Khajna.dbo.[2J1_sv_fiscal_year_info] fy ON s.fy_id = fy.id
+    WHERE s.function_name = 'Certificate No'
+         AND @UpdateDate BETWEEN fy.from_date AND fy.to_date) -- Check if @UpdateDate is after the current fiscal year's to_date
+BEGIN
+    -- Insert a new row for certificateNo with LastNumber set to 1
+    INSERT INTO Khajna.dbo.[3X2_signature] (function_name, fy_id, last_date, LastNumber, branch_id, prefix)
+    VALUES ('Certificate No', (SELECT id FROM Khajna.dbo.[2J1_sv_fiscal_year_info] WHERE @UpdateDate BETWEEN from_date AND to_date), @UpdateDate, 1, @branchId, 'CTN');
+END;
+ -- Fetch the updated LastNumber
+    SELECT @LastNumber = s.LastNumber
+    FROM Khajna.dbo.[3X2_signature] s
+    INNER JOIN Khajna.dbo.[2J1_sv_fiscal_year_info] fy ON s.fy_id = fy.id
+    WHERE s.function_name = 'Certificate No'
+        AND @UpdateDate BETWEEN fy.from_date AND fy.to_date
+        AND s.branch_id = @branchId;
+
+    -- Return the updated LastNumber
+    SELECT @LastNumber AS LastNumber;
+--	PRINT 'After Update';  
+--SELECT * FROM Khajna.dbo.[3X2_signature] WHERE function_name = 'Certificate No';
+END;

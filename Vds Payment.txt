@@ -1,0 +1,265 @@
+get all payment list sp
+
+USE [Khajna]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_get_6F1_vds_payment_list]    Script Date: 1/24/2024 3:28:38 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Abdul Kadir
+-- Create date: 02-11-2023
+-- Call : EXEC [sp_get_6F1_vds_payment_list] @DbFieldName ='', @SortDirection=''
+-- =============================================
+ALTER PROCEDURE [dbo].[sp_get_6F1_vds_payment_list]
+@DbFieldName NVARCHAR(100),
+ @SortDirection NVARCHAR(10)
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+DECLARE @Query NVARCHAR(MAX);
+
+   if(@DbFieldName IS NULL OR @DbFieldName = '')
+	BEGIN
+       SET @DbFieldName = 'id'
+    END
+
+	if(@SortDirection IS NULL OR @SortDirection = '')
+	BEGIN
+       SET @SortDirection = 'asc'
+    END
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+ 
+	
+
+    -- Insert statements for procedure here		 WHERE UST.is_default=1			
+SET @Query = '
+	SELECT  VPM.[id] as id
+				,UST.[store_id] as storeId
+				,CSL.[sl_name] as storeName
+				,CSL.[branch_id] as branchId
+				,CBU.[b_u_name] as branchName
+			  ,VPM.[tc_master_id] as tcMasterId
+			  ,VPM.[payment_date] as transactionDate
+			   ,VPM.[vat_month_id] as vatMontId
+			   ,VMI.[vm_info] as vatMonth
+			  ,TC.[tc_no] as treasuryChallanNo
+			  ,TC.[tc_date] as treasuryChallanDate
+			  
+			 
+			   ,VPM.[total_payable_vat_amt] AS totalPayableVatAmt 		 
+			  ,VPM.[total_fine_amt] AS totalFineAmt
+			   ,VPM.[total_payable_amt] AS totalPayableAmt
+			   ,VPM.[remarks] as remarks
+			  ,VPM.[created_at] as createdAt
+			  ,VPM.[updated_at] as updatedAt
+			  ,ISNULL(CreatedUser.[name],'''') as createdBy
+			,ISNULL(UpdatedUser.[name],'''') as updatedBy
+		  FROM [Khajna].[dbo].[6F1_vds_payment_master] VPM
+		  JOIN [Khajna].[dbo].[6J1_treasury_challan_master] TC ON VPM.tc_master_id = TC.id
+		  LEFT JOIN [Khajna].[dbo].[2J2_sv_vat_month_info] VMI ON VPM.vat_month_id = VMI.id 
+		  LEFT JOIN [dbo].[1a3_users] CreatedUser ON VPM.created_by = CreatedUser.id
+	    LEFT JOIN [dbo].[1a3_users] UpdatedUser ON VPM.updated_by = UpdatedUser.id
+		LEFT JOIN [dbo].[3C6_users_stores] UST ON CreatedUser.id = UST.user_id
+		LEFT JOIN [dbo].[3C1_company_store_location] CSL ON UST.store_id = CSL.id
+		LEFT JOIN [dbo].[3B1_company_branch_unit] CBU ON CSL.branch_id = CBU.id  '
+		  + ' ORDER BY VPM.'+@DbFieldName+' '+@SortDirection;
+		EXEC sp_executesql @Query; 
+		 
+END
+						VDS PAYMENT GET BY ID
+============================================================================================================================================================
+USE [Khajna]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_get_6F1_vds_payment_list_by_id]    Script Date: 1/24/2024 3:29:00 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Abdul Kadir
+-- Create date: 02-11-2023
+-- Description:	<Description,,>
+-- Call : EXEC [sp_get_6F1_vds_payment_list_by_id]
+-- =============================================
+
+ALTER PROCEDURE [dbo].[sp_get_6F1_vds_payment_list_by_id](
+	@id bigint
+)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from  and UST.is_default=1
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+			SELECT 
+			  VPM.[id] as id
+			  ,UST.[store_id] as storeId
+				,CSL.[sl_name] as storeName
+				,CSL.[branch_id] as branchId
+				,CBU.[b_u_name] as branchName
+			  ,VPM.[payment_date] as transactionDate
+			  ,VPM.[vat_month_id] as vatMontId
+			   ,VMI.[vm_info] as vatMonth
+			  ,VPM.[tc_master_id] as tcMasterId
+			  ,TC.[bank_id] as bankId
+			  ,BI.[bank_name] as bankName
+			   ,TC.[bank_branch_id] as bankBrunchId
+			    ,BBI.[bank_branch_name] as bankBrunchName
+				 ,TC.[commisionerate_id] as commissionerateId
+			    ,CMI.[commissionerate_name] as commissionerateName
+				,TC.[tc_acct_code_id] as tcAcctCodeId
+			    ,TAI.[tc_acct_code_name] as vatCode
+				 ,TC.[tc_acct_item_id] as tcAcctCodeItemId
+			    ,TAII.[tc_acct_item_name] as vatCodeDetails
+			  ,TC.[tc_no] as treasuryChallanNo
+			  ,TC.[tc_date] as treasuryChallanDate			  			  
+			   ,VPM.[total_payable_vat_amt] AS totalPayableVatAmt 		 
+			  ,VPM.[total_fine_amt] AS totalFineAmt
+			   ,VPM.[total_payable_amt] AS totalPayableAmt
+			   ,VPM.[remarks] as remark
+			    ,VPC.[id] as paymentChildMasterId
+			   ,VPC.[vds_payment_master_id] as paymentMasterId
+			   ,VPC.[vds_purchase_master_id] as vdsPurchaseMaster
+			   ,VM.[certificate_no] as certificateNo
+			    ,VM.[published_date] as publishedDate
+				,VPC.[payable_vat_amt] AS payableVatAmt 		 
+			  ,VPC.[fine_amt] AS fineAmt
+			   ,VPC.[payable_amt] AS payableAmt
+			  ,VPM.[created_at] as createdAt
+			  ,VPM.[updated_at] as updatedAt
+			  ,ISNULL(CreatedUser.[name],'') as createdBy
+			 ,ISNULL(UpdatedUser.[name],'') as updatedBy
+		  FROM [Khajna].[dbo].[6F1_vds_payment_master] VPM
+		  JOIN [Khajna].[dbo].[6J1_treasury_challan_master] TC ON VPM.tc_master_id = TC.id
+		   LEFT JOIN [Khajna].[dbo].[2J2_sv_vat_month_info] VMI ON VPM.vat_month_id = VMI.id
+		  LEFT JOIN [Khajna].[dbo].[2H1_sv_bank_info] BI ON TC.bank_id = BI.id
+		  LEFT JOIN [Khajna].[dbo].[2H2_sv_bank_branch_info] BBI ON TC.bank_branch_id = BBI.id
+		  LEFT JOIN [Khajna].[dbo].[2K1_sv_commisionerate_info] CMI ON TC.commisionerate_id = CMI.id
+		   LEFT JOIN [Khajna].[dbo].[2K2_sv_tc_acct_code_info] TAI ON TC.tc_acct_code_id = TAI.id
+		   LEFT JOIN [Khajna].[dbo].[2K3_sv_tc_acct_item_info] TAII ON TC.tc_acct_item_id = TAII.id
+		   LEFT JOIN [Khajna].[dbo].[6F2_vds_payment_child] VPC ON VPM.id = VPC.vds_payment_master_id
+		   LEFT JOIN [Khajna].[dbo].[6D1_vds_purchaser_master] VM ON VPC.vds_purchase_master_id = VM.id
+		    LEFT JOIN [dbo].[1a3_users] CreatedUser ON VPM.created_by = CreatedUser.id
+		 LEFT JOIN [dbo].[1a3_users] UpdatedUser ON VPM.updated_by = UpdatedUser.id
+		 LEFT JOIN [dbo].[3C6_users_stores] UST ON CreatedUser.id = UST.user_id
+		LEFT JOIN [dbo].[3C1_company_store_location] CSL ON UST.store_id = CSL.id
+		LEFT JOIN [dbo].[3B1_company_branch_unit] CBU ON CSL.branch_id = CBU.id
+	 WHERE VPM.id = @id 
+		END
+
+
+
+
+
+								Get Drop down
+=========================================================================================================================================================
+USE [Khajna]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_get_6F_vds_payment_dropdown]    Script Date: 1/24/2024 3:30:29 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Abdul Kadir
+-- Create date: 18-11-2023
+-- Description:	<This SP get A dropdown list of sp_get_3A_company_info_dropdown which is the part of the Company Setting Module ,,>
+-- Call : EXEC [sp_get_3A_company_info_dropdown]
+-- =============================================
+ALTER PROCEDURE [dbo].[sp_get_6F_vds_payment_dropdown]
+AS
+BEGIN
+   
+
+    -- Select data from the second table (2R10_Company_Type)
+    SELECT
+        'bankType' as type,
+         id,
+         bank_name AS name,
+        bank_name_bn AS nameBn -- Assuming there is no name_bn column in [3J1_customer_type]
+    FROM
+        [dbo].[2H1_sv_bank_info] 
+
+    UNION ALL
+
+    -- Select data from the third table (2F3_sv_currency_info)
+    SELECT
+        'bankBrunchType' as type,
+		  id,
+         bank_branch_name AS name,
+        bank_branch_name_bn AS nameBn
+    FROM
+        [dbo].[2H2_sv_bank_branch_info] 
+		
+
+		UNION ALL
+
+		SELECT
+        'commissionerateType' as type,
+		id,
+         commissionerate_name AS name,
+       commissionerate_name_bn AS nameBn
+    FROM
+        [dbo].[2K1_sv_commisionerate_info] 
+		
+
+		UNION ALL
+
+		SELECT
+        'vatCodeType' as type,
+		  id,
+         tc_acct_code_name AS name,
+        tc_acct_code_name_bn AS nameBn
+    FROM
+        [dbo].[2K2_sv_tc_acct_code_info] C
+		
+
+		UNION ALL
+
+		SELECT
+        'vatCodeDetailsType' as type,
+		  id,
+         tc_acct_item_name AS name,
+        tc_acct_item_name_bn AS nameBn
+    FROM
+        [dbo].[2K3_sv_tc_acct_item_info] 
+		
+END;
+					child drop-down
+=======================================================================================================================================
+USE [Khajna]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_get_6F2_vds_payment_child_dropdown]    Script Date: 1/24/2024 3:31:10 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Abdul Kadir
+-- Create date: 21-11-2023
+-- Description:	<This SP get A dropdown list of sp_get_6F2_vds_payment_child_dropdown which is the part of the Commercial  Module ,,>
+-- Call : EXEC [sp_get_6F2_vds_payment_child_dropdown]
+-- =============================================
+ALTER PROCEDURE [dbo].[sp_get_6F2_vds_payment_child_dropdown]
+AS
+BEGIN
+    -- Select data from the first table (2J2_sv_vat_month_info)
+    SELECT 
+        'paymentChildType' as type,
+        VSC.id,
+        VSC.certificate_no as certificateNo,
+        VSC.published_date as publishedDate,
+		VSC.total_vat_amount as payableVatAmt
+    FROM
+        [dbo].[6D1_vds_purchaser_master] VSC		
+			--WHERE
+	     --VSC.tc_master_id IS NULL AND
+	     --VSC.is_paid = 0
+		 
+END;

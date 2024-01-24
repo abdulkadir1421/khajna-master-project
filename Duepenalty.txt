@@ -1,0 +1,232 @@
+https://docs.google.com/document/d/10V6FXfHCVno7Ke3hYehPiKmBYtq2UCIYAQDVgct0OK0/edit   due penalty doc
+
+/commercial/api/v1/due-penalty/all?sortOrder=DESC&sortField=id
+Apis:  /commercial/api/v1/due-penalty/find/9
+/commercial/api/v1/due-penalty/vat-month?selectedDate=2023-05-25T12:00:00
+/commercial/api/v1/due-penalty/add
+
+body: {
+                
+               
+                "transactionDate": "2023-05-10T18:00:00.000+00:00",
+                
+                "vatMonthId": 1,
+               
+                "intOnUnpaidVat": 2.2,
+                "intOnUnpaidSd": 2.2,
+                "penaltyAmount": 2.2,
+                "payableExciseDuty": 2.2,
+                "payableDevSurcharge": 2.2,
+                "payableIctDevSurcharge": 2.2,
+                "payableHealthCareSurcharge": 2.2,
+                "payableEnvProtSurcharge": 2.2,
+                "monthlyProcessStatus": 1,
+                "remarks": "test2"
+               
+            }
+Get All List
+
+USE [Khajna]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_get_6k1_due_penalty_list]    Script Date: 11/13/2023 2:43:30 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Abdul Kadir
+-- Create date: 03-11-2023
+-- Description:	<This SP get All list of 6k1.Due,Panalty,SC which is the part of the Commercial Module,,>
+-- Call : EXEC [sp_get_6k1_due_penalty_list]
+-- =============================================
+ALTER PROCEDURE [dbo].[sp_get_6k1_due_penalty_list]
+ @SortField NVARCHAR(255) = NULL,
+    @SortOrder NVARCHAR(10) = 'ASC'
+AS
+BEGIN
+DECLARE @OrderBy NVARCHAR(1000);
+
+    SET @OrderBy = ISNULL(@SortField, 'transactionId') + ' ' + @SortOrder;
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+   DECLARE @Sql NVARCHAR(MAX);
+	
+
+    -- Insert statements for procedure here
+SET @Sql ='
+	SELECT VTC.[id] as transactionId			 
+			   ,VTC.[penalty_date] as transactionDate
+			   ,VTC.[vat_month_id] as vatMonthId
+			   ,VMI.[vm_info] as vatMonth									  			  
+			   ,VTC.[int_on_unpaid_vat] as insertOnUnPaidVat
+			   ,VTC.[int_on_unpaid_sd] as insertOnUnPaidSd
+			   ,VTC.[penalty] as penaltyAmount			  
+			  ,VTC.[payable_excise_duty] as payableExciseDuty 
+			   ,VTC.[payable_dev_surcharge] as payableDevSurcharge
+			   ,VTC.[payable_ict_dev_surcharge] as payableIctDevSurcharge
+			   ,VTC.[payable_health_care_surcharge] as payableHealthCareSurcharge
+			   ,VTC.[payable_env_prot_surcharge] as payableEnvProtSurcharge			  
+			   ,VTC.[monthly_process_status] as monthlyProcessStatus			  
+			   ,VTC.[remarks] as remarks		   
+			  ,VTC.[created_at] as createdAt
+			  ,VTC.[updated_at] as updatedAt
+			  ,VTC.[created_by] as createdBy
+			  ,VTC.[updated_by] as updatedBy
+		  FROM [Khajna].[dbo].[6K1_due_penalty_sc_master] VTC 
+		 LEFT JOIN [Khajna].[dbo].[2J2_sv_vat_month_info] VMI ON VTC.vat_month_id=VMI.id '
+		   + ISNULL('ORDER BY ' + @OrderBy, '');
+
+		EXEC sp_executesql @Sql;
+		  
+		
+END
+
+Find By Id
+------------------------------------------------------------------------------------------------------------------
+USE [Khajna]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_get_6k1_due_penalty_list_by_id]  1  Script Date: 11/21/2023 12:26:57 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- -Author:		Abdul Kadir
+-- Create date: 03-11-2023
+-- Description:	<This SP get All list of 6k1.Due,Panalty,SC which is the part of the Commercial Module,,>
+-- Call : EXEC [sp_get_6k1_due_penalty_list_by_id] 1
+-- =============================================
+
+ALTER PROCEDURE [dbo].[sp_get_6k1_due_penalty_list_by_id](
+	@transactionId int
+)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+
+	IF( @transactionId IS NULL OR @transactionId = 0)
+		BEGIN
+			SELECT 
+			  VTC.[id] as transactionId			 
+			   ,VTC.[penalty_date] as transactionDate
+			   ,VTC.[vat_month_id] as vatMonthId
+			   ,VMI.[vm_info] as vatMonth									  			  
+			   ,VTC.[int_on_unpaid_vat] as insertOnUnPaidVat
+			   ,VTC.[int_on_unpaid_sd] as insertOnUnPaidSd
+			   ,VTC.[penalty] as penaltyAmount			  
+			  ,VTC.[payable_excise_duty] as payableExciseDuty 
+			   ,VTC.[payable_dev_surcharge] as payableDevSurcharge
+			   ,VTC.[payable_ict_dev_surcharge] as payableIctDevSurcharge
+			   ,VTC.[payable_health_care_surcharge] as payableHealthCareSurcharge
+			   ,VTC.[payable_env_prot_surcharge] as payableEnvironmentPortSurcharge			  
+			   ,VTC.[monthly_process_status] as monthlyProcessStatus			  
+			   ,VTC.[remarks] as remarks		   
+			  ,VTC.[created_at] as createdAt
+			  ,VTC.[updated_at] as updatedAt
+			  ,VTC.[created_by] as createdBy
+			  ,VTC.[updated_by] as updatedBy
+		  FROM [Khajna].[dbo].[6K1_due_penalty_sc_master] VTC 		  
+		 LEFT JOIN [Khajna].[dbo].[2J2_sv_vat_month_info] VMI ON VTC.vat_month_id=VMI.id
+		END
+
+	ELSE
+		BEGIN
+			SELECT 
+			 VTC.[id] as transactionId			 
+			   ,VTC.[penalty_date] as transactionDate
+			   ,VTC.[vat_month_id] as vatMonthId
+			   ,VMI.[vm_info] as vatMonth									  			  
+			   ,VTC.[int_on_unpaid_vat] as insertOnUnPaidVat
+			   ,VTC.[int_on_unpaid_sd] as insertOnUnPaidSd
+			   ,VTC.[penalty] as penaltyAmount			  
+			  ,VTC.[payable_excise_duty] as payableExciseDuty 
+			   ,VTC.[payable_dev_surcharge] as payableDevSurcharge
+			   ,VTC.[payable_ict_dev_surcharge] as payableIctDevSurcharge
+			   ,VTC.[payable_health_care_surcharge] as payableHealthCareSurcharge
+			   ,VTC.[payable_env_prot_surcharge] as payableEnvironmentPortSurcharge			  
+			   ,VTC.[monthly_process_status] as monthlyProcessStatus			  
+			   ,VTC.[remarks] as remarks		   
+			  ,VTC.[created_at] as createdAt
+			  ,VTC.[updated_at] as updatedAt
+			  ,VTC.[created_by] as createdBy
+			  ,VTC.[updated_by] as updatedBy
+		  FROM [Khajna].[dbo].[6K1_due_penalty_sc_master] VTC 		  
+		 LEFT JOIN [Khajna].[dbo].[2J2_sv_vat_month_info] VMI ON VTC.vat_month_id=VMI.id
+		  WHERE VTC.id = @transactionId
+		END
+
+END
+
+Drop down 
+---------------------------------------------------
+USE [Khajna]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_get_6K_vds_due_penulty_dropdown]    Script Date: 11/18/2023 3:48:00 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Abdul Kadir
+-- Create date: 18-11-2023
+-- Description:	<This SP get A dropdown list of sp_get_6K_vds_due_penulty_dropdown which is the part of the Commercial Module ,,>
+-- Call : EXEC [sp_get_6K_vds_due_penulty_dropdown]
+-- =============================================
+CREATE PROCEDURE sp_get_6K_vds_due_penulty_dropdown
+AS
+BEGIN
+   
+
+    -- Select data from the second table (2R10_Company_Type)
+    SELECT
+        'vatMonth' as type,
+         id,
+        vm_info AS name,
+        vm_info_bn AS nameBn -- Assuming there is no name_bn column in [3J1_customer_type]
+    FROM
+        [dbo].[2J2_sv_vat_month_info]
+
+END;
+
+VAT MONTH   
+=================================================================
+USE [Khajna]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_fiscal_year_vat_month_from_input]    Script Date: 11/27/2023 5:59:03 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+-- =============================================
+-- Author:     Hayatunnabi Nabil
+-- Create date: 23-11-2023 (Consider YYYY-MM-DD format for clarity)
+-- Description:    Get VAT month information based on input date
+-- =============================================
+ALTER PROCEDURE [dbo].[sp_fiscal_year_vat_month_from_input] 
+    -- Add the parameters for the stored procedure here
+    @Param DATETIME -- Removed the data type declaration here
+AS
+BEGIN
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+    DECLARE @DateParam DATETIME -- Declare the variable inside the procedure
+
+    SET @DateParam = @Param -- Assign the input parameter to the declared variable
+
+    SELECT TOP 1
+        'vatMonth' AS type,
+        vm.id AS id,
+        vm.vm_info AS name,
+        vm.vm_info_bn AS name_bn
+    FROM
+        [dbo].[2J2_sv_vat_month_info] AS vm
+    WHERE
+        @DateParam BETWEEN vm.from_date AND vm.to_date
+    ORDER BY
+        id DESC;
+END

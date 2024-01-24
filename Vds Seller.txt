@@ -1,0 +1,204 @@
+						Gett All List with pagination
+========================================================================================================================================================================
+USE [Khajna]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_get_6E1_vds_seller_list]    Script Date: 1/24/2024 3:25:41 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Abdul Kadir
+-- Create date: 01-11-2023
+-- Call : EXEC [sp_get_6E1_vds_seller_list] @DbFieldName ='', @SortDirection=''
+-- =============================================
+ALTER PROCEDURE [dbo].[sp_get_6E1_vds_seller_list]
+@DbFieldName NVARCHAR(100),
+ @SortDirection NVARCHAR(10)
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+DECLARE @Query NVARCHAR(MAX);
+
+   if(@DbFieldName IS NULL OR @DbFieldName = '')
+	BEGIN
+       SET @DbFieldName = 'id'
+    END
+
+	if(@SortDirection IS NULL OR @SortDirection = '')
+	BEGIN
+       SET @SortDirection = 'asc'
+    END
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+ 
+	
+
+    -- Insert statements for procedure here	  WHERE UST.is_default=1				
+SET @Query = '
+	SELECT  VSM.[id] as id
+				,UST.[store_id] as storeId
+				,CSL.[sl_name] as storeName
+				,CSL.[branch_id] as branchId
+				,CBU.[b_u_name] as branchName
+			 ,VSM.[branch_id] as branchMasterId
+			  ,CBU1.[b_u_name] as branchMasterName
+			  ,VSM.[vm_id] as vmId
+			  ,PT.[vm_info] as vatMonth
+			  ,VSM.[customer_id] as customerId
+			  ,CS.[customer_name] as customerName 
+			   ,VSM.[transaction_date] as transactionDate
+			  ,VSM.[certificate_no] as certificateNo
+			  ,VSM.[published_date] as certificateDate
+			  ,VSM.[total_issue_amount] as totalIssueAmount
+			  ,VSM.[total_vat_amount] as totalVat
+			  ,VSM.[total_deducted_vat_amount] as totalDeductedVat
+			  ,VSM.[commisionerate_id] as commisionerateId
+			  ,CR.[commissionerate_name] as commisionerateName		
+			  ,VSM.[tc_acct_code_id] as tcAcctCodeId		  
+			  ,TC.[tc_acct_code_name] as vatDepositAccountCode		  
+			  ,VSM.[remarks] as remarks
+			  ,VSM.[created_at] as createdAt
+			  ,VSM.[updated_at] as updatedAt
+			   ,ISNULL(CreatedUser.[name],'''') as createdBy
+			,ISNULL(UpdatedUser.[name],'''') as updatedBy
+		  FROM [Khajna].[dbo].[6E1_vds_seller_master] VSM
+		  JOIN [Khajna].[dbo].[2J2_sv_vat_month_info] PT ON VSM.vm_id = PT.id
+		  
+		   LEFT JOIN [Khajna].[dbo].[3J2_customer_details] CS ON VSM.customer_id = CS.id
+		  LEFT JOIN [Khajna].[dbo].[2K1_sv_commisionerate_info] CR ON VSM.commisionerate_id = CR.id
+		  LEFT JOIN [Khajna].[dbo].[2K2_sv_tc_acct_code_info] TC ON VSM.tc_acct_code_id = TC.id  
+		   LEFT JOIN [dbo].[3B1_company_branch_unit] CBU1 ON VSM.branch_id = CBU1.id
+		  LEFT JOIN [dbo].[1a3_users] CreatedUser ON VSM.created_by = CreatedUser.id
+	    LEFT JOIN [dbo].[1a3_users] UpdatedUser ON VSM.updated_by = UpdatedUser.id
+		LEFT JOIN [dbo].[3C6_users_stores] UST ON CreatedUser.id = UST.user_id
+		LEFT JOIN [dbo].[3C1_company_store_location] CSL ON UST.store_id = CSL.id
+		LEFT JOIN [dbo].[3B1_company_branch_unit] CBU ON CSL.branch_id = CBU.id '
+		  + ' ORDER BY VSM.'+@DbFieldName+' '+@SortDirection;
+		EXEC sp_executesql @Query; 
+		 		
+END
+
+
+
+find By Id on 20-11-23
+
+USE [Khajna]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_get_6E1_vds_seller_list_by_id]    Script Date: 1/24/2024 3:26:47 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Abdul Kadir
+-- Create date: 01-11-2023
+-- Description:	<Description,,>
+-- Call : EXEC [sp_get_6E1_vds_seller_list_by_id] 14
+-- =============================================
+
+ALTER PROCEDURE [dbo].[sp_get_6E1_vds_seller_list_by_id](
+	@id bigint
+)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from and UST.is_default=1
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+
+	
+			SELECT 
+			  VSM.[id] as id
+			  ,UST.[store_id] as storeId
+				,CSL.[sl_name] as storeName
+				,CSL.[branch_id] as branchId
+				,CBU.[b_u_name] as branchName
+			   ,VSM.[branch_id] as branchMasterId
+			  ,CBU1.[b_u_name] as branchMasterName
+			  ,VSM.[vm_id] as vmId
+			  ,VMI.[vm_info] as vatMonthInfo
+			  ,VSM.[customer_id] as customerId
+			  ,CS.[customer_name] as customerName 
+			   ,VSM.[transaction_date] as transactionDate
+			  ,VSM.[certificate_no] as certificateNo
+			  ,VSM.[published_date] as certificateDate
+			  ,VSM.[total_issue_amount] as totalSellsAmount
+			  ,VSM.[total_vat_amount] as totalVatAmount
+			  ,VSM.[total_deducted_vat_amount] as totalDeductedVatAmount
+			   ,VSM.[commisionerate_id] as commisionerateId
+			  ,CR.[commissionerate_name] as commissionerateName		
+			  ,VSM.[tc_acct_code_id] as tcAcctCodeId		  
+			  ,TC.[tc_acct_code_name] as vatDepositAccountCode
+
+			   ,VSC.[total_amount_local_curr] as amountLocalCurr
+			  ,VSC.[vat_amount] as vatAmount
+			  ,VSC.[deducted_vat_amount] as deductedVatAmount
+			 
+			  ,VSC.[id] as vdsSellerChildId
+			  ,VSC.[vds_seller_master_id] as vdsSellerMasterId
+			  ,VSC.[issue_master_id] as issueMasterId
+			   ,ISM.[challan_number] as challanNo
+			    ,ISM.[challan_date] as challanDate
+			  ,VSM.[remarks] as remark
+			  ,VSM.[created_at] as createdAt
+			  ,VSM.[updated_at] as updatedAt
+			  ,ISNULL(CreatedUser.[name],'') as createdBy
+			 ,ISNULL(UpdatedUser.[name],'') as updatedBy
+		  FROM [Khajna].[dbo].[6E1_vds_seller_master] VSM		 
+		  JOIN [Khajna].[dbo].[2J2_sv_vat_month_info] VMI ON VSM.vm_id = VMI.id
+		  
+		  
+		   LEFT JOIN [Khajna].[dbo].[3J2_customer_details] CS ON VSM.customer_id = CS.id
+		   LEFT JOIN [Khajna].[dbo].[6E2_vds_seller_child] VSC ON VSM.id = VSC.vds_seller_master_id
+		   LEFT JOIN [Khajna].[dbo].[5K1_issue_master] ISM ON VSC.issue_master_id = ISM.id
+		  LEFT JOIN [Khajna].[dbo].[2K1_sv_commisionerate_info] CR ON VSM.commisionerate_id = CR.id
+		  LEFT JOIN [Khajna].[dbo].[2K2_sv_tc_acct_code_info] TC ON VSM.tc_acct_code_id = TC.id
+		  LEFT JOIN [dbo].[3B1_company_branch_unit] CBU1 ON VSM.branch_id = CBU1.id
+		   LEFT JOIN [dbo].[1a3_users] CreatedUser ON VSM.created_by = CreatedUser.id
+		 LEFT JOIN [dbo].[1a3_users] UpdatedUser ON VSM.updated_by = UpdatedUser.id
+		 LEFT JOIN [dbo].[3C6_users_stores] UST ON CreatedUser.id = UST.user_id
+		LEFT JOIN [dbo].[3C1_company_store_location] CSL ON UST.store_id = CSL.id
+		LEFT JOIN [dbo].[3B1_company_branch_unit] CBU ON CSL.branch_id = CBU.id
+		  
+	
+		  WHERE VSM.id = @id 
+
+END
+
+-- select * from [Khajna].[dbo].[6E1_trns08a_vds_seller_master]
+							VDS SELLER DROP-DOWN
+=======================================================================================================================================
+USE [Khajna]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_get_6E2_vds_seller_child_dropdown]    Script Date: 1/24/2024 3:27:24 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Abdul Kadir
+-- Create date: 21-11-2023
+-- Description:	<This SP get A dropdown list of sp_get_6E1_vds_seller_dropdown which is the part of the Commercial  Module ,,>
+-- Call : EXEC [sp_get_6E2_vds_seller_child_dropdown]
+-- =============================================
+ALTER PROCEDURE [dbo].[sp_get_6E2_vds_seller_child_dropdown]
+AS
+BEGIN
+    -- Select data from the first table (2J2_sv_vat_month_info)
+    SELECT
+        'issueMaster' as type,
+        CS.id,
+        CS.challan_number as name,
+        CS.challan_date as nameBn,
+		CS.total_issue_amt_local_curr as sellsAmount,
+		CS.total_vat_amnt as vatAmount,
+		VSC.deducted_vat_amount as deductedVatAmount
+    FROM
+        [dbo].[6E2_vds_seller_child] VSC		
+		LEFT JOIN [Khajna].[dbo].[5k1_issue_master] CS ON VSC.issue_master_id = CS.id
+		--WHERE CS.is_vds_done = 0;
+END;

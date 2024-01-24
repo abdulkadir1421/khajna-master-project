@@ -1,0 +1,175 @@
+gwt all list
+
+USE [Khajna]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_get_6M1_others_adjt_master_list]    Script Date: 11/13/2023 3:29:46 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Abdul Kadir
+-- Create date: 08-11-2023
+-- Call : EXEC [sp_get_6M1_others_adjt_master_list]
+-- =============================================
+ALTER PROCEDURE [dbo].[sp_get_6M1_others_adjt_master_list]
+ @SortField NVARCHAR(255) = NULL,
+    @SortOrder NVARCHAR(10) = 'ASC'
+AS
+BEGIN
+	DECLARE @OrderBy NVARCHAR(1000);
+
+    SET @OrderBy = ISNULL(@SortField, 'vdsOtherMasterId') + ' ' + @SortOrder;
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+   DECLARE @Sql NVARCHAR(MAX);
+
+    -- Insert statements for procedure here
+ SET @Sql ='
+	SELECT   VSM.[id] as vdsOtherMasterId
+			  ,VSM.[branch_id] as branchId
+			  ,VSM.[entry_date] as transactionDate
+			  ,VSM.[vm_id] as vmId
+			   ,VMI.[vm_info] as vatMonth
+			   ,VSM.[total_bill_amount] as totalBilAmount
+			  ,VSM.[total_vat_amount] as totalVatAmount
+			  ,VSM.[total_ vat_adjustable_amount] as totalRebateAmount  
+			  ,VSM.[remarks] as remarks
+			  ,VSM.[created_at] as createdAt
+			  ,VSM.[updated_at] as updatedAt
+			  ,VSM.[created_by] as createdBy
+			  ,VSM.[updated_by] as updatedBy
+		  FROM [Khajna].[dbo].[6M1_others_adjt_master] VSM 
+		  JOIN [Khajna].[dbo].[2J2_sv_vat_month_info] VMI ON VSM.vm_id = VMI.id  '
+		   + ISNULL('ORDER BY ' + @OrderBy, '');
+
+		EXEC sp_executesql @Sql;
+		  
+		 
+END
+
+Find By Id
+===============================================================================================================
+USE [Khajna]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_get_6M1_others_adjt_master_list_by_id]    Script Date: 11/21/2023 4:15:32 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+--  Author:		Abdul Kadir
+-- Create date: 08-11-2023
+-- Description:	<Description,,>
+-- Call : EXEC [sp_get_6M1_others_adjt_master_list_by_id] 16
+-- =============================================
+
+ALTER PROCEDURE [dbo].[sp_get_6M1_others_adjt_master_list_by_id](
+	@vdsOtherMasterId int
+)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+
+	IF( @vdsOtherMasterId IS NULL OR @vdsOtherMasterId = 0)
+		BEGIN
+			SELECT 
+			 VSM.[id] as vdsOtherMasterId
+			  ,VSM.[branch_id] as branchId
+			  ,VSM.[entry_date] as transactionDate
+			  ,VSM.[vm_id] as vmId
+			  ,VMI.[vm_info] as vatMonth
+			  ,VSM.[adjustment_type_id] as adjudtmentId			  
+			  ,OAT.[others_adjt_type_name] as adjustmentType
+			  ,VSM.[total_bill_amount] as totalBilAmount
+			  ,VSM.[total_vat_amount] as totalVatAmount
+			  ,VSM.[total_ vat_adjustable_amount] as totalAdjustableAmount 
+			   ,OAC.[other_adjt_id] as otherId
+			   ,OA.[others_adjt_name] as namm
+			  ,VSM.[remarks] as remarks
+			  ,VSM.[created_at] as createdAt
+			  ,VSM.[updated_at] as updatedAt
+			  ,VSM.[created_by] as createdBy
+			  ,VSM.[updated_by] as updatedBy
+		  FROM [Khajna].[dbo].[6M1_others_adjt_master] VSM		  
+		  JOIN [Khajna].[dbo].[2J2_sv_vat_month_info] VMI ON VSM.vm_id = VMI.id
+		  LEFT JOIN [Khajna].[dbo].[2Q2_sv_others_adjt_type] OAT ON VSM.adjustment_type_id = OAT.id 
+		   LEFT JOIN [Khajna].[dbo].[6M2_others_adjt_child] OAC ON VSM.id = OAC.monthly_svc_master_id 
+		   LEFT JOIN [Khajna].[dbo].[2Q1_sv_others_adjt] OA ON OAC.other_adjt_id = OA.id 
+		  
+		END
+
+	ELSE
+		BEGIN
+			SELECT 
+			  VSM.[id] as vdsOtherMasterId
+			  ,VSM.[branch_id] as branchId
+			  ,VSM.[entry_date] as transactionDate
+			  ,VSM.[vm_id] as vmId
+			  ,VMI.[vm_info] as vatMonth
+			  ,VSM.[adjustment_type_id] as adjudtmentId			  
+			  ,OAT.[others_adjt_type_name] as adjustmentType
+			  ,VSM.[total_bill_amount] as totalBilAmount
+			  ,VSM.[total_vat_amount] as totalVatAmount
+			  ,VSM.[total_ vat_adjustable_amount] as totalAdjustableAmount 
+			   ,OAC.[other_adjt_id] as otherId
+			   ,OA.[others_adjt_name] as namm
+			  ,VSM.[remarks] as remarks
+			  ,VSM.[created_at] as createdAt
+			  ,VSM.[updated_at] as updatedAt
+			  ,VSM.[created_by] as createdBy
+			  ,VSM.[updated_by] as updatedBy
+		  FROM [Khajna].[dbo].[6M1_others_adjt_master] VSM		  
+		  JOIN [Khajna].[dbo].[2J2_sv_vat_month_info] VMI ON VSM.vm_id = VMI.id
+		  LEFT JOIN [Khajna].[dbo].[2Q2_sv_others_adjt_type] OAT ON VSM.adjustment_type_id = OAT.id 
+		   LEFT JOIN [Khajna].[dbo].[6M2_others_adjt_child] OAC ON VSM.id = OAC.monthly_svc_master_id 
+		   LEFT JOIN [Khajna].[dbo].[2Q1_sv_others_adjt] OA ON OAC.other_adjt_id = OA.id 
+		  WHERE VSM.id = @vdsOtherMasterId
+		END
+
+END
+
+drop down 
+-------------------------------
+USE [Khajna]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_get_6M_vds_other_adjustment_dropdown]    Script Date: 11/18/2023 3:48:00 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Abdul Kadir
+-- Create date: 18-11-2023
+-- Description:	<This SP get A dropdown list of sp_get_6M_vds_other_adjustment_dropdown which is the part of the Commercial Module ,,>
+-- Call : EXEC [sp_get_6M_vds_other_adjustment_dropdown]
+-- =============================================
+CREATE PROCEDURE sp_get_6M_vds_other_adjustment_dropdown
+AS
+BEGIN
+   
+
+    -- Select data from the second table (2R10_Company_Type)
+    SELECT
+         'adjustmentDescriptionType' as type,
+         id,
+        others_adjt_name AS name,
+        others_adjt_name_bn AS nameBn -- Assuming there is no name_bn column in [3J1_customer_type]
+    FROM
+        [dbo].[2Q1_sv_others_adjt]
+
+		UNION ALL
+
+		  SELECT
+        'adjustmentType' as type,
+         id,
+        others_adjt_type_name AS name,
+        others_adjt_type_name_bn AS nameBn -- Assuming there is no name_bn column in [3J1_customer_type]
+    FROM
+        [dbo].[2Q2_sv_others_adjt_type]
+
+END;

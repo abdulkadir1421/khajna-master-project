@@ -1,0 +1,369 @@
+				INSERT WITH SP
+---------------------------------------------------------------------------------------------------------------------
+USE [Khajna]
+GO
+/****** Object:  StoredProcedure [dbo].[insert_vds_treasury_challan_json]    Script Date: 1/24/2024 3:14:04 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+/******  DECLARE @JsonDto NVARCHAR(MAX);
+SET @JsonDto = N'{
+ "branchId": 1,
+    "BankId": 1,
+    "BankBranchId": 1,
+    "TransactionDate": "2023-12-26",
+    "FiscalYearId": 1,
+    "VatMonthId": 1,
+    "TreasuryChallanNo": "TC123",
+    "TreasuryChallanDate": "2023-12-26",
+    "CommissionerateId": 1,
+    "VatCodeId": 1,
+    "TcAcctItemId": 1,
+    "TcAmount": 12345.678,
+    "Remark": "Test Remark"
+}';
+
+EXEC [dbo].[insert_vds_treasury_challan_json] @JsonDto; ******/
+ALTER PROCEDURE [dbo].[insert_vds_treasury_challan_json]
+    @JsonDto NVARCHAR(MAX),
+	@CreatedBy INT
+AS
+BEGIN
+    -- Convert JSON to temp table
+    CREATE TABLE #TempTable (
+        branchId INT,
+        bankId BIGINT,
+        bankBranchId INT,
+        transactionDate DATETIME,
+        fiscalYearId BIGINT,
+        vatMonthId INT,
+        treasuryChallanNo NVARCHAR(50),
+        treasuryChallanDate DATE,
+        commissionerateId BIGINT,
+        vatCodeId BIGINT,
+        tcAcctItemId BIGINT,
+        tcAmount DECIMAL(18, 3),
+        remark NVARCHAR(100)
+    );
+
+    BEGIN TRY
+        -- Insert data into the temp table
+        INSERT INTO #TempTable
+        SELECT
+            branchId,
+            bankId,
+            bankBranchId,
+            CAST(CONVERT(VARCHAR, transactionDate, 23) + ' ' + CONVERT(VARCHAR, GETDATE(), 108) AS DATETIME) AS transactionDate,
+            fiscalYearId,
+            vatMonthId,
+            treasuryChallanNo,
+            treasuryChallanDate,
+            commissionerateId,
+            vatCodeId,
+            tcAcctItemId,
+            tcAmount,
+            remark
+        FROM OPENJSON(@JsonDto)
+        WITH (
+            branchId INT,
+            bankId BIGINT,
+            bankBranchId INT,
+            transactionDate DATE,
+            fiscalYearId BIGINT,
+            vatMonthId INT,
+            treasuryChallanNo NVARCHAR(50),
+            treasuryChallanDate DATE,
+            commissionerateId BIGINT,
+            vatCodeId BIGINT,
+            tcAcctItemId BIGINT,
+            tcAmount DECIMAL(18, 3),
+            remark NVARCHAR(100)
+        );
+
+        -- Insert into the master table
+        INSERT INTO [dbo].[6J1_treasury_challan_master] (
+            branch_id,
+            bank_id,
+            bank_branch_id,
+            trans_date,
+            fiscal_year_id,
+            vat_month_id,
+            tc_no,
+            tc_date,
+            commisionerate_id,
+            tc_acct_code_id,
+            tc_acct_item_id,
+            tc_amount,
+            remarks,
+			created_by
+        )
+        SELECT
+            branchId,
+            bankId,
+            bankBranchId,
+            transactionDate,
+            fiscalYearId,
+            vatMonthId,
+            treasuryChallanNo,
+            treasuryChallanDate,
+            commissionerateId,
+            vatCodeId,
+            tcAcctItemId,
+            tcAmount,
+            remark,
+			@CreatedBy
+        FROM #TempTable;
+
+        -- Output the inserted ID
+        SELECT SCOPE_IDENTITY() AS TreasuryChallanId;
+    END TRY
+    BEGIN CATCH
+        -- Handle errors
+        DECLARE @ErrorMessage NVARCHAR(MAX) = ERROR_MESSAGE();
+        PRINT 'Error in stored procedure: ' + @ErrorMessage;
+    END CATCH
+
+    -- Drop the temp table
+    DROP TABLE #TempTable;
+END;
+
+				GET ALL
+---------------------------------------------------------------------------------------------------------------------
+USE [Khajna]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_get_6J1_treasyry_challan_list]    Script Date: 1/24/2024 3:16:20 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- -- -Author:		Abdul Kadir
+-- Create date: 03-11-2023
+-- Description:	<This SP get All list of 6k1.Treasury Challan List which is the part of the Commercial Module,,>
+-- Call : EXEC [sp_get_6J1_treasyry_challan_list] @DbFieldName ='', @SortDirection=''
+-- =============================================
+ALTER PROCEDURE [dbo].[sp_get_6J1_treasyry_challan_list]
+@DbFieldName NVARCHAR(100),
+ @SortDirection NVARCHAR(10)
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+DECLARE @Query NVARCHAR(MAX);
+
+   if(@DbFieldName IS NULL OR @DbFieldName = '')
+	BEGIN
+       SET @DbFieldName = 'id'
+    END
+
+	if(@SortDirection IS NULL OR @SortDirection = '')
+	BEGIN
+       SET @SortDirection = 'asc'
+    END
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+ 
+	
+
+    -- Insert statements for procedure here		 WHERE UST.is_default=1			
+SET @Query = '
+	SELECT    VTC.[id] as id
+			,UST.[store_id] as storeId
+				,CSL.[sl_name] as storeName
+				,CSL.[branch_id] as branchId
+				,CBU.[b_u_name] as branchName
+			 ,VTC.[trans_date] as transactionDate,
+			  VTC.[vat_month_id] as vatMonthId,
+			  VMI.[vm_info] as vatMonthName
+			  ,VTC.[tc_no] as treasuryChallanNo
+			   ,VTC.[tc_date] as treasuryChallanDate
+			  ,VTC.[branch_id] as branchMasterId
+			  ,CBU1.[b_u_name] as branchMasterName
+			  ,VTC.[bank_id] as bankId
+			  ,BI.[bank_name] as bankName
+			  ,VTC.[bank_branch_id] as bankBranchId
+			  ,BBI.[bank_branch_name] as bankBranchName			   
+			  ,VTC.[commisionerate_id] as commissionerateId 
+			   ,CRI.[commissionerate_name] as nameOfCommissionerate
+			   ,VTC.[tc_acct_code_id] as tcAcctCodeId
+			   ,TAC.[tc_acct_code_name] as vatCode
+			    ,VTC.[tc_acct_item_id] as tcAcctItemId
+			   ,TAI.[tc_acct_item_name] as vatCodeDetails			   			  			   
+			   ,VTC.[tc_amount] as treasuryAmount
+			   ,VTC.[remarks] as remarks		   
+			  ,VTC.[created_at] as createdAt
+			  ,VTC.[updated_at] as updatedAt
+			  ,ISNULL(CreatedUser.[name],'''') as createdBy
+			,ISNULL(UpdatedUser.[name],'''') as updatedBy
+		  FROM [Khajna].[dbo].[6J1_treasury_challan_master] VTC
+		  
+		   
+			 JOIN [Khajna].[dbo].[2H1_sv_bank_info] BI ON VTC.bank_id = BI.id
+		   LEFT JOIN [Khajna].[dbo].[2H2_sv_bank_branch_info] BBI ON VTC.bank_branch_id = BBI.id
+		    LEFT JOIN [Khajna].[dbo].[2J2_sv_vat_month_info] VMI ON VTC.vat_month_id = VMI.id
+		  LEFT JOIN [Khajna].[dbo].[2K1_sv_commisionerate_info] CRI ON VTC.commisionerate_id = CRI.id
+		  LEFT JOIN [Khajna].[dbo].[2K2_sv_tc_acct_code_info] TAC ON VTC.tc_acct_code_id = TAC.id		 
+		  LEFT JOIN [Khajna].[dbo].[2K3_sv_tc_acct_item_info] TAI ON VTC.tc_acct_item_id = TAI.id 
+		  LEFT JOIN [dbo].[3B1_company_branch_unit] CBU1 ON VTC.branch_id = CBU1.id
+ LEFT JOIN [dbo].[1a3_users] CreatedUser ON VTC.created_by = CreatedUser.id
+	    LEFT JOIN [dbo].[1a3_users] UpdatedUser ON VTC.updated_by = UpdatedUser.id
+		LEFT JOIN [dbo].[3C6_users_stores] UST ON CreatedUser.id = UST.user_id
+		LEFT JOIN [dbo].[3C1_company_store_location] CSL ON UST.store_id = CSL.id
+		LEFT JOIN [dbo].[3B1_company_branch_unit] CBU ON CSL.branch_id = CBU.id '
+		  + ' ORDER BY VTC.'+@DbFieldName+' '+@SortDirection;
+		EXEC sp_executesql @Query; 
+				
+END
+
+				GET BY ID 
+---------------------------------------------------------------------------------------------------------------------
+USE [Khajna]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_get_6J1_treasyry_challan_list_by_id]    Script Date: 1/24/2024 3:17:12 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- --- -Author:		Abdul Kadir
+-- Create date: 03-11-2023
+-- Description:	<This SP get All list of 6k1.Due,Panalty,SC which is the part of the Commercial Module,,>
+-- Call : EXEC [sp_get_6J1_treasyry_challan_list_by_id]  106
+-- =============================================
+
+ALTER PROCEDURE [dbo].[sp_get_6J1_treasyry_challan_list_by_id](
+	@id bigint
+)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here            and UST.is_default=1
+
+			SELECT DISTINCT
+			  VTC.[id] as id
+			  ,UST.[store_id] as storeId
+				,CSL.[sl_name] as storeName
+				,CSL.[branch_id] as branchId
+				,CBU.[b_u_name] as branchName
+			 ,VTC.[trans_date] as transactionDate,
+			  VTC.[vat_month_id] as vatMonthId,
+			  VMI.[vm_info] as vatMonthName
+			  ,VTC.[tc_no] as treasuryChallanNo
+			   ,VTC.[tc_date] as treasuryChallanDate
+			  ,VTC.[branch_id] as branchMasterId
+			  ,CBU1.[b_u_name] as branchMasterName
+			  ,VTC.[bank_id] as bankId
+			  ,BI.[bank_name] as bankName
+			  ,VTC.[bank_branch_id] as bankBranchId
+			  ,BBI.[bank_branch_name] as bankBranchName			   
+			  ,VTC.[commisionerate_id] as commissionerateId 
+			   ,CRI.[commissionerate_name] as nameOfCommissionerate
+			   ,VTC.[tc_acct_code_id] as tcAcctCodeId
+			   ,TAC.[tc_acct_code_name] as tcAcctCodeName
+			    ,VTC.[tc_acct_item_id] as tcAcctItemId
+			   ,TAI.[tc_acct_item_name] as tcAcctItemName			   			  			   
+			   ,VTC.[tc_amount] as tcAmount
+			   ,VTC.[remarks] as remarks		   
+			  ,VTC.[created_at] as createdAt
+			  ,VTC.[updated_at] as updatedAt
+			   ,ISNULL(CreatedUser.[name],'') as createdBy
+			 ,ISNULL(UpdatedUser.[name],'') as updatedBy
+		  FROM [Khajna].[dbo].[6J1_treasury_challan_master] VTC
+		  
+		   
+			 JOIN [Khajna].[dbo].[2H1_sv_bank_info] BI ON VTC.bank_id = BI.id
+		   LEFT JOIN [Khajna].[dbo].[2H2_sv_bank_branch_info] BBI ON VTC.bank_branch_id = BBI.id
+		    LEFT JOIN [Khajna].[dbo].[2J2_sv_vat_month_info] VMI ON VTC.vat_month_id = VMI.id
+		  LEFT JOIN [Khajna].[dbo].[2K1_sv_commisionerate_info] CRI ON VTC.commisionerate_id = CRI.id
+		  LEFT JOIN [Khajna].[dbo].[2K2_sv_tc_acct_code_info] TAC ON VTC.tc_acct_code_id = TAC.id		 
+		  LEFT JOIN [Khajna].[dbo].[2K3_sv_tc_acct_item_info] TAI ON VTC.tc_acct_item_id = TAI.id
+		  LEFT JOIN [dbo].[3B1_company_branch_unit] CBU1 ON VTC.branch_id = CBU1.id
+		   LEFT JOIN [dbo].[1a3_users] CreatedUser ON VTC.created_by = CreatedUser.id
+		 LEFT JOIN [dbo].[1a3_users] UpdatedUser ON VTC.updated_by = UpdatedUser.id
+		  LEFT JOIN [dbo].[3C6_users_stores] UST ON CreatedUser.id = UST.user_id
+		LEFT JOIN [dbo].[3C1_company_store_location] CSL ON UST.store_id = CSL.id
+		LEFT JOIN [dbo].[3B1_company_branch_unit] CBU ON CSL.branch_id = CBU.id 
+		WHERE VTC.id = @id
+		END
+
+					Drop down
+---------------------------------------------------------------------------------------------------------------------
+USE [Khajna]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_get_6J_vds_treasury_dropdown]    Script Date: 1/24/2024 3:17:52 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Abdul Kadir
+-- Create date: 18-11-2023
+-- Description:	<This SP get A dropdown list of sp_get_6J_vds_treasury_dropdown which is the part of the Company Setting Module ,,>
+-- Call : EXEC [sp_get_3A_company_info_dropdown]
+-- =============================================
+ALTER PROCEDURE [dbo].[sp_get_6J_vds_treasury_dropdown]
+AS
+BEGIN
+   
+
+    -- Select data from the second table (2R10_Company_Type)
+  
+
+    -- Select data from the third table (2F3_sv_currency_info)
+   
+		SELECT
+        'bankType' as type,
+		 id,
+        bank_name AS name,
+        bank_name_bn AS nameBn
+    FROM
+        [dbo].[2H1_sv_bank_info]
+
+		UNION ALL
+
+		  SELECT
+        'bankBrunchType' as type,
+         id,
+        bank_branch_name AS name,
+        bank_branch_name_bn AS nameBn -- Assuming there is no name_bn column in [3J1_customer_type]
+    FROM
+        [dbo].[2H2_sv_bank_branch_info]
+
+    UNION ALL
+
+	 SELECT
+        'commissionarateType' as type,
+		 id,
+        commissionerate_name AS name,
+        commissionerate_name_bn AS nameBn
+    FROM
+        [dbo].[2K1_sv_commisionerate_info]
+
+		UNION ALL
+
+		  SELECT
+        'vatCode' as type,
+		 id,
+        tc_acct_code_name AS name,
+        tc_acct_code_name_bn AS nameBn
+    FROM
+        [dbo].[2K2_sv_tc_acct_code_info]
+
+		UNION ALL
+
+		 SELECT
+        'vatCodeDetailsType' as type,
+		 id,
+        tc_acct_item_name AS name,
+        tc_acct_item_name_bn AS nameBn
+    FROM
+        [dbo].[2K3_sv_tc_acct_item_info]
+
+	
+END;

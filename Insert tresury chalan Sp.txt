@@ -1,0 +1,125 @@
+USE [Khajna]
+GO
+/****** Object:  StoredProcedure [dbo].[insert_vds_treasury_challan_json]    Script Date: 12/30/2023 4:07:17 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+/******  DECLARE @JsonDto NVARCHAR(MAX);
+SET @JsonDto = N'{
+ "branchId": 1,
+    "BankId": 1,
+    "BankBranchId": 1,
+    "TransactionDate": "2023-12-26",
+    "FiscalYearId": 1,
+    "VatMonthId": 1,
+    "TreasuryChallanNo": "TC123",
+    "TreasuryChallanDate": "2023-12-26",
+    "CommissionerateId": 1,
+    "VatCodeId": 1,
+    "TcAcctItemId": 1,
+    "TcAmount": 12345.678,
+    "Remark": "Test Remark"
+}';
+
+EXEC [dbo].[insert_vds_treasury_challan_json] @JsonDto; ******/
+ALTER PROCEDURE [dbo].[insert_vds_treasury_challan_json]
+    @JsonDto NVARCHAR(MAX)
+AS
+BEGIN
+    -- Convert JSON to temp table
+    CREATE TABLE #TempTable (
+        branchId INT,
+        bankId BIGINT,
+        bankBranchId INT,
+        transactionDate DATETIME,
+        fiscalYearId BIGINT,
+        vatMonthId INT,
+        treasuryChallanNo NVARCHAR(50),
+        treasuryChallanDate DATE,
+        commissionerateId BIGINT,
+        vatCodeId BIGINT,
+        tcAcctItemId BIGINT,
+        tcAmount DECIMAL(18, 3),
+        remark NVARCHAR(100)
+    );
+
+    BEGIN TRY
+        -- Insert data into the temp table
+        INSERT INTO #TempTable
+        SELECT
+            branchId,
+            bankId,
+            bankBranchId,
+            CAST(CONVERT(VARCHAR, transactionDate, 23) + ' ' + CONVERT(VARCHAR, GETDATE(), 108) AS DATETIME) AS transactionDate,
+            fiscalYearId,
+            vatMonthId,
+            treasuryChallanNo,
+            treasuryChallanDate,
+            commissionerateId,
+            vatCodeId,
+            tcAcctItemId,
+            tcAmount,
+            remark
+        FROM OPENJSON(@JsonDto)
+        WITH (
+            branchId INT,
+            bankId BIGINT,
+            bankBranchId INT,
+            transactionDate DATE,
+            fiscalYearId BIGINT,
+            vatMonthId INT,
+            treasuryChallanNo NVARCHAR(50),
+            treasuryChallanDate DATE,
+            commissionerateId BIGINT,
+            vatCodeId BIGINT,
+            tcAcctItemId BIGINT,
+            tcAmount DECIMAL(18, 3),
+            remark NVARCHAR(100)
+        );
+
+        -- Insert into the master table
+        INSERT INTO [dbo].[6J1_treasury_challan_master] (
+            branch_id,
+            bank_id,
+            bank_branch_id,
+            trans_date,
+            fiscal_year_id,
+            vat_month_id,
+            tc_no,
+            tc_date,
+            commisionerate_id,
+            tc_acct_code_id,
+            tc_acct_item_id,
+            tc_amount,
+            remarks
+        )
+        SELECT
+            branchId,
+            bankId,
+            bankBranchId,
+            transactionDate,
+            fiscalYearId,
+            vatMonthId,
+            treasuryChallanNo,
+            treasuryChallanDate,
+            commissionerateId,
+            vatCodeId,
+            tcAcctItemId,
+            tcAmount,
+            remark
+        FROM #TempTable;
+
+        -- Output the inserted ID
+        SELECT SCOPE_IDENTITY() AS TreasuryChallanId;
+    END TRY
+    BEGIN CATCH
+        -- Handle errors
+        DECLARE @ErrorMessage NVARCHAR(MAX) = ERROR_MESSAGE();
+        PRINT 'Error in stored procedure: ' + @ErrorMessage;
+    END CATCH
+
+    -- Drop the temp table
+    DROP TABLE #TempTable;
+END;

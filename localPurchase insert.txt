@@ -1,0 +1,606 @@
+USE [Khajna]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_insert_5c1_1_local_purchase]    Script Date: 1/24/2024 3:36:35 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Abdul kadir
+-- Create date: 24-10-2023
+-- Description:	<Description,,>
+-- Call : EXEC [sp_insert_5c1_1_local_purchase] '[{asfasdf}]',1
+-- =============================================
+
+ALTER PROCEDURE [dbo].[sp_insert_5c1_1_local_purchase]
+	-- Add the parameters for the stored procedure here
+	@JSON_DATA nvarchar(max),
+	@CreatedBy int
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+
+	-- Declare Cursor for child (item details)
+	DECLARE @CurItemList CURSOR;
+	DECLARE @CurrentReceiveMasterId int;
+	DECLARE @CurrentReceiveChildId int;
+	DECLARE @CurrentItemStockMasterId int;
+
+	-- Declare item detial vfariable for cursor 
+	DECLARE @itemInfoId int;
+	DECLARE @uomId int;
+	DECLARE @uomShortCode NVARCHAR(50);
+	DECLARE @relativeFactor int;
+	DECLARE @vatPaymentMethodId int;
+	DECLARE @itemCatForRetailId int;
+	DECLARE @gateRecvQty decimal(13,6);
+	DECLARE @recvQuantity decimal(13,6);
+	DECLARE @itemReceiveRate decimal(11,3);
+	--DECLARE @itemAssessableValueTransCurr decimal(11,2);
+	--DECLARE @itemAssessableValueLocalCurr decimal(11,2);
+	--DECLARE @itemValueWotaxTransCurr decimal(11,2);
+	DECLARE @itemValueWotaxLocalCurr decimal(15,3);
+	DECLARE @vatRateTypeId int ;
+	DECLARE @isFixedRate int;
+	DECLARE @cdPercent decimal(4,2);
+	DECLARE @cdAmount decimal(15,3);
+	DECLARE @rdPercent decimal(4,2);
+	DECLARE @rdAmount decimal(15,3);
+	DECLARE @sdPercent decimal(4,2);
+	DECLARE @sdAmount decimal(15,3);
+	DECLARE @vatPercent decimal(4,2);
+	DECLARE @fixedRateUomId int;
+	DECLARE @fixedRate decimal(11,3);
+	DECLARE @vatAmount decimal(15,3);
+	DECLARE @atPercent decimal(4,2);
+	DECLARE @atAmount decimal(15,3);
+	DECLARE @aitPercent decimal(4,2);
+	DECLARE @aitAmount decimal(15,3);
+	DECLARE @totalAmtTransCurr decimal(15,3);
+	DECLARE @totalAmtLocalCurr decimal(15,3);
+	DECLARE @gateEntryAt datetime;
+	DECLARE @gateEntryBy int;
+	DECLARE @openingStockRemarks NVARCHAR(50);
+
+	BEGIN TRY
+		  BEGIN TRANSACTION;
+
+		 	-- Find some id 
+			DECLARE @TranSourceTypeId int
+			DECLARE @TranTypeId int
+			DECLARE @TranSubTypeId int
+			SELECT TOP 1 @TranSourceTypeId = id  from [2C1_sv_tran_source_type] where tran_source_type_name = 'Receive' order by id desc
+			SELECT TOP 1 @TranTypeId = id from [2C2_sv_tran_type] where tran_type_name = 'Purchase' order by id desc
+			SELECT TOP 1 @TranSubTypeId = id from [2C3_sv_tran_sub_type] where tran_sub_type_name = 'Local Purchase' order by id desc
+
+			DECLARE @CompanyId int
+			DECLARE @BranchId int
+			DECLARE @StoreId int
+			DECLARE @CurrencyId int
+			DECLARE @ExcgRate decimal(11,3)
+			
+			/*
+			SELECT TOP 1 @CompanyId = u.[company_id], @BranchId = u.[branch_id], @StoreId = u.[store_id], @CurrencyId = c.currency_id, 
+			@ExcgRate = ISNULL(cx.exch_rate,0.0)
+			FROM [dbo].[1a3_users] u 
+			JOIN [3A_company] c on u.company_id = c.id 
+			LEFT JOIN [2F4_sv_currency_exc_rate] cx on c.currency_id = cx.currency_info_id
+			where u.id = @CreatedBy order by u.id desc
+			*/
+
+			SELECT TOP 1
+			   @StoreId = storeMapper.[store_id]
+			  ,@BranchId = branch.[id]
+			  ,@CompanyId = branch.[company_id]
+			  ,@CurrencyId = company.currency_id
+			  ,@ExcgRate = ISNULL(cx.exch_rate,0.0)
+			FROM [dbo].[3C6_users_stores] as storeMapper
+			JOIN [dbo].[1a3_users] as usr on usr.id = storeMapper.[user_id]
+			JOIN [dbo].[3C1_company_store_location] as store on store.id = storeMapper.[store_id]
+			JOIN [dbo].[3B1_company_branch_unit] branch on branch.id = store.[branch_id]
+			JOIN [dbo].[3A_company] company on company.id = branch.[company_id]
+			LEFT JOIN [2F4_sv_currency_exc_rate] cx on company.currency_id = cx.currency_info_id
+			where store.is_active = 1 and branch.is_active = 1 and storeMapper.[user_id] = @CreatedBy
+			order by storeMapper.[user_id] desc
+
+			print('ExcgRate')
+			print(@ExcgRate)
+
+			DECLARE @IsReg bit
+			SET @IsReg = 0
+
+			DECLARE @SupplierAccountNumber NVARCHAR(50);
+			SET @SupplierAccountNumber = ''
+
+			DECLARE @BankBranchId int
+			SET @BankBranchId = 0
+
+			DECLARE @BankAccountTypeId int
+			SET @BankAccountTypeId = 0
+
+			DECLARE @IsRegBankTrans bit
+			SET @IsRegBankTrans = 0
+
+			DECLARE @FiscalYearId int
+			SELECT TOP 1  @FiscalYearId = [id]
+			FROM [dbo].[2J1_sv_fiscal_year_info] where from_date < GETDATE() and to_date > GETDATE() order by id desc
+			
+			-- Create Tamp Table for Master Data 
+			SELECT txnCode, prodTypeId,vatRebateId,
+					supplierId,supplierBinNumber,supplierBinNumberBn,payModeId,payInstrumentNo,
+					payInstrumentDate,paymentInstitutionId, receiveDate,challanTypeId,challanNumber,
+					challanNumberBn,challanDate,totalAssessableAmtTransCurr,totalAssessableAmtLocalCurr,recvAmtWotaxTransCurr,
+					recvAmtWotaxLocalCurr,totalCdAmount,totalRdAmount,totalSdAmount,totalVatAmount,totalPaidVatAmount,totalAtAmount,
+					totalAitAmount,recvAmtWithtaxTransCurr,recvAmtWithtaxLocalCurr,isRebateable,isVdsApplicable,isVdsDone,isPaid,remarks,remarksBn, 
+					GETDATE() grnDate,
+					(SELECT  'GRN-000'+ CAST(ISNULL(MAX(id),0)+1 AS VARCHAR(16)) FROM [5C1_recv_master]) grnNumber,
+					(SELECT  'GRN-000'+ CAST(ISNULL(MAX(id),0)+1 AS VARCHAR(16)) FROM [5C1_recv_master]) grnNumberBd,
+					GETDATE() createdId,
+					@CreatedBy createdBy
+			
+			 INTO #tblRecMaster
+			 FROM OPENJSON (@JSON_DATA, '$')
+			 WITH ( 
+			    txnCode NVARCHAR(100),
+				prodTypeId int,
+				vatRebateId int,
+				supplierId int,
+				supplierBinNumber NVARCHAR(50),
+				supplierBinNumberBn NVARCHAR(50),
+				payModeId int,
+				payInstrumentNo NVARCHAR(50),
+				payInstrumentDate NVARCHAR(50),
+				paymentInstitutionId int,
+				receiveDate datetime,
+				challanTypeId int,
+				challanNumber NVARCHAR(50),
+				challanNumberBn NVARCHAR(50),
+				challanDate datetime,
+				totalAssessableAmtTransCurr decimal(15,3) ,
+				totalAssessableAmtLocalCurr decimal(15,3),
+				recvAmtWotaxTransCurr decimal(15,3),
+				recvAmtWotaxLocalCurr decimal(15,3),
+				totalCdAmount decimal(15,3),
+				totalRdAmount decimal(15,3),
+				totalSdAmount decimal(15,3),
+				totalVatAmount decimal(15,3),
+				totalPaidVatAmount decimal(15,3),
+				totalAtAmount decimal(15,3),
+				totalAitAmount decimal(15,3),
+				recvAmtWithtaxTransCurr decimal(15,3),
+				recvAmtWithtaxLocalCurr decimal(15,3),
+				isRebateable bit,
+				isVdsApplicable bit,
+				isVdsDone bit,
+				isPaid bit,
+				remarks NVARCHAR(50),
+				remarksBn NVARCHAR(50)
+			 )
+
+			--Select * FROM #tblRecMaster
+
+		    DECLARE @VatMonthId int
+		    Select top 1 @VatMonthId = id from [2J2_sv_vat_month_info] where from_date < (select receiveDate from #tblRecMaster) and  to_date > (select receiveDate from #tblRecMaster) order by id desc
+
+			--PRINT '--------tblRecMaster---------'+cast(@VatMonthId as varchar)
+
+			-- Set Child Data (Item Details) To Cursor
+			SET @CurItemList = CURSOR FOR
+			SELECT * FROM OpenJson(@JSON_DATA,'$.items')
+			WITH (
+				itemInfoId int,
+				uomId int ,
+				recvQuantity decimal(13,6),
+				itemReceiveRate decimal(11,3),
+				cdPercent decimal(4,2),
+				cdAmount decimal(15,3),
+				rdPercent decimal(4,2),
+				rdAmount decimal(15,3),
+				sdPercent decimal(4,2),
+				sdAmount decimal(15,3),
+				vatPercent decimal(4,2),
+				vatAmount decimal(15,3),
+				atPercent decimal(4,2),
+				atAmount decimal(15,3),
+				aitPercent decimal(4,2),
+				aitAmount decimal(15,3),
+				totalAmtTransCurr decimal(15,3),
+				totalAmtLocalCurr decimal(15,3)
+			)
+
+			PRINT '--------cursor---------'
+
+			 --INSERT INTO [5C1_recv_master]
+			 --select * From #tblRecMaster
+			 --,[bank_branch_id]
+			  -- ,[bank_account_type_id]
+			   --,[is_reg_bank_trans]
+			  -- ,[supplier_account_number]
+
+			-- Insert Receive Master Data to [5C1_recv_master]
+
+			INSERT INTO [5C1_recv_master] (
+			    [txn_code]
+			   ,[tran_source_type_id]
+			   ,[tran_type_id]
+			   ,[tran_sub_type_id]
+			   ,[prod_type_id]
+			   ,[vat_rebate_id]
+			   ,[company_id]
+			   ,[branch_id]
+			   ,[store_id]
+			   ,[currency_id]
+			   ,[excg_rate]
+			   ,[supplier_id]
+			   ,[is_reg]
+			   ,[supplier_bin_number]
+			   ,[supplier_bin_number_bn]
+			   ,[pay_mode_id]
+			   ,[pay_instrument_no]
+			   ,[pay_instrument_date]
+			   ,[payment_institution_id]
+			   ,[receive_date]
+			   ,[fiscal_year_id]
+			   ,[vat_month_id]
+			   ,[challan_type_id]
+			   ,[challan_number]
+			   ,[challan_number_bn]
+			   ,[challan_date]
+			   ,[total_assessable_amt_trans_curr]
+			   ,[total_assessable_amt_local_curr]
+			   ,[recv_amt_wotax_trans_curr]
+			   ,[recv_amt_wotax_local_curr]
+			   ,[total_cd_amount]
+			   ,[total_rd_amount]
+			   ,[total_sd_amount]
+			   ,[total_vat_amount]
+			   ,[total_paid_vat_amount]
+			   ,[total_at_amount]
+			   ,[total_ait_amount]
+			   ,[recv_amt_withtax_trans_curr]
+			   ,[recv_amt_withtax_local_curr]
+			   ,[monthly_proc_status]
+			   ,[yearly_proc_status]
+			   ,[is_rebateable]
+			   ,[is_vds_applicable]
+			   ,[is_vds_done]
+			   ,[is_paid]
+			   ,[remarks]
+			   ,[remarks_bn]
+			   ,[grn_date]
+			   ,[grn_number]
+			   ,[grn_number_bn]
+			   ,[created_at]
+			   ,[created_by])
+			SELECT txnCode,@TranSourceTypeId,@TranTypeId,@TranSubTypeId,prodTypeId,vatRebateId,@CompanyId,@BranchId,@StoreId,
+					@CurrencyId,@ExcgRate,supplierId,@IsReg,supplierBinNumber,supplierBinNumberBn,payModeId,payInstrumentNo,
+					payInstrumentDate,paymentInstitutionId,receiveDate,@FiscalYearId,@VatMonthId,challanTypeId,challanNumber,
+					challanNumberBn,challanDate,totalAssessableAmtTransCurr,totalAssessableAmtLocalCurr,recvAmtWotaxTransCurr,
+					recvAmtWotaxLocalCurr,totalCdAmount,totalRdAmount,totalSdAmount,totalVatAmount,totalPaidVatAmount,totalAtAmount,
+					totalAitAmount,recvAmtWithtaxTransCurr,recvAmtWithtaxLocalCurr,0,0,isRebateable,isVdsApplicable,isVdsDone,
+					isPaid, remarks, remarksBn,grnDate,grnNumber,grnNumberBd,createdId,createdBy
+			FROM #tblRecMaster 
+			
+			
+			SELECT @CurrentReceiveMasterId = @@IDENTITY  FROM [5C1_recv_master]
+
+			PRINT '--------insert data  receive master id ---------'+ CAST(@CurrentReceiveMasterId as NVARCHAR) 
+
+			-- Insert Item Stock Master Data 
+
+		--Open cursor
+		OPEN @CurItemList
+
+			PRINT '-------- fec cursor---------'
+
+		--Fetch it
+		FETCH NEXT FROM @CurItemList 
+		INTO @itemInfoId,@uomId,@recvQuantity,@itemReceiveRate, 
+			 @cdPercent,@cdAmount,@rdPercent,@rdAmount,@sdPercent,@sdAmount,@vatPercent,@vatAmount,@atPercent,
+			 @atAmount,@aitPercent,@aitAmount,@totalAmtTransCurr,@totalAmtLocalCurr;
+
+		WHILE @@FETCH_STATUS = 0
+		BEGIN
+			PRINT '-----------------'
+			PRINT '@ACTV_ANS_IND:'
+
+			SELECT TOP 1 @UomShortCode = uom_short_code, @RelativeFactor = relative_factor FROM [2F2_sv_uom] where id = @uomId order by id desc
+
+			SELECT TOP 1 @vatPaymentMethodId = vat_payment_method_id, @itemCatForRetailId = item_cat_for_retail_id 
+			FROM [3N05_item_info]  where id = 1 order by id desc
+
+			--Set @itemValueTransactionCurrency = @issueQty * @issueRate;
+			--Set @itemValueLocalCurrency = (@issueQty * @issueRate) * @ExcgRate;
+		    --SELECT TOP 1 @vatRateTypeId = vs.id, @isFixedRate = vs.is_fixed_rate, @sdPercent = vs.sd, @vatPercent = vs.vat, @fixedRateUomId = fixed_rate_uom_id, @fixedRate = fixed_rate
+			SELECT TOP 1 @vatRateTypeId = vs.id, @isFixedRate = vs.is_fixed_rate, @vatPercent = vs.vat, @fixedRateUomId = fixed_rate_uom_id, @fixedRate = fixed_rate
+			FROM [2E2_sv_vat_structure] vs
+			JOIN [dbo].[3N05_item_info] ii on ii.hs_code_id = vs.hs_code_id
+			where ii.id = @itemInfoId order by ii.id desc
+			IF(@isFixedRate = 0)
+			BEGIN
+				SET @fixedRateUomId = 0
+				SET @fixedRate = 0
+			END
+
+			SET @gateRecvQty = 0.0
+			SET @gateEntryAt = GETDATE()
+			SET @gateEntryBy = @CreatedBy
+			SET @openingStockRemarks = ''
+
+			print(@ExcgRate)
+
+			-- Update answer first
+			--UPDATE dbo.ANS_DTL SET ANS_DESC = @ANS_DESC, ACTV_ANS_IND = @ACTV_ANS_IND  WHERE QSTN_NBR=@QSTN_NBR AND ANS_NBR = @ANS_NBR
+
+			-- if fails then insert
+			--IF @@ROWCOUNT = 0
+			--	INSERT INTO dbo.ANS_DTL (QSTN_NBR, ANS_NBR,ANS_DESC, ACTV_ANS_IND, CRTE_TSTP, CRTE_USR_ID) 
+			--	VALUES (@QSTN_NBR,@ANS_NBR ,@ANS_DESC, @ACTV_ANS_IND, SYSDATETIME(),'TEST')
+			
+			-- Insert Receive Master Child Data
+			INSERT INTO [5C2_recv_child] (
+				[receive_master_id]
+			   ,[item_info_id]
+			   ,[uom_id]
+			   ,[uom_short_code]
+			   ,[relative_factor]
+			   ,[vat_payment_method_id]
+			   ,[item_cat_for_retail_id]
+			   ,[gate_recv_qty]
+			   ,[recv_quantity]
+			   ,[itm_receive_rate]
+			   ,[item_assessable_value_trans_curr] --11
+			   ,[item_assessable_value_local_curr]
+			   ,[item_value_wotax_trans_curr]
+			   ,[item_value_wotax_local_curr]
+			   ,[vat_rate_type_id]
+			   ,[is_fixed_rate]
+			   ,[cd_percent]
+			   ,[cd_amount]
+			   ,[rd_percent]
+			   ,[rd_amount]
+			   ,[sd_percent]
+			   ,[sd_amount]
+			   ,[vat_percent]
+			   ,[fixed_rate_uom_id]
+			   ,[fixed_rate]
+			   ,[vat_amount]
+			   ,[at_percent]
+			   ,[at_amount]
+			   ,[ait_percent]
+			   ,[ait_amount]
+			   ,[total_amt_trans_curr]
+			   ,[total_amt_local_curr]
+			   ,[gate_entry_at]
+			   ,[gate_entry_by]
+			   ,[opening_stock_remarks]
+			   ,[created_at]
+			   ,[created_by]
+			)VALUES (
+				@CurrentReceiveMasterId,
+				@itemInfoId,
+				@uomId,
+				@uomShortCode,
+				@relativeFactor,
+				@vatPaymentMethodId, 
+				@itemCatForRetailId,
+				@gateRecvQty,
+				@recvQuantity,
+				@itemReceiveRate, 
+				@recvQuantity * @itemReceiveRate,    --@itemAssessableValueTransCurr,
+			    (@recvQuantity * @itemReceiveRate) * @ExcgRate,   --@itemAssessableValueLocalCurr,
+			    (@recvQuantity * @itemReceiveRate) + @cdAmount + @rdAmount,  --@itemValueWotaxTransCurr,
+			    ((@recvQuantity * @itemReceiveRate) + @cdAmount + @rdAmount) * @ExcgRate ,--@itemValueWotaxLocalCurr,
+				0,--@vatRateTypeId,
+				@isFixedRate,
+				@cdPercent,
+				@cdAmount,
+				@rdPercent,
+				@rdAmount,
+				@sdPercent,
+				@sdAmount,
+				@vatPercent,
+				@fixedRateUomId,
+				@fixedRate,
+				@vatAmount,
+				@atPercent,
+				@atAmount,
+				@aitPercent,
+				@aitAmount,
+				@totalAmtTransCurr,
+				@totalAmtLocalCurr, 
+				@gateEntryAt,
+				@gateEntryBy,
+				@openingStockRemarks,
+				GETDATE(),
+				@CreatedBy
+			) 
+
+			--SELECT @CurrentReceiveChildId = @@IDENTITY  FROM [5C2_recv_child]
+			
+
+			set @itemValueWotaxLocalCurr = ((@recvQuantity * @itemReceiveRate) + @cdAmount + @rdAmount) * @ExcgRate
+			
+			print('404')
+
+			-- Insert ItemStock Master Data 
+
+			INSERT INTO [dbo].[5Z1_itemstock_master] (
+				[receive_Issue_master_id]
+			   ,[tran_source_type_id]
+			   ,[tran_type_id]
+			   ,[tran_sub_type_id]
+			   ,[prod_type_id]
+			   ,[vat_rebate_id]
+			   ,[company_id]
+			   ,[branch_id]
+			   ,[currency_id]
+			   ,[receive_issue_date]
+			   ,[opening_bal_date]
+			   ,[fiscal_year_id]
+			   ,[vat_month_id]
+			   ,[supplier_id]
+			   ,[supplier_bin_number]
+			   ,[supplier_bin_number_bn]
+			   ,[supplier_bank_branch_id]
+			   ,[supplier_bank_account_type_id]
+			   ,[supplier_account_number]
+			   ,[supplier_is_reg_bank_trans]
+			   ,[item_info_id]
+			   ,[uom_id]
+			   ,[vat_payment_method_id]
+			   ,[item_cat_for_retail_id]
+			   ,[vat_rate_type_id]
+			   ,[challan_number]
+			   ,[challan_number_bn]
+			   ,[challan_date]
+			   ,[remarks]
+			   ,[remarks_bn]
+			   ,[created_at]
+			   ,[created_by])
+			SELECT
+				@CurrentReceiveMasterId,@TranSourceTypeId,@TranTypeId,@TranSubTypeId,prodTypeId,vatRebateId,@CompanyId,@BranchId,@CurrencyId,receiveDate,
+				receiveDate,@FiscalYearId,@VatMonthId,supplierId,supplierBinNumber,supplierBinNumberBn,@BankBranchId,@BankAccountTypeId,@SupplierAccountNumber,@IsRegBankTrans,
+				@itemInfoId,@uomId,@vatPaymentMethodId,@itemCatForRetailId, 0, --@vatRateTypeId,
+				challanNumber,challanNumberBn,challanDate,remarks,'Local Purchase',
+				GETDATE(),
+				@CreatedBy 
+			FROM #tblRecMaster 
+
+			print('472')
+			
+			SELECT @CurrentItemStockMasterId = @@IDENTITY  FROM [5Z1_itemstock_master]
+
+			DECLARE @closing_bal_qty decimal(13,6);
+			select TOP(1) @closing_bal_qty = closing_bal_qty from [5Z2_itemstock_child] c 
+			join [5Z1_itemstock_master] m on m.id = c.itemstock_master_id
+			where m.item_info_id = @itemInfoId and c.store_id = @StoreId order by c.id desc
+
+			DECLARE @closing_bal_rate decimal(11,3);
+			select TOP(1) @closing_bal_rate = closing_bal_rate from [5Z2_itemstock_child] c 
+			join [5Z1_itemstock_master] m on m.id = c.itemstock_master_id
+			where m.item_info_id = @itemInfoId and c.store_id = @StoreId order by c.id desc
+
+			DECLARE @closing_bal_amount decimal(15,3);
+			select TOP(1) @closing_bal_amount = closing_bal_amount from [5Z2_itemstock_child] c 
+			join [5Z1_itemstock_master] m on m.id = c.itemstock_master_id
+			where m.item_info_id = @itemInfoId and c.store_id = @StoreId order by c.id desc
+
+			DECLARE @closing_bal_amount_with_tax decimal(15,3);
+			select TOP(1) @closing_bal_amount_with_tax = closing_bal_amount_with_tax from [5Z2_itemstock_child] c 
+			join [5Z1_itemstock_master] m on m.id = c.itemstock_master_id
+			where m.item_info_id = @itemInfoId and c.store_id = @StoreId order by c.id desc
+
+			--select  @closing_bal_qty, @closing_bal_rate, @closing_bal_amount, @closing_bal_amount_with_tax
+
+			print('closing_bal_amount_with_tax')
+			print(@closing_bal_amount_with_tax)
+
+			-- Insert Item Stock Child Data
+
+			print('500')
+
+			INSERT INTO [dbo].[5Z2_itemstock_child](
+				[itemstock_master_id]
+			   ,[receive_issue_child_id]
+			   ,[store_id]
+			   ,[opening_bal_qty]
+			   ,[opening_bal_rate]
+			   ,[opening_bal_amount]
+			   ,[opening_bal_amount_with_tax]
+			   ,[receive_qty]
+			   ,[receive_rate]
+			   ,[receive_amount]
+			   ,[receive_vat_percent]
+			   ,[receive_vat_amnt]
+			   ,[receive_sd_percent]
+			   ,[receive_sd_amnt]
+			   ,[receive_amount_with_tax]
+			   ,[issue_qty]
+			   ,[issue_rate]
+			   ,[issue_amount]
+			   ,[stock_issue_rate]
+			   ,[stock_issue_amount]
+			   ,[issue_vat_percent]
+			   ,[issue_vat_amnt]
+			   ,[issue_sd_percent]
+			   ,[issue_sd_amnt]
+			   ,[issue_amount_with_tax]
+			   ,[closing_bal_qty]
+			   ,[closing_bal_rate]
+			   ,[closing_bal_amount]
+			   ,[closing_bal_amount_with_tax]
+			   ,[created_at]
+			   ,[created_by])
+			VALUES
+			   (
+			   ISNULL(@CurrentItemStockMasterId,0),
+			   ISNULL(@CurrentReceiveChildId,0),
+			   ISNULL(@StoreId,0), 
+			   ISNULL(@closing_bal_qty,0.0),
+			   ISNULL(@closing_bal_rate,0.0),
+			   ISNULL(@closing_bal_amount,0.0),
+			   ISNULL(@closing_bal_amount_with_tax,0.0),
+			   ISNULL(@recvQuantity,0),
+			   ISNULL(@itemReceiveRate,0),
+			   ISNULL(@itemValueWotaxLocalCurr,0),
+			   ISNULL(@vatPercent,0),
+			   ISNULL(@vatAmount,0),
+			   ISNULL( @sdPercent,0),
+			   ISNULL(@sdAmount,0),
+			   ISNULL(@totalAmtLocalCurr,0),
+			   0,
+			   0,
+			   0,
+			   0,
+			   0,
+			   0,
+			   0,
+			   0,
+			   0,
+			   0, 
+			   (ISNULL(@closing_bal_qty,0.0) + ISNULL(@recvQuantity,0) - 0), --closing_bal_qty
+			   (ISNULL(@closing_bal_amount,0.0) + ISNULL(@itemValueWotaxLocalCurr,0) - 0)/(ISNULL(@closing_bal_qty,0.0) + ISNULL(@recvQuantity,0) - 0), -- closing_bal_rate
+			   (ISNULL(@closing_bal_amount,0.0) + ISNULL(@itemValueWotaxLocalCurr,0) - 0), --closing_bal_amount
+			   (ISNULL(@closing_bal_amount_with_tax,0.0) + ISNULL(@totalAmtLocalCurr,0) - 0),  -- closing_bal_amount_with_tax
+			   GETDATE(),
+			   @CreatedBy
+			   )
+			   
+			   print('569')
+
+			--Fetch the next record
+			FETCH NEXT FROM @CurItemList 
+			INTO @itemInfoId,@uomId,@recvQuantity,@itemReceiveRate, 
+			--@itemAssessableValueTransCurr,@itemAssessableValueLocalCurr,@itemValueWotaxTransCurr,@itemValueWotaxLocalCurr,
+			@cdPercent,@cdAmount,@rdPercent,@rdAmount,@sdPercent,@sdAmount,@vatPercent,@vatAmount,@atPercent,
+			@atAmount,@aitPercent,@aitAmount,@totalAmtTransCurr,@totalAmtLocalCurr;
+
+		END
+
+		--Close cursor for Answers
+		CLOSE @CurItemList ;
+		DEALLOCATE @CurItemList;
+
+		COMMIT;
+		 
+		 -- Return Message
+		SELECT 1 as 'Status', 'Successfully Saved Data' as 'Message', @CurrentReceiveMasterId as 'Result'
+
+	END TRY
+	BEGIN CATCH
+		IF @@TRANCOUNT > 0
+			ROLLBACK TRANSACTION;
+
+		--EXECUTE usp_GetErrorInfo;  
+
+		-- Return Message
+		SELECT 0 as 'Status', CAST(ERROR_LINE() As nvarchar) + CAST( ERROR_MESSAGE() As nvarchar) as 'Message', 0  as 'Result'
+
+    END CATCH;
+
+END

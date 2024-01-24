@@ -1,0 +1,450 @@
+					INSERT WITH SP VDS PURCHASE
+=======================================================================================================
+USE [Khajna]
+GO
+/****** Object:  StoredProcedure [dbo].[insert_VdsPurchase_json_data]    Script Date: 1/24/2024 3:19:25 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+/*****
+DECLARE @JsonDto NVARCHAR(MAX) = N'{
+    "storeId": 27,
+    "transactionDate": "2023-11-20",
+    "vmId": 1,
+    "supplierId": 39,
+    "publishedDate": "2023-11-21",
+    "totalPurchaseAmount": 99999999932.99999999,
+    "totalVatAmount": 999999999999.34534745756,
+    "totalVdsPaidAmount": 346666666.4645745,
+    "totalDeductedVatAmount": 235634634.34645645,
+    "remarks": "This is a sample remark.",
+    "vdsPurchaseChild6D2RequestDtos": [
+        {
+            "receiveMasterId": 10572,
+            "receiveAmount": 3463445745.37473,
+            "vatAmount": 34634645745.345,
+            "deductedVatAmount": 3463465745.03463460
+        }
+    ]
+}';
+
+EXEC [dbo].[insert_VdsPurchase_json_data] @JsonDto;
+***/
+ALTER PROCEDURE [dbo].[insert_VdsPurchase_json_data]
+    @JsonDto NVARCHAR(MAX),
+	@CreatedBy INT
+AS
+BEGIN
+    -- Convert JSON to temp table for master
+    CREATE TABLE #MasterTempTable (
+        storeId INT,
+        transactionDate DATETIME,
+        vmId INT,
+        supplierId INT,
+        publishedDate DATE,
+        totalPurchaseAmount DECIMAL(15, 3),
+        totalVatAmount DECIMAL(15, 3),
+        totalVdsPaidAmount DECIMAL(15, 3),
+        totalDeductedVatAmount DECIMAL(15, 3),
+        remarks NVARCHAR(100)
+    );
+
+    -- Convert JSON to temp table for child
+    CREATE TABLE #ChildTempTable (
+        receiveMasterId INT,
+        receiveAmount DECIMAL(15, 3),
+        vatAmount DECIMAL(15, 3),
+        deductedVatAmount DECIMAL(15, 3)
+    );
+
+    BEGIN TRY
+        -- Insert data into the temp table for master
+        INSERT INTO #MasterTempTable
+        SELECT
+            storeId,
+            CAST(CONVERT(VARCHAR, transactionDate, 23) + ' ' + CONVERT(VARCHAR, GETDATE(), 108) AS DATETIME) AS transactionDate,
+            vmId,
+            supplierId,
+            publishedDate,
+            totalPurchaseAmount,
+            totalVatAmount,
+            totalVdsPaidAmount,
+            totalDeductedVatAmount,
+            remarks
+        FROM OPENJSON(@JsonDto)
+        WITH (
+            storeId INT,
+            transactionDate DATE,
+            vmId INT,
+            supplierId INT,
+            publishedDate DATE,
+            totalPurchaseAmount DECIMAL(15, 3),
+            totalVatAmount DECIMAL(15, 3),
+            totalVdsPaidAmount DECIMAL(15, 3),
+            totalDeductedVatAmount DECIMAL(15, 3),
+            remarks NVARCHAR(100),
+            vdsPurchaseChild6D2RequestDtos NVARCHAR(MAX) '$.vdsPurchaseChild6D2RequestDtos' AS JSON
+        );
+
+        -- Insert data into the temp table for child
+        INSERT INTO #ChildTempTable
+        SELECT
+            receiveMasterId,
+            receiveAmount,
+            vatAmount,
+            deductedVatAmount
+        FROM OPENJSON(@JsonDto, '$.vdsPurchaseChild6D2RequestDtos')
+        WITH (
+            receiveMasterId INT,
+            receiveAmount DECIMAL(15, 3),
+            vatAmount DECIMAL(15, 3),
+            deductedVatAmount DECIMAL(15, 3)
+        );
+
+       -- Insert into the master table
+INSERT INTO [dbo].[6D1_vds_purchaser_master] (        
+    branch_id,
+    transaction_date,
+    vm_id,
+    supplier_id,
+    published_date,
+    total_recv_amt_wotax_local_curr,
+    total_vat_amount,
+    total_vds_paid_amount,
+    total_deducted_vat_amount,
+    remarks,
+	is_paid,  -- Add this line
+	created_by,
+	certificate_no
+)
+SELECT           
+    csl.branch_id,  -- Assuming csl.id is the column from 3c1_companystorelocation
+    transactionDate,
+    vmId,
+    supplierId,
+    publishedDate,
+    totalPurchaseAmount,
+    totalVatAmount,
+    0,
+    totalDeductedVatAmount,
+    remarks,
+	0,
+	@CreatedBy,
+	'inserting data with  sp' AS certificate_no
+FROM #MasterTempTable mt
+
+JOIN [dbo].[3C1_company_store_location] csl ON csl.id = mt.storeId;
+
+
+        -- Get the newly inserted master ID
+        DECLARE @MasterId INT;
+        SET @MasterId = SCOPE_IDENTITY();
+
+        -- Insert into the child table
+        INSERT INTO [dbo].[6D2_vds_purchaser_child] (
+			vds_purchaser_master_id,
+            receive_master_id,
+            recv_amt_wotax_local_curr,
+            vat_amount,
+            deducted_vat_amount,
+			created_by
+        )
+        SELECT
+            @MasterId,
+			receiveMasterId,
+            receiveAmount,
+            vatAmount,
+            deductedVatAmount,
+			@CreatedBy
+        FROM #ChildTempTable;
+
+		UPDATE [dbo].[5C1_recv_master]
+SET
+    is_vds_done = 1,
+    updated_at = GETDATE(),
+    updated_by = @CreatedBy
+WHERE
+  id = (SELECT receiveMasterId FROM #ChildTempTable);
+        -- Output the inserted master ID
+        SELECT @MasterId AS MasterId;
+    END TRY
+    BEGIN CATCH
+        -- Handle errors
+        DECLARE @ErrorMessage NVARCHAR(MAX) = ERROR_MESSAGE();
+        DECLARE @ErrorSeverity INT = ERROR_SEVERITY();
+        DECLARE @ErrorState INT = ERROR_STATE();
+        DECLARE @ErrorLine INT = ERROR_LINE();
+        DECLARE @ErrorProcedure NVARCHAR(128) = ERROR_PROCEDURE();
+
+        -- Log the error details
+        PRINT 'Error in stored procedure: ' + @ErrorMessage;
+        PRINT 'Severity: ' + CONVERT(NVARCHAR(10), @ErrorSeverity);
+        PRINT 'State: ' + CONVERT(NVARCHAR(10), @ErrorState);
+        PRINT 'Line: ' + CONVERT(NVARCHAR(10), @ErrorLine);
+        PRINT 'Procedure: ' + @ErrorProcedure;
+
+        -- Re-throw the error for further handling
+        THROW;
+    END CATCH
+
+    -- Drop the temp tables
+    IF OBJECT_ID('tempdb..#MasterTempTable') IS NOT NULL DROP TABLE #MasterTempTable;
+    IF OBJECT_ID('tempdb..#ChildTempTable') IS NOT NULL DROP TABLE #ChildTempTable;
+END;
+
+						FIND BY ID LATEST
+=======================================================================================================
+USE [Khajna]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_get_6d1_vds_purchase_list_by_id]    Script Date: 1/24/2024 3:21:30 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:	Abdul kadir
+-- Create date: 02-11-2023
+-- Description:	<Description,,>
+-- Call : EXEC [sp_get_6d1_vds_purchase_list_by_id] 60            and UST.is_default=1
+-- =============================================
+
+ALTER PROCEDURE [dbo].[sp_get_6d1_vds_purchase_list_by_id](
+	@id bigint
+
+)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+    -- Insert statements for procedure here
+		
+			SELECT 
+			  VPM.[id] as id
+			  ,UST.[store_id] as storeId
+				,CSL.[sl_name] as storeName
+				,CSL.[branch_id] as branchId
+				,CBU.[b_u_name] as branchName
+				,VPM.[branch_id] as branchMasterId
+				,CBU1.[b_u_name] as branchMasterName
+			  ,VPM.[transaction_date] as transactionDate
+
+              ,VPM.[vm_id] as vmId
+              ,VM.[vm_info] as vatMonthInfo
+			  ,VPM.[supplier_id] as supplierId
+			  ,SD.[supplier_name] as supplierName
+               ,VPM.[certificate_no] as certificateNo
+              ,VPM.[published_date] as publishedDate                            
+              ,VPM.[tc_master_id] as tcMasterId
+			  ,TCM.[tc_no] as treasuryChallanNo
+			  ,TCM.[tc_date] as treasuryChallanDate
+			  ,TCM.[tc_amount] as paidAmount
+			 			 
+			 , VPM.[total_recv_amt_wotax_local_curr] totalPurchaseAmount
+			 , VPM.[total_vat_amount] totalVatAmount
+			 , VPM.[total_deducted_vat_amount] totalDeductedVatAmount       
+              ,VPM.[total_vds_paid_amount] as totalVdsPaidAmount          
+              ,VPM.[is_paid] as isPaid
+			  ,VPM.[remarks] as remark
+			   , VPC.[id] as vdsPurchaseChildId
+			    , VPC.[vds_purchaser_master_id] as vdsPurchaseMasterId
+				 , VPC.[receive_master_id] as receiveMasterId
+			   , VPC.[recv_amt_wotax_local_curr] receiveAmount
+			 , VPC.[vat_amount] vatAmount
+			 , VPC.[deducted_vat_amount] deductedVatAmount 
+			  ,RCM.[challan_number] as challanNo
+			  ,RCM.[challan_date] as challanDate
+              ,VPM.[created_at] as createdAt
+              ,VPM.[updated_at] as updatedAt
+              ,ISNULL(CreatedUser.[name],'') as createdBy
+			 ,ISNULL(UpdatedUser.[name],'') as updatedBy
+        FROM [Khajna].[dbo].[6D1_vds_purchaser_master] VPM
+        JOIN [Khajna].[dbo].[2J2_sv_vat_month_info] VM ON VPM.vm_id = VM.id
+		LEFT JOIN [dbo].[3B1_company_branch_unit] CBU1 ON VPM.branch_id = CBU1.id
+		
+		LEFT JOIN [Khajna].[dbo].[3K2_supplier_details] SD ON VPM.supplier_id = SD.id		
+		 
+		 LEFT JOIN [Khajna].[dbo].[6D2_vds_purchaser_child] VPC ON VPM.id = VPC.vds_purchaser_master_id	
+		 LEFT JOIN [Khajna].[dbo].[5C1_recv_master] RCM ON VPC.receive_master_id = RCM.id
+		  LEFT JOIN [Khajna].[dbo].[6J1_treasury_challan_master] TCM ON VPM.tc_master_id = TCM.id
+		 LEFT JOIN [Khajna].[dbo].[3B1_company_branch_unit] CBM ON VPM.branch_id = CBM.id
+		  LEFT JOIN [dbo].[1a3_users] CreatedUser ON VPM.created_by = CreatedUser.id
+		 LEFT JOIN [dbo].[1a3_users] UpdatedUser ON VPM.updated_by = UpdatedUser.id
+		 LEFT JOIN [dbo].[3C6_users_stores] UST ON CreatedUser.id = UST.user_id
+		LEFT JOIN [dbo].[3C1_company_store_location] CSL ON UST.store_id = CSL.id
+		LEFT JOIN [dbo].[3B1_company_branch_unit] CBU ON CSL.branch_id = CBU.id
+
+		 WHERE VPM.id = @id 
+
+		END
+
+
+
+					get all list 
+===========================================================================================
+USE [Khajna]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_get_6d1_vds_purchase_list]    Script Date: 1/24/2024 3:20:52 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Abdul Kadir
+-- Create date: 03-11-2023
+-- Description:	<This SP get All list of [sp_get_6d1_vds_purchase_list],SC which is the part of the Commercial Module,,>
+-- Call : EXEC [sp_get_6d1_vds_purchase_list] @DbFieldName ='', @SortDirection=''
+-- =============================================
+ALTER PROCEDURE [dbo].[sp_get_6d1_vds_purchase_list]
+ @DbFieldName NVARCHAR(100),
+ @SortDirection NVARCHAR(10)
+AS
+BEGIN
+
+SET NOCOUNT ON;
+
+DECLARE @Query NVARCHAR(MAX);
+
+if(@DbFieldName IS NULL OR @DbFieldName = '')
+	BEGIN
+       SET @DbFieldName = 'id'
+    END
+
+	if(@SortDirection IS NULL OR @SortDirection = '')
+	BEGIN
+       SET @SortDirection = 'asc'
+    END
+
+    -- Insert statements for procedure here    and CSL.branch_id=VPM.branch_id    WHERE UST.is_default=1                
+ SET @Query = '
+        SELECT DISTINCT  VPM.[id] as id
+             , UST.[store_id] as storeId
+				,CSL.[sl_name] as storeName
+				,CSL.[branch_id] as branchId
+				,CBU.[b_u_name] as branchName
+				,VPM.[branch_id] as branchMasterId
+				,CBM1.[b_u_name] as branchMasterName
+			  ,VPM.[transaction_date] as transactionDate	
+              ,VPM.[vm_id] as vmId
+              ,VM.[vm_info] as vatMonth
+			  ,VPM.[supplier_id] as supplierId
+			  ,SD.[supplier_name] as supplierName
+               ,VPM.[certificate_no] as certificateNo
+              ,VPM.[published_date] as publishedDate                            
+              ,VPM.[tc_master_id] as tcMasterId
+			  ,TCM.[tc_no] as treasuryChallanNo
+			  ,TCM.[tc_date] as treasuryDate			 
+			 , VPM.[total_recv_amt_wotax_local_curr] totalPurchaseAmount
+			 , VPM.[total_vat_amount] totalVatAmount
+			 , VPM.[total_deducted_vat_amount] totalDeductedVateeAmount       
+              ,VPM.[total_vds_paid_amount] as totalVdsPaidAmount          
+              ,VPM.[is_paid] as isPaid
+			  ,VPM.[remarks] as remarks
+              ,VPM.[created_at] as createdAt
+              ,VPM.[updated_at] as updatedAt
+              ,VPM.[created_by] as createdBy
+              ,VPM.[updated_by] as updatedBy
+			  ,ISNULL(CreatedUser.[name],'''') as createdBy
+			,ISNULL(UpdatedUser.[name],'''') as updatedBy
+        FROM [Khajna].[dbo].[6D1_vds_purchaser_master] VPM
+        JOIN [Khajna].[dbo].[2J2_sv_vat_month_info] VM ON VPM.vm_id = VM.id
+		
+		LEFT JOIN [Khajna].[dbo].[3K2_supplier_details] SD ON VPM.supplier_id = SD.id		
+		 LEFT JOIN [Khajna].[dbo].[6J1_treasury_challan_master] TCM ON VPM.tc_master_id = TCM.id 
+		 LEFT JOIN [dbo].[3B1_company_branch_unit] CBM1 ON VPM.branch_id = CBM1.id
+		  LEFT JOIN [dbo].[1a3_users] CreatedUser ON VPM.created_by = CreatedUser.id
+	    LEFT JOIN [dbo].[1a3_users] UpdatedUser ON VPM.updated_by = UpdatedUser.id
+		LEFT JOIN [dbo].[3C6_users_stores] UST ON VPM.created_by = UST.user_id
+		LEFT JOIN [dbo].[3C1_company_store_location] CSL ON UST.store_id = CSL.id
+		LEFT JOIN [dbo].[3B1_company_branch_unit] CBU ON CSL.branch_id = CBU.id '
+		 + ' ORDER BY VPM.'+@DbFieldName+' '+@SortDirection;
+		EXEC sp_executesql @Query;
+        
+	
+       
+		
+   
+END
+
+============================================
+
+				dropdown for supplier 
+======================================================================================================
+USE [Khajna]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_get_6D_vds_purchase_dropdown]    Script Date: 1/2/2024 6:24:28 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Abdul Kadir
+-- Create date: 18-11-2023
+-- Description:	<This SP get A dropdown list of sp_get_6D_vds_purchase_dropdown which is the part of the Company Setting Module ,,>
+-- Call : EXEC [sp_get_6D_vds_purchase_dropdown]
+-- =============================================
+ALTER PROCEDURE [dbo].[sp_get_6D_vds_purchase_dropdown]
+AS
+BEGIN
+    -- Select data from the first table (2R2_country)
+    --SELECT
+        --'vatMonthType' as type,
+        --id,
+        --vm_info as name,
+        --vm_info_bn as nameBn
+    --FROM
+        --[dbo].[2J2_sv_vat_month_info]
+
+    --UNION ALL
+
+	
+
+    -- Select data from the second table (2R10_Company_Type)
+    SELECT DISTINCT
+        'supplierType' as type,
+        [3K2_supplier_details].id as id,
+        [3K2_supplier_details].supplier_name as name,
+        [3K2_supplier_details].supplier_name_bn as nameBn -- Assuming there is no name_bn column in [3J1_customer_type]
+    FROM
+        [dbo].[3K2_supplier_details]
+		 JOIN [5C1_recv_master] ON [3K2_supplier_details].id = [5C1_recv_master].supplier_id
+		WHERE [5C1_recv_master].is_vds_applicable = 1 AND [5C1_recv_master].is_vds_done =0
+   
+
+END;
+
+			VDS PURCHASE CHILD DROP-DOWN
+========================================================================================
+child drop down is not for use
+USE [Khajna]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_get_6D2_vds_purchase_child_dropdown]    Script Date: 1/2/2024 6:26:15 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Abdul Kadir
+-- Create date: 21-11-2023
+-- Description:	<This SP get A dropdown list of sp_get_6E1_vds_seller_dropdown which is the part of the Commercial  Module ,,>
+-- Call : EXEC [sp_get_6D2_vds_purchase_child_dropdown]
+-- =============================================
+ALTER PROCEDURE [dbo].[sp_get_6D2_vds_purchase_child_dropdown]
+AS
+BEGIN
+    -- Select data from the first table (2J2_sv_vat_month_info)
+    SELECT
+        'receiveMaster' as type,
+        RC.id,
+        RC.challan_number as challanNo,
+        RC.challan_date as challanDate,
+		VPC.recv_amt_wotax_local_curr as receiveAmount,
+		VPC.vat_amount as vatAmount,
+		VPC.deducted_vat_amount as deductedVatAmount
+    FROM
+        [dbo].[6D2_vds_purchaser_child] VPC		
+		LEFT JOIN [Khajna].[dbo].[5c1_recv_master] RC ON VPC.receive_master_id = RC.id
+END;
+=====================================================================================================

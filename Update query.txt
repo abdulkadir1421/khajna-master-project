@@ -1,0 +1,17 @@
+USE [Khajna]
+GO
+
+UPDATE [dbo].[6F1_vds_payment_master]
+   SET [tc_master_id] = 1
+      ,[vat_month_id] = 1
+      ,[total_payable_vat_amt] = 1.1
+      ,[total_fine_amt] = 1.1
+      ,[total_payable_amt] = 1.1
+      ,[created_at] = '01-11-23'
+      ,[updated_at] ='01-11-23'
+      ,[created_by] = 8
+      ,[updated_by] = 8
+ WHERE [id]=12
+GO
+
+

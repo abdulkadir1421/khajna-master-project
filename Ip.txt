@@ -1,0 +1,49 @@
+https://docs.google.com/document/d/1oBNn88AXCK7K6C9Z418hM2QvV_2uPd7ak5EJu4dFrXs/edit  
+
+vds purchase
+/commercial/api/v1/purchase/list?sortOrder=ASC&sortField=vdsPurchaserMasterId
+/commercial/api/v1/purchase/find?vdsPurchaserMasterId=2
+/commercial/api/v1/purchase/drop-down
+
+Vds seller 
+/commercial/api/v1/seller/list?sortOrder=ASC&sortField=vdsSellerMasterId
+/commercial/api/v1/seller/find?vdsSellerMasterId=3
+/commercial/api/v1/seller/drop-down
+
+Vds Payment 
+/commercial/api/v1/payment/list?sortOrder=DESC&sortField=vdsPaymentMasterId
+/commercial/api/v1/payment/find?vdsPaymentMasterId=12
+/commercial/api/v1/payment/drop-down
+
+Vds Treasury Challan
+/commercial/api/v1/treasury/list?sortOrder=ASC&sortField=vdsTreasuryChallanMasterId
+/commercial/api/v1/treasury/find?vdsTreasuryChallanMasterId=1
+/commercial/api/v1/treasury/drop-down
+
+Vds Due Penalty
+/commercial/api/v1/due-penalty/list?sortOrder=DESC&sortField=transactionId
+/commercial/api/v1/due-penalty/find?transactionId=1
+/commercial/api/v1/due-penalty/drop-down
+
+Vds Last Month Closing Balance
+/commercial/api/v1/last-month-closing/list?sortOrder=DESC&sortField=transactionId
+/commercial/api/v1/last-month-closing/find?transactionId=1
+/commercial/api/v1/last-month-closing/drop-down
+
+Vds Other Adjustment
+/commercial/api/v1/other-adjust/list?sortOrder=DESC&sortField=vdsOtherMasterId
+/commercial/api/v1/other-adjust/find?vdsOtherMasterId=1
+/commercial/api/v1/other-adjust/drop-down
+
+
+
+
+
+
+
+
+
+
+
+
+

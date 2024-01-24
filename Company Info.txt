@@ -1,0 +1,79 @@
+Get All List
+-- ================================================
+-- Template generated from Template Explorer using:
+-- Create Procedure (New Menu).SQL
+--
+-- Use the Specify Values for Template Parameters 
+-- command (Ctrl-Shift-M) to fill in the parameter 
+-- values below.
+--
+-- This block of comments will not be included in
+-- the definition of the procedure.
+-- ================================================
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		Abdul Kadir
+-- Create date: 14-11-2023
+-- Call : EXEC [sp_get_3A_company_info_list]
+-- =============================================
+CREATE PROCEDURE sp_get_3A_company_info_list
+@SortField NVARCHAR(255) = NULL,
+    @SortOrder NVARCHAR(10) = 'ASC'
+AS
+BEGIN
+DECLARE @OrderBy NVARCHAR(1000);
+
+    SET @OrderBy = ISNULL(@SortField, 'companyId') + ' ' + @SortOrder;
+    -- SET NOCOUNT ON added to prevent extra result sets from
+    -- interfering with SELECT statements.
+   DECLARE @Sql NVARCHAR(MAX);
+
+    -- Insert statements for procedure here
+	 SET @Sql ='
+	SELECT  VSM.[id] as companyId
+			  ,VSM.[country_id] as countryId			  
+			  ,PT.[name] as countryName
+			  ,VSM.[currency_id] as currencyId
+			  ,CS.[currency_desc] as currency
+			  ,VSM.[comp_code] as companyCode
+			  ,VSM.[comp_type_id] as companyTypeId
+			  ,VSM.[comp_type] as compType
+			  ,CT.[company_type] as companyType
+			  ,CT.[company_type_code] as companyTypeCode
+			  ,VSM.[comp_business_id] as companyBusinessId
+			  ,VSM.[comp_business_others] as companyBusinessOther
+			  ,VSM.[comp_name] as companyName
+			  ,VSM.[comp_name_bn] as companyNameBn
+			  ,VSM.[reg_person_name] as contactPersonName
+			  ,VSM.[reg_person_name_bn] as contactPersonNameBn
+			  ,VSM.[reg_person_nid] as contactPersonNID
+			  ,VSM.[reg_person_nid_bn] as contactPersonNIDBn
+			  ,VSM.[phone_number] as contactPersonPhone
+			  ,VSM.[comp_logo] as companyLogo
+			  ,VSM.[comp_icon] as companyIcon
+			  ,VSM.[nature_of_biz] as natureOfBiz
+			  ,VSM.[comp_short_name] as companyShortName
+			  ,VSM.[comp_short_name_bn] as companyShortNameBn
+			  ,VSM.[comp_address] as companyAddress
+			  ,VSM.[comp_address_bn] as companyAddressBn
+			  ,VSM.[area_code] as areaCode
+			  ,VSM.[area_code_bn] as areaCodeBn
+			  ,VSM.[phone_number] as phoneNumber  
+			  ,VSM.[email_address] as emailAddress
+			  ,VSM.[is_active] as isActive
+			  ,VSM.[created_at] as createdAt
+			  ,VSM.[updated_at] as updatedAt
+			  ,VSM.[created_by] as createdBy
+			  ,VSM.[updated_by] as updatedBy
+		  FROM [Khajna].[dbo].[3A_company] VSM
+		  JOIN [Khajna].[dbo].[2R2_country] PT ON VSM.country_id = PT.id
+		  LEFT JOIN [Khajna].[dbo].[2F3_sv_currency_info] CS ON VSM.currency_id = CS.id
+		  LEFT JOIN [Khajna].[dbo].[2R10_Company_Type] CT ON VSM.comp_type_id = CT.id '
+		   + ISNULL('ORDER BY ' + @OrderBy, '');
+
+		EXEC sp_executesql @Sql;
+END
+GO
