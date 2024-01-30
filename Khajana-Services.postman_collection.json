@@ -1,0 +1,7265 @@
+{
+	"info": {
+		"_postman_id": "a96fbed0-b864-4a33-b9b6-70deacb9ceff",
+		"name": "Khajana-Services",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "30486814"
+	},
+	"item": [
+		{
+			"name": "Inventory-service",
+			"item": [
+				{
+					"name": "local purchase",
+					"item": [
+						{
+							"name": "service-perchase",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/inventory/api/v1/service-sells/list?dbFieldName=ID&sortDirection=ASC&pageNo=1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"inventory",
+										"api",
+										"v1",
+										"service-sells",
+										"list"
+									],
+									"query": [
+										{
+											"key": "dbFieldName",
+											"value": "ID"
+										},
+										{
+											"key": "sortDirection",
+											"value": "ASC"
+										},
+										{
+											"key": "pageNo",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "local purchase index Copy",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/inventory/api/v1/service-sells/find/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"inventory",
+										"api",
+										"v1",
+										"service-sells",
+										"find",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "find by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/inventory/api/v1/service-sells/find/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"inventory",
+										"api",
+										"v1",
+										"service-sells",
+										"find",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "insert",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"txnCode\": \"null\",\r\n    \"issue_master_id\": \"null\",\r\n    \"prodTypeId\": 3,\r\n    \"vatRebateId\": 1,\r\n    \"supplierId\": 39,\r\n    \"supplierBinNumber\": \"000344172-0203\",\r\n    \"supplierBinNumberBn\": \"000344172-0203\",\r\n    \"payModeId\": 4,\r\n    \"payInstrumentNo\": \"001\",\r\n    \"payInstrumentDate\": \"2023-12-22 00:00:00\",\r\n    \"paymentInstitutionId\": 1,\r\n    \"receiveDate\": \"2023-12-22 00:00:00\",\r\n    \"challanTypeId\": 2,\r\n    \"challanNumber\": \"2004001578\",\r\n    \"challanNumberBn\": \"2004001578\",\r\n    \"challanDate\": \"2023-12-22 00:00:00\",\r\n    \"totalAssessableAmtTransCurr\": 116528.087,\r\n    \"totalAssessableAmtLocalCurr\": 116528.087,\r\n    \"recvAmtWotaxTransCurr\": 116528.087,\r\n    \"recvAmtWotaxLocalCurr\": 116528.087,\r\n    \"totalCdAmount\": 0.0,\r\n    \"totalRdAmount\": 0.0,\r\n    \"totalSdAmount\": 0.0,\r\n    \"totalVatAmount\":  17479.21 ,\r\n    \"totalAtAmount\": 0.0,\r\n    \"totalAitAmount\": 0.0,\r\n    \"recvAmtWithtaxTransCurr\":  134007.30,\r\n    \"recvAmtWithtaxLocalCurr\":  134007.30,\r\n    \"isRebateable\": true,\r\n    \"isVdsApplicable\": true,\r\n    \"isVdsDone\": false,\r\n    \"isPaid\": false,\r\n    \"remarks\": \"Local Purchas\",\r\n    \"remarksBn\": \"Local Purchase\",\r\n    \"items\": [\r\n        {\r\n            \"itemInfoId\": 18,\r\n            \"uomId\": 1,\r\n            \"recvQuantity\": 12,\r\n            \"itemReceiveRate\": 773.91,\r\n            \"cdPercent\": 0.0,\r\n            \"cdAmount\": 0.0,\r\n            \"rdPercent\": 0.0,\r\n            \"rdAmount\": 0.0,\r\n            \"sdPercent\": 0.0,\r\n            \"sdAmount\": 0.0,\r\n            \"vatPercent\": 15.0,\r\n            \"vatAmount\": 1393.04,\r\n            \"atPercent\": 0.0,\r\n            \"atAmount\": 0.0,\r\n            \"aitPercent\": 0.0,\r\n            \"aitAmount\": 0.0,\r\n            \"totalAmtTransCurr\": 10680,\r\n            \"totalAmtLocalCurr\": 10680\r\n        },\r\n        {\r\n            \"itemInfoId\": 1,\r\n            \"uomId\": 1,\r\n            \"recvQuantity\": 36,\r\n            \"itemReceiveRate\": 425.65,\r\n            \"cdPercent\": 0.0,\r\n            \"cdAmount\": 0.0,\r\n            \"rdPercent\": 0.0,\r\n            \"rdAmount\": 0.0,\r\n            \"sdPercent\": 0.0,\r\n            \"sdAmount\": 0.0,\r\n            \"vatPercent\": 15.0,\r\n            \"vatAmount\": 2298.52,\r\n            \"atPercent\": 0.0,\r\n            \"atAmount\": 0.0,\r\n            \"aitPercent\": 0.0,\r\n            \"aitAmount\": 0.0,\r\n            \"totalAmtTransCurr\": 17622,\r\n            \"totalAmtLocalCurr\": 17622\r\n        },\r\n          {\r\n            \"itemInfoId\": 2,\r\n            \"uomId\": 1,\r\n            \"recvQuantity\": 36,\r\n            \"itemReceiveRate\": 243.78,\r\n            \"cdPercent\": 0.0,\r\n            \"cdAmount\": 0.0,\r\n            \"rdPercent\": 0.0,\r\n            \"rdAmount\": 0.0,\r\n            \"sdPercent\": 0.0,\r\n            \"sdAmount\": 0.0,\r\n            \"vatPercent\": 15.0,\r\n            \"vatAmount\": 1316.43,\r\n            \"atPercent\": 0.0,\r\n            \"atAmount\": 0.0,\r\n            \"aitPercent\": 0.0,\r\n            \"aitAmount\": 0.0,\r\n            \"totalAmtTransCurr\": 10092.60,\r\n            \"totalAmtLocalCurr\": 10092.60\r\n        },\r\n        {\r\n            \"itemInfoId\": 3,\r\n            \"uomId\": 1,\r\n            \"recvQuantity\": 12,\r\n            \"itemReceiveRate\": 773.91,\r\n            \"cdPercent\": 0.0,\r\n            \"cdAmount\": 0.0,\r\n            \"rdPercent\": 0.0,\r\n            \"rdAmount\": 0.0,\r\n            \"sdPercent\": 0.0,\r\n            \"sdAmount\": 0.0,\r\n            \"vatPercent\": 15.0,\r\n            \"vatAmount\": 1393.04,\r\n            \"atPercent\": 0.0,\r\n            \"atAmount\": 0.0,\r\n            \"aitPercent\": 0.0,\r\n            \"aitAmount\": 0.0,\r\n            \"totalAmtTransCurr\": 10680.00,\r\n            \"totalAmtLocalCurr\": 10680.00\r\n        },\r\n        {\r\n            \"itemInfoId\": 4,\r\n            \"uomId\": 1,\r\n            \"recvQuantity\": 60,\r\n            \"itemReceiveRate\": 77.39,\r\n            \"cdPercent\": 0.0,\r\n            \"cdAmount\": 0.0,\r\n            \"rdPercent\": 0.0,\r\n            \"rdAmount\": 0.0,\r\n            \"sdPercent\": 0.0,\r\n            \"sdAmount\": 0.0,\r\n            \"vatPercent\": 15.0,\r\n            \"vatAmount\": 696.52,\r\n            \"atPercent\": 0.0,\r\n            \"atAmount\": 0.0,\r\n            \"aitPercent\": 0.0,\r\n            \"aitAmount\": 0.0,\r\n            \"totalAmtTransCurr\": 5340,\r\n            \"totalAmtLocalCurr\": 5340\r\n        },\r\n        {\r\n            \"itemInfoId\": 19,\r\n            \"uomId\": 1,\r\n            \"recvQuantity\": 150,\r\n            \"itemReceiveRate\": 131.57,\r\n            \"cdPercent\": 0.0,\r\n            \"cdAmount\": 0.0,\r\n            \"rdPercent\": 0.0,\r\n            \"rdAmount\": 0.0,\r\n            \"sdPercent\": 0.0,\r\n            \"sdAmount\": 0.0,\r\n            \"vatPercent\": 15.0,\r\n            \"vatAmount\": 2960.22,\r\n            \"atPercent\": 0.0,\r\n            \"atAmount\": 0.0,\r\n            \"aitPercent\": 0.0,\r\n            \"aitAmount\": 0.0,\r\n            \"totalAmtTransCurr\": 22695.00,\r\n            \"totalAmtLocalCurr\": 22695.00\r\n        },\r\n        {\r\n            \"itemInfoId\": 6,\r\n            \"uomId\": 1,\r\n            \"recvQuantity\": 72,\r\n            \"itemReceiveRate\": 243.78,\r\n            \"cdPercent\": 0.0,\r\n            \"cdAmount\": 0.0,\r\n            \"rdPercent\": 0.0,\r\n            \"rdAmount\": 0.0,\r\n            \"sdPercent\": 0.0,\r\n            \"sdAmount\": 0.0,\r\n            \"vatPercent\": 15.0,\r\n            \"vatAmount\": 2632.85,\r\n            \"atPercent\": 0.0,\r\n            \"atAmount\": 0.0,\r\n            \"aitPercent\": 0.0,\r\n            \"aitAmount\": 0.0,\r\n            \"totalAmtTransCurr\": 20185.20,\r\n            \"totalAmtLocalCurr\": 20185.20\r\n        },\r\n        {\r\n            \"itemInfoId\": 7,\r\n            \"uomId\": 1,\r\n            \"recvQuantity\": 75,\r\n            \"itemReceiveRate\": 425.65,\r\n            \"cdPercent\": 0.0,\r\n            \"cdAmount\": 0.0,\r\n            \"rdPercent\": 0.0,\r\n            \"rdAmount\": 0.0,\r\n            \"sdPercent\": 0.0,\r\n            \"sdAmount\": 0.0,\r\n            \"vatPercent\": 15.0,\r\n            \"vatAmount\": 4788.59,\r\n            \"atPercent\": 0.0,\r\n            \"atAmount\": 0.0,\r\n            \"aitPercent\": 0.0,\r\n            \"aitAmount\": 0.0,\r\n            \"totalAmtTransCurr\": 36712.50,\r\n            \"totalAmtLocalCurr\": 36712.50\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/inventory/api/v1/local-purchase/insert",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"inventory",
+										"api",
+										"v1",
+										"local-purchase",
+										"insert"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "service purchase",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"txnCode\": \"TX-86324\",\r\n    \"serviceId\":2,\r\n    \"vatRebateId\": 1,\r\n    \"supplierId\": 40,\r\n    \"supplierBinNumber\": \"1234567890\",\r\n    \"supplierBinNumberBn\": \"১২৩৪৫৬৭৮৯০\",\r\n    \"payModeId\": 1,\r\n    \"payInstrumentNo\": \"1912\",\r\n    \"payInstrumentDate\": \"2023-12-19 00:00:00\",\r\n    \"paymentInstitutionId\": 1,\r\n    \"transactionDate\": \"2023-12-19 00:00:00\",\r\n    \"challanTypeId\": 1,\r\n    \"billNo\": \"1219\",\r\n    \"billNoBn\": \"১২১৯\",\r\n    \"billDate\": \"2023-12-19 00:00:00\",\r\n    \"totalAssessableAmtTransCurr\": 1000.00,\r\n    \"totalAssessableAmtLocalCurr\": 1000.00,\r\n    \"recvAmtWotaxTransCurr\": 1656.00,\r\n    \"recvAmtWotaxLocalCurr\": 1656.00,\r\n    \"totalRebateAmount\":216.00,\r\n    \"totalCdAmount\": 100.00,\r\n    \"totalRdAmount\": 100.00,\r\n    \"totalSdAmount\": 240.00,\r\n    \"totalVatAmount\": 216.00,\r\n    \"totalAtAmount\": 50.00,\r\n    \"totalAitAmount\": 72.00,\r\n    \"recvAmtWithtaxTransCurr\": 1778,\r\n    \"recvAmtWithtaxLocalCurr\": 1778,\r\n    \"isRebateable\":true,\r\n    \"isVdsApplicable\": false,\r\n    \"isVdsDone\": false,\r\n    \"isPaid\": false,\r\n    \"remarks\": \"remarks\",\r\n    \"remarksBn\": \"Service Purchase\",\r\n    \"items\": [\r\n        {\r\n            \"itemInfoId\": 3,\r\n            \"uomId\": 2,\r\n            \"vatAmount\": 216.00,\r\n            \"purchaseQty\": 1,\r\n            \"purchaseRate\": 1000.00,\r\n            \"cdPercent\": 10.00,\r\n            \"cdAmount\": 100.00,\r\n            \"rdPercent\": 10.0,\r\n            \"rdAmount\": 100.0,\r\n            \"sdPercent\": 20.0,\r\n            \"sdAmount\": 240.0,\r\n            \"rebateAmount\":216.00,\r\n            \"vatPercent\": 15.0,\r\n            \"atPercent\": 5.0,\r\n            \"atAmount\": 50.0,\r\n            \"aitPercent\": 5.0,\r\n            \"aitAmount\": 72.0,\r\n            \"totalAmtTransCurr\": 1778.00,\r\n            \"totalAmtLocalCurr\": 1778.00\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/inventory/api/v1/service-purchase/insert",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"inventory",
+										"api",
+										"v1",
+										"service-purchase",
+										"insert"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Test API",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/inventory/api/v1/test/",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"inventory",
+								"api",
+								"v1",
+								"test",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if(pm.response.code == 200){\r",
+									"    pm.globals.set(\"TOKEN\",pm.response.json().result.jwt)\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"robiul@zit.com\",\r\n    \"password\":\"sapsw1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/api/v1/login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"api",
+								"v1",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Generate Token",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\":\"robiul@zit.com\",\r\n    \"password\":\"sapsw1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/auth/token",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"auth",
+								"token"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Setting",
+			"item": [
+				{
+					"name": "BankInfo",
+					"item": [
+						{
+							"name": "Get Bank",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/bank-info/all?pageNo=0&pageSize=1&dbFieldName=id&sortDirection=ASC",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"bank-info",
+										"all"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "1"
+										},
+										{
+											"key": "dbFieldName",
+											"value": "id"
+										},
+										{
+											"key": "sortDirection",
+											"value": "ASC"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Bank Brunch Info",
+					"item": [
+						{
+							"name": "Get Bank",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/bank-branch-info/all?pageNo=0&pageSize=1&dbFieldName=id&sortDirection=ASC",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"bank-branch-info",
+										"all"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "1"
+										},
+										{
+											"key": "dbFieldName",
+											"value": "id"
+										},
+										{
+											"key": "sortDirection",
+											"value": "ASC"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get Bank Brunch By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/bank-branch-info/find/1?pageNo=0&pageSize=1&dbFieldName=id&sortDirection=ASC",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"bank-branch-info",
+										"find",
+										"1"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "1"
+										},
+										{
+											"key": "dbFieldName",
+											"value": "id"
+										},
+										{
+											"key": "sortDirection",
+											"value": "ASC"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "insert",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"id\": 1,\r\n        \"bankId\": 1,\r\n        \"bankName\": \"The City Bank Ltd.\",\r\n        \"bankNameBn\": \"সিটি ব্যাংক লিমিটেড\",\r\n        \"bankBranchName\": \"Moghbazar\",\r\n        \"bankBranchNameBn\": \"মগবাজার\",\r\n        \"bankBranchAddress\": \"New Eskaton Road, Dhaka 1205\",\r\n        \"bankBranchAddressBn\": \"??? ??????? ???, ????-????\",\r\n        \"bankBranchRoutingNo\": 1,\r\n        \"bankBranchPhoneNumber\": \"29356831\",\r\n        \"bankBranchEmailAddress\": \"city-mogh@gmail.com\",\r\n        \"seqNo\": 1.0,\r\n        \"active\": true,\r\n        \"createdAt\": \"2022-01-08T00:04:56.000+00:00\",\r\n        \"updatedAt\": null,\r\n        \"createdBy\": 65,\r\n        \"updatedBy\": null\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/bank-branch-info/add?pageNo=0&pageSize=1&dbFieldName=id&sortDirection=ASC",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"bank-branch-info",
+										"add"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "1"
+										},
+										{
+											"key": "dbFieldName",
+											"value": "id"
+										},
+										{
+											"key": "sortDirection",
+											"value": "ASC"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "ChallanType",
+					"item": [
+						{
+							"name": "getChallanType",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/customer/all?pageNo=0&pageSize=1&dbFieldName=id&sortDirection=DESC",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"customer",
+										"all"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "1"
+										},
+										{
+											"key": "dbFieldName",
+											"value": "id"
+										},
+										{
+											"key": "sortDirection",
+											"value": "DESC"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get By Id Challan",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/challan-type/find/1?pageNo=0&pageSize=1&dbFieldName=id&sortDirection=ASC",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"challan-type",
+										"find",
+										"1"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "1"
+										},
+										{
+											"key": "dbFieldName",
+											"value": "id"
+										},
+										{
+											"key": "sortDirection",
+											"value": "ASC"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "insertChallanType",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {\r\n                \"id\": 1,\r\n                \"name\": \"Challan\",\r\n                \"nameBn\": \"Challan\",\r\n                \"seqNo\": 1.03345,\r\n                \"active\": false,\r\n                \"createdAt\": \"2023-10-28T03:51:33.567+00:00\",\r\n                \"updatedAt\": \"2023-10-28T03:51:33.567+00:00\",\r\n                \"createdBy\": null,\r\n                \"updatedBy\": null\r\n            }    \r\n        ",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/challan-type/add?pageNo=0&pageSize=0",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"challan-type",
+										"add"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "insertChallanType Copy",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "   {\r\n                \"id\": 61,\r\n                \"name\": \"Test VAT Challan Update\",\r\n                \"nameBn\": \"Test VAT Challan\",\r\n                \"seqNo\": 2.134634,\r\n                \"active\": false,\r\n                \"createdAt\": \"2023-11-14 11:12:51\",\r\n                \"updatedAt\": \"2023-11-14 11:12:51\",\r\n                \"createdBy\": \"Robiul Islam\",\r\n                \"updatedBy\": \"Robiul Islam\"\r\n            }    \r\n        ",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/challan-type/update/62?pageNo=0&pageSize=0",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"challan-type",
+										"update",
+										"62"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TransactionTypes",
+					"item": [
+						{
+							"name": "Source Type",
+							"item": [
+								{
+									"name": "Drop Down List - T.Source Type",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/tran-source-type/drop-down",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"tran-source-type",
+												"drop-down"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Transaction Source Types",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/tran-source-type/find/14?pageNo=0&pageSize=2&dbFieldName=id&sortDirection=DESC",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"tran-source-type",
+												"find",
+												"14"
+											],
+											"query": [
+												{
+													"key": "pageNo",
+													"value": "0"
+												},
+												{
+													"key": "pageSize",
+													"value": "2"
+												},
+												{
+													"key": "dbFieldName",
+													"value": "id"
+												},
+												{
+													"key": "sortDirection",
+													"value": "DESC"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Transaction Source Types ById",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/tran-source-type/find/14?pageNo=0&pageSize=2&dbFieldName=id&sortDirection=DESC",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"tran-source-type",
+												"find",
+												"14"
+											],
+											"query": [
+												{
+													"key": "pageNo",
+													"value": "0"
+												},
+												{
+													"key": "pageSize",
+													"value": "2"
+												},
+												{
+													"key": "dbFieldName",
+													"value": "id"
+												},
+												{
+													"key": "sortDirection",
+													"value": "DESC"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Insert Transaction Source Type",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"tranSourceTypeName\": \"test 35\",\r\n    \"tranSourceTypeNameBN\": \"test 35\",\r\n    \"tranSourceSequenceNo\": 5\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/tran-source-type/add",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"tran-source-type",
+												"add"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Transaction Source Type",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n                \"id\": 54,\r\n                \"tranSourceTypeName\": \"test 38-u\",\r\n                \"tranSourceTypeNameBN\": \"bangla\",\r\n                \"seqNo\": 5.6,\r\n                \"active\": true,\r\n                \"createdAt\": \"2023-11-03T12:16:30.737+00:00\",\r\n                \"updatedAt\": \"2023-11-03T12:21:20.500+00:00\",\r\n                \"createdBy\": 8,\r\n                \"updatedBy\": 8\r\n            }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/tran-source-type/update/54",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"tran-source-type",
+												"update",
+												"54"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Transaction Type",
+							"item": [
+								{
+									"name": "Trans Account Item Info",
+									"item": [
+										{
+											"name": "getAll",
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{BASE_URL}}/setting/api/v1/tran-acc-item/all",
+													"host": [
+														"{{BASE_URL}}"
+													],
+													"path": [
+														"setting",
+														"api",
+														"v1",
+														"tran-acc-item",
+														"all"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "getById",
+											"request": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{BASE_URL}}/setting/api/v1/tran-acc-item/find/10",
+													"host": [
+														"{{BASE_URL}}"
+													],
+													"path": [
+														"setting",
+														"api",
+														"v1",
+														"tran-acc-item",
+														"find",
+														"10"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "getById Copy",
+											"request": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": ""
+												},
+												"url": {
+													"raw": "{{BASE_URL}}/setting/api/v1/tran-acc-item/add",
+													"host": [
+														"{{BASE_URL}}"
+													],
+													"path": [
+														"setting",
+														"api",
+														"v1",
+														"tran-acc-item",
+														"add"
+													]
+												}
+											},
+											"response": []
+										},
+										{
+											"name": "getById Copy 2",
+											"request": {
+												"method": "POST",
+												"header": [],
+												"url": {
+													"raw": "{{BASE_URL}}/setting/api/v1/tran-acc-item/add",
+													"host": [
+														"{{BASE_URL}}"
+													],
+													"path": [
+														"setting",
+														"api",
+														"v1",
+														"tran-acc-item",
+														"add"
+													]
+												}
+											},
+											"response": []
+										}
+									]
+								},
+								{
+									"name": "Drop-Down - Transaction Types",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/tran-type/drop-down",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"tran-type",
+												"drop-down"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Transaction Types",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/tran-type/all?pageNo=0&pageSize=2&dbFieldName=id&sortDirection=DESC&filter",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"tran-type",
+												"all"
+											],
+											"query": [
+												{
+													"key": "pageNo",
+													"value": "0"
+												},
+												{
+													"key": "pageSize",
+													"value": "2"
+												},
+												{
+													"key": "dbFieldName",
+													"value": "id"
+												},
+												{
+													"key": "sortDirection",
+													"value": "DESC"
+												},
+												{
+													"key": "filter",
+													"value": null
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Find Transaction Types",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/tran-type/find/1",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"tran-type",
+												"find",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Insert Transaction Type",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n        \"id\": 1,\r\n        \"trnsSourceTypeId\": 1,\r\n        \"tranSourceTypeName\": \"2222\",\r\n        \"tranSourceTypeNameBN\": \"9999ddd\",\r\n        \"trnsTypeName\": \"Purchase Done fdfff\",\r\n        \"trnsTypeNameBn\": \"ক্রয় ডান\",\r\n        \"seqNo\": 1.0,\r\n        \"active\": true,\r\n        \"createdAt\": \"2023-10-24T11:21:50.323+00:00\",\r\n        \"updatedAt\": \"2023-10-24T11:21:50.323+00:00\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n    }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/tran-type/add",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"tran-type",
+												"add"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Transaction Source Type",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n        \"id\": 1,\r\n        \"trnsSourceTypeId\": 1,\r\n        \"tranSourceTypeName\": \"2222\",\r\n        \"tranSourceTypeNameBN\": \"9999ddd\",\r\n        \"trnsTypeName\": \"Purchase Done fdfff\",\r\n        \"trnsTypeNameBn\": \"ক্রয় ডান\",\r\n        \"seqNo\": 1.0787,\r\n        \"active\": false,\r\n        \"createdAt\": \"2023-10-24T11:21:50.323+00:00\",\r\n        \"updatedAt\": \"2023-10-24T11:21:50.323+00:00\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n    }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/tran-type/update/1",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"tran-type",
+												"update",
+												"1"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Sub Type",
+							"item": [
+								{
+									"name": "Drop Down List - T. SubType",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/tran-sub-type/drop-down",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"tran-sub-type",
+												"drop-down"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Transaction Sub Types",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/tran-sub-type/all?pageNo=0&pageSize=2&dbFieldName=id&sortDirection=DESC",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"tran-sub-type",
+												"all"
+											],
+											"query": [
+												{
+													"key": "pageNo",
+													"value": "0"
+												},
+												{
+													"key": "pageSize",
+													"value": "2"
+												},
+												{
+													"key": "dbFieldName",
+													"value": "id"
+												},
+												{
+													"key": "sortDirection",
+													"value": "DESC"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Transaction Sub Types By Id",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/tran-sub-type/find/1?pageNo=0&pageSize=2&dbFieldName=id&sortDirection=DESC",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"tran-sub-type",
+												"find",
+												"1"
+											],
+											"query": [
+												{
+													"key": "pageNo",
+													"value": "0"
+												},
+												{
+													"key": "pageSize",
+													"value": "2"
+												},
+												{
+													"key": "dbFieldName",
+													"value": "id"
+												},
+												{
+													"key": "sortDirection",
+													"value": "DESC"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Insert Transaction Sub Type",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n        \"id\": 1,\r\n        \"trnsTypeId\": 4,\r\n        \r\n        \"trnsSubTypeName\": \"Factory\",\r\n        \"trnsSubTypeNameBn\": \"কারখানা\",\r\n        \"seqNo\": 1.02,\r\n        \"active\": true,\r\n        \"createdAt\": \"2023-10-20 10:05:39\",\r\n        \"updatedAt\": \"2023-10-20 10:05:39\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n    }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/tran-sub-type/add",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"tran-sub-type",
+												"add"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update Transaction Source Type",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n        \"id\": 76,\r\n        \"trnsTypeId\": 2,\r\n        \"trnsTypeName\": \"Sellss Return\",\r\n        \"trnsTypeNameBn\": \"বিক্রয় ফেরত\",\r\n        \"trnsSubTypeName\": \"Factory\",\r\n        \"trnsSubTypeNameBn\": \"কারখানা\",\r\n        \"seqNo\": 1.54,\r\n        \"active\": true,\r\n        \"createdAt\": \"2023-11-07 08:38:28\",\r\n        \"updatedAt\": \"2023-11-07 08:38:28\",\r\n        \"createdBy\": 8,\r\n        \"updatedBy\": 8\r\n    }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/tran-sub-type/update/76",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"tran-sub-type",
+												"update",
+												"76"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Currency",
+					"item": [
+						{
+							"name": "Currency Exchange Rate",
+							"item": [
+								{
+									"name": "Get Currency Exchange Rate",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/currency-exchange-rate/all?pageNo=0&pageSize=2&dbFieldName=id&sortDirection=DESC",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"currency-exchange-rate",
+												"all"
+											],
+											"query": [
+												{
+													"key": "pageNo",
+													"value": "0"
+												},
+												{
+													"key": "pageSize",
+													"value": "2"
+												},
+												{
+													"key": "dbFieldName",
+													"value": "id"
+												},
+												{
+													"key": "sortDirection",
+													"value": "DESC"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Insert",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \r\n    \"currencyInfoId\": 2,\r\n    \"exchangeRate\": \"3000.0\",\r\n    \"exchangeRateDate\": \"2023-05-29T00:00:00.000+00:00\",\r\n    \"source\": \"NA\",\r\n    \"active\": true\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/currency-exchange-rate/add",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"currency-exchange-rate",
+												"add"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Insert Copy",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \r\n    \"currencyInfoId\": 2,\r\n    \"exchangeRate\": \"3000.0\",\r\n    \"exchangeRateDate\": \"2023-05-29T00:00:00.000+00:00\",\r\n    \"source\": \"khajna\",\r\n    \"active\": false\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/currency-exchange-rate/update/16",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"currency-exchange-rate",
+												"update",
+												"16"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "get All",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/currency/all?pageNo=0&pageSize=2&dbFieldName=id&sortDirection=DESC",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"currency",
+										"all"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "2"
+										},
+										{
+											"key": "dbFieldName",
+											"value": "id"
+										},
+										{
+											"key": "sortDirection",
+											"value": "DESC"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get All By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/currency/find/2?pageNo=0&pageSize=2&dbFieldName=id&sortDirection=DESC",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"currency",
+										"find",
+										"2"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "2"
+										},
+										{
+											"key": "dbFieldName",
+											"value": "id"
+										},
+										{
+											"key": "sortDirection",
+											"value": "DESC"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "insert",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/currency-exchange-rate/add?pageNo=0&pageSize=2&dbFieldName=id&sortDirection=DESC",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"currency-exchange-rate",
+										"add"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "2"
+										},
+										{
+											"key": "dbFieldName",
+											"value": "id"
+										},
+										{
+											"key": "sortDirection",
+											"value": "DESC"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Currency",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n       \r\n        \"currencyShortCode\": \"USD test\",\r\n        \"currencyDesc\": \"USD test\",\r\n        \"active\": true,\r\n        \"functional\": true\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/currency/update/10?pageNo=0&pageSize=2&dbFieldName=id&sortDirection=DESC",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"currency",
+										"update",
+										"10"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "2"
+										},
+										{
+											"key": "dbFieldName",
+											"value": "id"
+										},
+										{
+											"key": "sortDirection",
+											"value": "DESC"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Vat",
+					"item": [
+						{
+							"name": "Var Registration",
+							"item": [
+								{
+									"name": "List",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/vat-registration-type/all?page=0&size=500&sort=id&sortDirection=ASC",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"vat-registration-type",
+												"all"
+											],
+											"query": [
+												{
+													"key": "page",
+													"value": "0"
+												},
+												{
+													"key": "size",
+													"value": "500"
+												},
+												{
+													"key": "sort",
+													"value": "id"
+												},
+												{
+													"key": "sortDirection",
+													"value": "ASC"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Find One",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/vat-registration-type/find/1",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"vat-registration-type",
+												"find",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/vat-registration-type/add",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"vat-registration-type",
+												"add"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/vat-registration-type/update",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"vat-registration-type",
+												"update"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Vat Month",
+							"item": [
+								{
+									"name": "List",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/vat-month/all?pageNo=0&pageSize=2&dbFieldName=id&sortDirection=ASC",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"vat-month",
+												"all"
+											],
+											"query": [
+												{
+													"key": "pageNo",
+													"value": "0"
+												},
+												{
+													"key": "pageSize",
+													"value": "2"
+												},
+												{
+													"key": "dbFieldName",
+													"value": "id"
+												},
+												{
+													"key": "sortDirection",
+													"value": "ASC"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Find One",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/vat-month/find/2",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"vat-month",
+												"find",
+												"2"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n                \"id\": 1,\r\n                \"fyId\": 1,\r\n                \"fiscalYear\": \"2022-2023\",\r\n                \"fiscalYearBn\": \"2022-2023\",\r\n                \"vmInfo\": \"May-23\",\r\n                \"vmInfoBn\": \"May-23\",\r\n                \"seqNo\": 1.0,\r\n                \"fromDate\": \"2023-04-30T18:00:00.000+00:00\",\r\n                \"toDate\": \"2023-05-30T18:00:00.000+00:00\",\r\n                \"vmStatus\": \"1\",\r\n                \"active\": true,\r\n                \"createdAt\": \"2023-03-22T06:10:04.000+00:00\",\r\n                \"updatedAt\": \"2023-06-03T09:35:36.000+00:00\",\r\n                \"createdBy\": null,\r\n                \"updatedBy\": null\r\n            }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/vat-month/add",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"vat-month",
+												"add"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/vat-month/update",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"vat-month",
+												"update"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Vat payment methode",
+							"item": [
+								{
+									"name": "Get vat paymment methode",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/vat-pay-method/all",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"vat-pay-method",
+												"all"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get vat paymment methode By Id",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/vat-pay-method/find/1",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"vat-pay-method",
+												"find",
+												"1"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Add Vat payment methode",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n        \"id\": 1,\r\n        \"tranSubTypeId\": 1,\r\n        \r\n        \"vatPaymentMethodName\": \"Generaldd\",\r\n        \"vatPaymentMethodNameBn\": \"সাধারন\",\r\n        \"seqNo\": 2.0587,\r\n        \"active\": false,\r\n        \"createdAt\": \"2023-10-28T06:53:22.743+00:00\",\r\n        \"updatedAt\": \"2023-10-28T06:53:22.743+00:00\",\r\n        \"createdBy\": 1,\r\n        \"updatedBy\": null\r\n    }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/vat-pay-method/add",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"vat-pay-method",
+												"add"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "update Vat payment methode",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n        \"id\": 1,\r\n        \"vatPaymentMethodeName\": \"Generals\",\r\n        \"vatPaymentMethodeNameBn\": \"সাধারন\",\r\n        \"sequenceNumber\": 1.100000023841858,\r\n        \"status\": true,\r\n        \"createdAt\": \"2023-10-24T09:22:38.667+00:00\",\r\n        \"updatedAt\": \"2023-10-24T09:22:38.667+00:00\",\r\n        \"createdBy\": 1,\r\n        \"updatedBy\": 2\r\n    }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/vat-pay-methode/update",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"vat-pay-methode",
+												"update"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Rebate",
+							"item": [
+								{
+									"name": "vatRebateGetAll",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/vat-rebate-type/all",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"vat-rebate-type",
+												"all"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "searching",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/vat-rebate-type/all",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"vat-rebate-type",
+												"all"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "vatRebate type DropDown",
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "{{TOKEN}}",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/vat-rebate-type/all",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"vat-rebate-type",
+												"all"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "find vate rebate by Id",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/vat-rebate-type/find/1?pageNo=0&pageSize=1&dbFieldName=id&sortDirection=ASC",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"vat-rebate-type",
+												"find",
+												"1"
+											],
+											"query": [
+												{
+													"key": "pageNo",
+													"value": "0"
+												},
+												{
+													"key": "pageSize",
+													"value": "1"
+												},
+												{
+													"key": "dbFieldName",
+													"value": "id"
+												},
+												{
+													"key": "sortDirection",
+													"value": "ASC"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Insert Vate rebate Type",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n            \"id\": 2,\r\n            \"vatRebateName\": \"Non Rebate-able\",\r\n            \"vatRebateNameBn\": \"অ-রেয়াতযোগ্য\",\r\n            \"seqNo\": 1.078,\r\n           \"active\": false\r\n        }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/vat-rebate-type/add",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"vat-rebate-type",
+												"add"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update vate rebateType",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n            \"id\": 2,\r\n            \"vatRebateName\": \"Non Rebate-able\",\r\n            \"vatRebateNameBn\": \"অ-রেয়াতযোগ্য\",\r\n            \"seqNo\": 1.078,\r\n           \"active\": true\r\n        }",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/vat-rebate-type/update/50",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"vat-rebate-type",
+												"update",
+												"50"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "vatRegistration",
+							"item": [
+								{
+									"name": "getAll Item Cat Retail",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/item-cat-retail/all?pageNo=0&pageSize=2&dbFieldName=id&sortDirection=DESC",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"item-cat-retail",
+												"all"
+											],
+											"query": [
+												{
+													"key": "pageNo",
+													"value": "0"
+												},
+												{
+													"key": "pageSize",
+													"value": "2"
+												},
+												{
+													"key": "dbFieldName",
+													"value": "id"
+												},
+												{
+													"key": "sortDirection",
+													"value": "DESC"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Vat rate Type",
+							"item": [
+								{
+									"name": "Index",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/vat-rate-type/all",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"vat-rate-type",
+												"all"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Insert",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"vatRateTypeName\": \"Tetsing salt Than Std Rate test 2\",\r\n    \"vatRateTypeNameBn\": \"মানসম্মত রেটের চেয়ে অন্য test 2\",\r\n    \"seqNo\": 1,\r\n    \"active\": false\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/vat-rate-type/add",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"vat-rate-type",
+												"add"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"vatRateTypeName\": \"Tetsing salt Than Std Rate test 2\",\r\n    \"vatRateTypeNameBn\": \"মানসম্মত রেটের চেয়ে অন্য test 2\",\r\n    \"seqNo\": 2,\r\n    \"active\": false\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/vat-rate-type/update/32",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"vat-rate-type",
+												"update",
+												"32"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "vat rate rfeference",
+							"item": [
+								{
+									"name": "Index",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/vat-rate-reference/all?pageNo=0&pageSize=2&dbFieldName=id&sortDirection=DESC",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"vat-rate-reference",
+												"all"
+											],
+											"query": [
+												{
+													"key": "pageNo",
+													"value": "0"
+												},
+												{
+													"key": "pageSize",
+													"value": "2"
+												},
+												{
+													"key": "dbFieldName",
+													"value": "id"
+												},
+												{
+													"key": "sortDirection",
+													"value": "DESC"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Insert",
+									"request": {
+										"method": "POST",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"vatRateRefName\": \"Test Data hfhfhf\",\r\n    \"vatRateRefNameBn\": \"Test Data 3\",\r\n    \"sequenceNumber\": 1.9,\r\n    \"active\": false\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/vat-rate-reference/add",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"vat-rate-reference",
+												"add"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Update",
+									"request": {
+										"method": "PUT",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n    \"vatRateRefName\": \"Test Data hfhfhf\",\r\n    \"vatRateRefNameBn\": \"Test Data 3\",\r\n    \"sequenceNumber\": 1,\r\n    \"active\": false\r\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/vat-rate-reference/update/38",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"vat-rate-reference",
+												"update",
+												"38"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Fiscal Year",
+					"item": [
+						{
+							"name": "Drop Down List - T.Source Type",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/fiscal-year/drop-down",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"fiscal-year",
+										"drop-down"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "FiscalYearGetAll",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/fiscal-year/all?pageNo=0&pageSize=2&dbFieldName=id&sortDirection=DESC",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"fiscal-year",
+										"all"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "2"
+										},
+										{
+											"key": "dbFieldName",
+											"value": "id"
+										},
+										{
+											"key": "sortDirection",
+											"value": "DESC"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add Fiscal Year",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"fiscalYear\": \"2024-2025\",\r\n    \"fiscalYearBn\": \"2024-2025\",\r\n    \"sequenceNumber\": 3,\r\n    \"fromDate\": \"2024-06-30T18:00:00.000+00:00\",\r\n    \"toDate\": \"2025-06-29T18:00:00.000+00:00\",\r\n    \"fiscalStatus\": \"2\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/fiscal-year/add",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"fiscal-year",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Transaction Source Type",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "\r\n{\r\n    \"id\": 3,\r\n    \"fiscalYear\": \"2024-2025-\",\r\n    \"fiscalYearBn\": \"2024-2025-\",\r\n    \"sequenceNumber\": 3,\r\n    \"fromDate\": \"2024-06-30T18:00:00.000+00:00\",\r\n    \"toDate\": \"2025-06-29T18:00:00.000+00:00\",\r\n    \"fiscalStatus\": \"2\"\r\n}\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/fiscal-year/update",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"fiscal-year",
+										"update"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "UOM",
+					"item": [
+						{
+							"name": "Drop Down List - UOM",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/uom/all",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"uom",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UOM List",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/uom/all?pageNo=0&pageSize=2&dbFieldName=id&sortDirection=DESC",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"uom",
+										"all"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "2"
+										},
+										{
+											"key": "dbFieldName",
+											"value": "id"
+										},
+										{
+											"key": "sortDirection",
+											"value": "DESC"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Insert UOM",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n               \r\n                \"uomSetId\": 2,\r\n                \"uomSetName\": \"Pcs\",\r\n                \"uomSetDesc\": \"Pieces\",\r\n                \"uomSetLocalDesc\": \"Pieces\",\r\n                \"uomShortCode\": \"30 Pcs Box\",\r\n                \"uomDesc\": \"Pcs  dfgh --sdfa\",\r\n                \"uomLocalDesc\": \"Pcs\",\r\n                \"relativeFactor\": 30.0,\r\n                \"fractionAllow\": \"No\",\r\n                \"active\": false\r\n              \r\n            }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/uom/add",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"uom",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update UOM",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "\r\n{\r\n                \r\n                \"uomSetId\": 2,\r\n                \"uomSetName\": \"aaaa\",\r\n                \"uomShortCode\": \"30 Pcs Box\",\r\n                \"uomDesk\": \"Pcs  dfgh\",\r\n                \"uomLocalDesk\": \"Pcs\",\r\n                \"relativeFactor\": 30.0,\r\n                \"fractionAllow\": \"No\"\r\n            \r\n            }\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/uom/update/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"uom",
+										"update",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "UomSet",
+					"item": [
+						{
+							"name": "Drop Down List - UOM",
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": [
+										{
+											"key": "token",
+											"value": "{{TOKEN}}",
+											"type": "string"
+										}
+									]
+								},
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/uom/all",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"uom",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "UOM List",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/uom-set/all?pageNo=0&pageSize=2&dbFieldName=id&sortDirection=DESC",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"uom-set",
+										"all"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "2"
+										},
+										{
+											"key": "dbFieldName",
+											"value": "id"
+										},
+										{
+											"key": "sortDirection",
+											"value": "DESC"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Insert UOM",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"uomSetId\": 2,\r\n    \"uomShortCode\": \"30 Pcs Box test\",\r\n    \"uomDesc\": \"Pcs\",\r\n    \"localDesc\": \"Pcs\",\r\n    \"relativeFactor\": 30.0,\r\n    \"fractionAllow\": \"No\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/uom/add",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"uom",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update UOM",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "\r\n {\r\n                \r\n                \"uomSet\": \"KGs\",\r\n                \"uomSetDesc\": \"Kilog\",\r\n                \"localUomSetDesc\": \"Kilogramaa\"\r\n                \r\n               \r\n            }\r\n",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/uom-set/update/35",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"uom-set",
+										"update",
+										"35"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "New Folder",
+					"item": [
+						{
+							"name": "New Request",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/tran-acc-item/all",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"tran-acc-item",
+										"all"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Economic Activity",
+					"item": [
+						{
+							"name": "getEconomicActivity",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/economic-activity/all",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"economic-activity",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "getEconomicActivity ById",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/economic-activity/find/8",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"economic-activity",
+										"find",
+										"8"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add EconomicActivity",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {\r\n               \r\n                \"economicActivityName\": \"Contractual Manufacture\",\r\n                \"economicActivityNameBn\": \"চুক্তিভিত্তিক উত্পাদন\",\r\n                \"seqNo\": 1.6666666667,\r\n                \"createdAt\": \"2021-08-07T06:08:58.000+00:00\",\r\n                \"updatedAt\": null,\r\n                \"createdBy\": 0,\r\n                \"updatedBy\": null,\r\n                \"active\": false\r\n            }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/economic-activity/add",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"economic-activity",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "add EconomicActivity Copy",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {\r\n               \r\n                \"economicActivityName\": \"Contractual Manufacture\",\r\n                \"economicActivityNameBn\": \"চুক্তিভিত্তিক উত্পাদন\",\r\n                \"seqNo\": 1.6667,\r\n                \"createdAt\": \"2021-08-07T06:08:58.000+00:00\",\r\n                \"updatedAt\": 12,\r\n                \"createdBy\": 0,\r\n                \"updatedBy\": null,\r\n                \"active\": false\r\n            }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/economic-activity/update/45",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"economic-activity",
+										"update",
+										"45"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Item Cat Retail",
+					"item": [
+						{
+							"name": "Get All Item Cat",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/item-cat-retail/all?pageNo=0&pageSize=50&dbFieldName=id&sortDirection=ASC",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"item-cat-retail",
+										"all"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "50"
+										},
+										{
+											"key": "dbFieldName",
+											"value": "id"
+										},
+										{
+											"key": "sortDirection",
+											"value": "ASC"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get DropDown",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/item-cat-retail/drop-down?pageNo=0&pageSize=50&dbFieldName=id&sortDirection=ASC",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"item-cat-retail",
+										"drop-down"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "50"
+										},
+										{
+											"key": "dbFieldName",
+											"value": "id"
+										},
+										{
+											"key": "sortDirection",
+											"value": "ASC"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Item Cat By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/item-cat-retail/find/1?pageNo=0&pageSize=2&dbFieldName=id&sortDirection=ASC",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"item-cat-retail",
+										"find",
+										"1"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "2"
+										},
+										{
+											"key": "dbFieldName",
+											"value": "id"
+										},
+										{
+											"key": "sortDirection",
+											"value": "ASC"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add Item Cat Retail",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"id\": 1,\r\n        \"itemCatRetailName\": \"Commercially\",\r\n        \"itemCatRetailNameBn\": \"বাণিজ্যিক আমদানীকারক\",\r\n        \"seqNo\": 2.0,\r\n        \"active\": true,\r\n        \"createdAt\": \"2023-10-28T06:26:20.917+00:00\",\r\n        \"updatedAt\": \"2023-10-28T06:26:20.917+00:00\",\r\n        \"createdBy\": 1,\r\n        \"updatedBy\": 2\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/item-cat-retail/add",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"item-cat-retail",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update Item Cat Retail",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"id\": 1,\r\n        \"itemCatRetailName\": \"Commercially\",\r\n        \"itemCatRetailNameBn\": \"বাণিজ্যিক আমদানীকারক\",\r\n        \"seqNo\": 2.022,\r\n        \"active\": true,\r\n        \"createdAt\": \"2023-10-28T06:26:20.917+00:00\",\r\n        \"updatedAt\": \"2023-10-28T06:26:20.917+00:00\",\r\n        \"createdBy\": 1,\r\n        \"updatedBy\": 2\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/item-cat-retail/update/6",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"item-cat-retail",
+										"update",
+										"6"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Issue Maste",
+					"item": [
+						{
+							"name": "Get sp drop down",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/api/execute-stored-procedure",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"api",
+										"execute-stored-procedure"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get Sp Index",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/sp/all?prodTypeId=1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"sp",
+										"all"
+									],
+									"query": [
+										{
+											"key": "prodTypeId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "TransAccount Item Info",
+					"item": [
+						{
+							"name": "Get All TransAccount Item",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/tran-acc-item/all?pageNo=0&pageSize=50&dbFieldName=id&sortDirection=ASC",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"tran-acc-item",
+										"all"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "50"
+										},
+										{
+											"key": "dbFieldName",
+											"value": "id"
+										},
+										{
+											"key": "sortDirection",
+											"value": "ASC"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All TransAccount Item By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/tran-acc-item/find/1?pageNo=0&pageSize=50&dbFieldName=id&sortDirection=ASC",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"tran-acc-item",
+										"find",
+										"1"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "50"
+										},
+										{
+											"key": "dbFieldName",
+											"value": "id"
+										},
+										{
+											"key": "sortDirection",
+											"value": "ASC"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Insert Tran acct Item info",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \r\n        \"tcAccountItemName\": \"aaa\",\r\n        \"tcAccountItemNameBn\": \"বর্তমান  করমেয়াদে পরিশোধিত মোট মূসক\",\r\n        \"seqNo\": 1.100000023841858\r\n       \r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/tran-acc-item/add?pageNo=0&pageSize=50&dbFieldName=id&sortDirection=ASC",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"tran-acc-item",
+										"add"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "50"
+										},
+										{
+											"key": "dbFieldName",
+											"value": "id"
+										},
+										{
+											"key": "sortDirection",
+											"value": "ASC"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Commercial",
+					"item": [
+						{
+							"name": "Vds seller",
+							"item": [
+								{
+									"name": "get index",
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{BASE_URL}}/setting/api/v1/test/all",
+											"host": [
+												"{{BASE_URL}}"
+											],
+											"path": [
+												"setting",
+												"api",
+												"v1",
+												"test",
+												"all"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						}
+					]
+				},
+				{
+					"name": "Inventory",
+					"item": [
+						{
+							"name": "Get All",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/inventory-method/all",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"inventory-method",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Copy",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"invMethodName\": \"New Inventory Method Name\",\r\n    \"invMethodNameBn\": \"New Inventory Method Name\",\r\n    \"seqNo\": 2.2,\r\n    \"active\": true\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/inventory-method/add",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"inventory-method",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get All Copy 2",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"invMethodName\": \"New Inventory Method Name\",\r\n    \"invMethodNameBn\": \"New Inventory Method Name\",\r\n    \"seqNo\": 2.1,\r\n    \"active\": false\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/inventory-method/update/15",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"inventory-method",
+										"update",
+										"15"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Bank Account Type",
+					"item": [
+						{
+							"name": "Get",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/bank-account-type/all",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"bank-account-type",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/bank-account-type/find/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"bank-account-type",
+										"find",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Insert",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {\r\n        \"id\": 1,\r\n        \"bankAccountTypeName\": \"Saving Account\",\r\n        \"bankAccountTypeNameBn\": \"সেভিং একাউন্ট\",\r\n        \"seqNo\": 1.0,\r\n        \"active\": true,\r\n        \"createdAt\": \"2021-09-11T00:28:12.000+00:00\",\r\n        \"updatedAt\": \"2021-10-19T06:26:33.000+00:00\",\r\n        \"createdBy\": 1,\r\n        \"updatedBy\": 1\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/bank-account-type/add",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"bank-account-type",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {\r\n        \"id\": 1,\r\n        \"bankAccountTypeName\": \"Saving Account\",\r\n        \"bankAccountTypeNameBn\": \"সেভিং একাউন্ট\",\r\n        \"seqNo\": 1.0,\r\n        \"active\": false,\r\n        \"createdAt\": \"2021-09-11T00:28:12.000+00:00\",\r\n        \"updatedAt\": \"2021-10-19T06:26:33.000+00:00\",\r\n        \"createdBy\": 1,\r\n        \"updatedBy\": 1\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/bank-account-type/update/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"bank-account-type",
+										"update",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "2n2 Credit not for",
+					"item": [
+						{
+							"name": "Get",
+							"request": {
+								"method": "GET",
+								"header": []
+							},
+							"response": []
+						},
+						{
+							"name": "Get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/credit-note-for/find/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"credit-note-for",
+										"find",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Insert",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"id\": 1,\r\n        \"name\": \"Wrong Data Entry\",\r\n        \"nameBn\": \"ভুল ডেটা এন্ট্রি\",\r\n        \"seqNo\": 1.0,\r\n        \"active\": true,\r\n        \"createdAt\": \"2021-10-14T07:16:07.000+00:00\",\r\n        \"updatedAt\": null,\r\n        \"createdBy\": 1,\r\n        \"updatedBy\": 1\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/credit-note-for/add",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"credit-note-for",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"id\": 1,\r\n        \"name\": \"Wrong Data Entry\",\r\n        \"nameBn\": \"ভুল ডেটা এন্ট্রি\",\r\n        \"seqNo\": 1.023534,\r\n        \"active\": true,\r\n        \"createdAt\": \"2021-10-14T07:16:07.000+00:00\",\r\n        \"updatedAt\": null,\r\n        \"createdBy\": 1,\r\n        \"updatedBy\": 1\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/credit-note-for/update/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"credit-note-for",
+										"update",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "2n1 Debit not for Copy",
+					"item": [
+						{
+							"name": "Get",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/debit-note-for/all",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"debit-note-for",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/debit-note-for/find/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"debit-note-for",
+										"find",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "insert",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"id\": 1,\r\n        \"name\": \"WRONG DATA ENTRY\",\r\n        \"nameBn\": \"ভুল ডেটা এন্ট্রি\",\r\n        \"seqNo\": 1.0,\r\n        \"active\": true,\r\n        \"createdAt\": \"2021-10-14T04:19:30.000+00:00\",\r\n        \"updatedAt\": \"2021-11-24T23:17:11.000+00:00\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/debit-note-for/add",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"debit-note-for",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"id\": 1,\r\n        \"name\": \"WRONG DATA ENTRY\",\r\n        \"nameBn\": \"ভুল ডেটা এন্ট্রি\",\r\n        \"seqNo\": 1.03464,\r\n        \"active\": true,\r\n        \"createdAt\": \"2021-10-14T04:19:30.000+00:00\",\r\n        \"updatedAt\": \"2021-11-24T23:17:11.000+00:00\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/debit-note-for/update/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"debit-note-for",
+										"update",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "2L3 pay ment mode",
+					"item": [
+						{
+							"name": "Get",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/pay-mode/all",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"pay-mode",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/pay-mode/find/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"pay-mode",
+										"find",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "insert",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"id\": 1,\r\n        \"name\": \"WRONG DATA ENTRY\",\r\n        \"nameBn\": \"ভুল ডেটা এন্ট্রি\",\r\n        \"seqNo\": 1.0,\r\n        \"active\": true,\r\n        \"createdAt\": \"2021-10-14T04:19:30.000+00:00\",\r\n        \"updatedAt\": \"2021-11-24T23:17:11.000+00:00\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/debit-note-for/add",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"debit-note-for",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"id\": 1,\r\n        \"name\": \"WRONG DATA ENTRY\",\r\n        \"nameBn\": \"ভুল ডেটা এন্ট্রি\",\r\n        \"seqNo\": 1.03464,\r\n        \"active\": true,\r\n        \"createdAt\": \"2021-10-14T04:19:30.000+00:00\",\r\n        \"updatedAt\": \"2021-11-24T23:17:11.000+00:00\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/debit-note-for/update/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"debit-note-for",
+										"update",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "2R1 Address Type",
+					"item": [
+						{
+							"name": "Get",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/address-type/all",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"address-type",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/address-type/find/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"address-type",
+										"find",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "insert",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"id\": 1,\r\n        \"name\": \"880\",\r\n        \"nameBn\": \"৮৮০\",\r\n        \"seqNo\": 1.11235346346346346346346457456,\r\n        \"active\": true,\r\n        \"createdAt\": \"2021-12-13T10:18:19.000+00:00\",\r\n        \"updatedAt\": \"2023-02-18T10:43:27.000+00:00\",\r\n        \"createdBy\": 72,\r\n        \"updatedBy\": 3\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/address-type/add",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"address-type",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"id\": 1,\r\n        \"name\": \"WRONG DATA ENTRY\",\r\n        \"nameBn\": \"ভুল ডেটা এন্ট্রি\",\r\n        \"seqNo\": 1.03464,\r\n        \"active\": true,\r\n        \"createdAt\": \"2021-10-14T04:19:30.000+00:00\",\r\n        \"updatedAt\": \"2021-11-24T23:17:11.000+00:00\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/debit-note-for/update/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"debit-note-for",
+										"update",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Commisionerate",
+					"item": [
+						{
+							"name": "Get",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/address-type/all",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"address-type",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/address-type/find/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"address-type",
+										"find",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "insert",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"id\": 1,\r\n        \"name\": \"880\",\r\n        \"nameBn\": \"৮৮০\",\r\n        \"seqNo\": 1.11235346346346346346346457456,\r\n        \"active\": true,\r\n        \"createdAt\": \"2021-12-13T10:18:19.000+00:00\",\r\n        \"updatedAt\": \"2023-02-18T10:43:27.000+00:00\",\r\n        \"createdBy\": 72,\r\n        \"updatedBy\": 3\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/address-type/add",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"address-type",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"id\": 1,\r\n        \"name\": \"WRONG DATA ENTRY\",\r\n        \"nameBn\": \"ভুল ডেটা এন্ট্রি\",\r\n        \"seqNo\": 1.03464,\r\n        \"active\": true,\r\n        \"createdAt\": \"2021-10-14T04:19:30.000+00:00\",\r\n        \"updatedAt\": \"2021-11-24T23:17:11.000+00:00\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/debit-note-for/update/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"debit-note-for",
+										"update",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "procedure",
+					"item": [
+						{
+							"name": "Get",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/address-type/all",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"address-type",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/address-type/find/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"address-type",
+										"find",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "insert",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"id\": 1,\r\n        \"name\": \"880\",\r\n        \"nameBn\": \"৮৮০\",\r\n        \"seqNo\": 1.11235346346346346346346457456,\r\n        \"active\": true,\r\n        \"createdAt\": \"2021-12-13T10:18:19.000+00:00\",\r\n        \"updatedAt\": \"2023-02-18T10:43:27.000+00:00\",\r\n        \"createdBy\": 72,\r\n        \"updatedBy\": 3\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/address-type/add",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"address-type",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"id\": 1,\r\n        \"name\": \"WRONG DATA ENTRY\",\r\n        \"nameBn\": \"ভুল ডেটা এন্ট্রি\",\r\n        \"seqNo\": 1.03464,\r\n        \"active\": true,\r\n        \"createdAt\": \"2021-10-14T04:19:30.000+00:00\",\r\n        \"updatedAt\": \"2021-11-24T23:17:11.000+00:00\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/debit-note-for/update/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"debit-note-for",
+										"update",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "3A Company Info",
+					"item": [
+						{
+							"name": "Get",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/company/all?pageNo=0&pageSize=5&sortDirection=ASC&filter=khajna",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"company",
+										"all"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "5"
+										},
+										{
+											"key": "sortDirection",
+											"value": "ASC"
+										},
+										{
+											"key": "filter",
+											"value": "khajna"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get DropDown",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/company/drop-down",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"company",
+										"drop-down"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/company/find?companyId=1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"company",
+										"find"
+									],
+									"query": [
+										{
+											"key": "companyId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "insert",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"id\": 1,\r\n        \"name\": \"880\",\r\n        \"nameBn\": \"৮৮০\",\r\n        \"seqNo\": 1.11235346346346346346346457456,\r\n        \"active\": true,\r\n        \"createdAt\": \"2021-12-13T10:18:19.000+00:00\",\r\n        \"updatedAt\": \"2023-02-18T10:43:27.000+00:00\",\r\n        \"createdBy\": 72,\r\n        \"updatedBy\": 3\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/address-type/add",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"address-type",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"id\": 1,\r\n        \"name\": \"WRONG DATA ENTRY\",\r\n        \"nameBn\": \"ভুল ডেটা এন্ট্রি\",\r\n        \"seqNo\": 1.03464,\r\n        \"active\": true,\r\n        \"createdAt\": \"2021-10-14T04:19:30.000+00:00\",\r\n        \"updatedAt\": \"2021-11-24T23:17:11.000+00:00\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/debit-note-for/update/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"debit-note-for",
+										"update",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "3B Company Brunch",
+					"item": [
+						{
+							"name": "Get",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/company-branch/all-by-sp?sortOrder=ASC&sortField=id",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"company-branch",
+										"all-by-sp"
+									],
+									"query": [
+										{
+											"key": "sortOrder",
+											"value": "ASC"
+										},
+										{
+											"key": "sortField",
+											"value": "id"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get without sp",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/company-branch/all-by-sp?sortOrder=ASC&sortField=id",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"company-branch",
+										"all-by-sp"
+									],
+									"query": [
+										{
+											"key": "sortOrder",
+											"value": "ASC"
+										},
+										{
+											"key": "sortField",
+											"value": "id"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get DropDown",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/company-branch/drop-down-by-sp",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"company-branch",
+										"drop-down-by-sp"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/company-branch/find-by-sp?id=21",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"company-branch",
+										"find-by-sp"
+									],
+									"query": [
+										{
+											"key": "id",
+											"value": "21"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/company-branch/find/100",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"company-branch",
+										"find",
+										"100"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "insert",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"id\": 1,\r\n        \"name\": \"880\",\r\n        \"nameBn\": \"৮৮০\",\r\n        \"seqNo\": 1.11235346346346346346346457456,\r\n        \"active\": true,\r\n        \"createdAt\": \"2021-12-13T10:18:19.000+00:00\",\r\n        \"updatedAt\": \"2023-02-18T10:43:27.000+00:00\",\r\n        \"createdBy\": 72,\r\n        \"updatedBy\": 3\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/address-type/add",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"address-type",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"id\": 1,\r\n        \"name\": \"WRONG DATA ENTRY\",\r\n        \"nameBn\": \"ভুল ডেটা এন্ট্রি\",\r\n        \"seqNo\": 1.03464,\r\n        \"active\": true,\r\n        \"createdAt\": \"2021-10-14T04:19:30.000+00:00\",\r\n        \"updatedAt\": \"2021-11-24T23:17:11.000+00:00\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/debit-note-for/update/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"debit-note-for",
+										"update",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Customer",
+					"item": [
+						{
+							"name": "Get",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/address-type/all",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"address-type",
+										"all"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/customer/find/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"customer",
+										"find",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "insert",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"id\": 1,\r\n        \"name\": \"880\",\r\n        \"nameBn\": \"৮৮০\",\r\n        \"seqNo\": 1.11235346346346346346346457456,\r\n        \"active\": true,\r\n        \"createdAt\": \"2021-12-13T10:18:19.000+00:00\",\r\n        \"updatedAt\": \"2023-02-18T10:43:27.000+00:00\",\r\n        \"createdBy\": 72,\r\n        \"updatedBy\": 3\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/customer/add",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"customer",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n        \"id\": 1,\r\n        \"name\": \"WRONG DATA ENTRY\",\r\n        \"nameBn\": \"ভুল ডেটা এন্ট্রি\",\r\n        \"seqNo\": 1.03464,\r\n        \"active\": true,\r\n        \"createdAt\": \"2021-10-14T04:19:30.000+00:00\",\r\n        \"updatedAt\": \"2021-11-24T23:17:11.000+00:00\",\r\n        \"createdBy\": null,\r\n        \"updatedBy\": null\r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/debit-note-for/update/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"debit-note-for",
+										"update",
+										"1"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Test",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{TOKEN}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/setting/api/v1/test/",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"setting",
+								"api",
+								"v1",
+								"test",
+								""
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Branch Wise Store",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/setting/api/v1/transType/branchWiseStore?pageNo=0&pageSize=0",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"setting",
+								"api",
+								"v1",
+								"transType",
+								"branchWiseStore"
+							],
+							"query": [
+								{
+									"key": "pageNo",
+									"value": "0"
+								},
+								{
+									"key": "pageSize",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Commercial",
+			"item": [
+				{
+					"name": "Vds Seller Index",
+					"item": [
+						{
+							"name": "Get Index By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/seller/find/10146",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"seller",
+										"find",
+										"10146"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get All",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/seller/all?sortDirection=DESC&DbFieldName=id&pageNo=1&pageSize=100",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"seller",
+										"all"
+									],
+									"query": [
+										{
+											"key": "sortDirection",
+											"value": "DESC"
+										},
+										{
+											"key": "DbFieldName",
+											"value": "id"
+										},
+										{
+											"key": "pageNo",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "100"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get All without Sp",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/seller/alls",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"seller",
+										"alls"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Insert",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n   \"storeId\": 27,\r\n    \"vmId\": 1,\r\n    \"customerId\": 605,\r\n    \"branchId\": 1,\r\n    \"certificateNo\": \"CERTt123\",\r\n    \"publishedDate\": \"2023-11-21\",\r\n    \"transactionDate\": \"2023-11-20\",\r\n    \"totalIssueAmount\": 1000.00,\r\n    \"totalVatAmount\": 1.00,\r\n    \"totalDeductedVatAmount\": 5.00,\r\n    \"commisionerateId\": 1,\r\n    \"tcAcctCodeId\": 1,\r\n    \"accountCode\": \"ACC456\",\r\n    \"remarks\": \"This is \",\r\n    \"vdsSellerChildRequestDtos\": [\r\n        {\r\n            \"issueMasterId\": 86497,\r\n            \"totalAmountLocalCurr\": 1.00,\r\n            \"vatAmount\": 1.00,\r\n            \"deductedVatAmount\": 5.00\r\n        }\r\n      \r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/seller/add",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"seller",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get DropDown",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/seller/drop-down",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"seller",
+										"drop-down"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get DropDown Child",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/seller/drop-down-child",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"seller",
+										"drop-down-child"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get drodown seller with filter",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/customer/find-issued-customer/616",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"customer",
+										"find-issued-customer",
+										"616"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "vds purchaser",
+					"item": [
+						{
+							"name": "get all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/purchase/all?pageNo=1&pageSize=10&sortDirection=DESC&dbFieldName=id&filter=ACI,24\n",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"purchase",
+										"all"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "10"
+										},
+										{
+											"key": "sortDirection",
+											"value": "DESC"
+										},
+										{
+											"key": "filter",
+											"value": "24",
+											"disabled": true
+										},
+										{
+											"key": "",
+											"value": "",
+											"disabled": true
+										},
+										{
+											"key": "dbFieldName",
+											"value": "id"
+										},
+										{
+											"key": "filter",
+											"value": "ACI,24\n"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get drop-down",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/purchase/drop-down",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"purchase",
+										"drop-down"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get drop-down For Child",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/purchase/challan-drop-down/40",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"purchase",
+										"challan-drop-down",
+										"40"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get vat month",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/purchase/challan-drop-down/39",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"purchase",
+										"challan-drop-down",
+										"39"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/purchase/find/10207",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"purchase",
+										"find",
+										"10207"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Insert",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"transactionDate\": \"2023-11-20\",\r\n    \"vmId\": 1,\r\n    \"supplierId\": 39,\r\n    \"publishedDate\": \"2023-11-21\",\r\n    \"totalPurchaseAmount\": 1000.00,\r\n    \"totalVatAmount\": 150.00,\r\n    \"storeId\": 8,\r\n    \"totalDeductedVatAmount\": 50.00,\r\n    \"remarks\": \"This is a sample remark.\",\r\n    \"vdsPurchaseChild6D2RequestDtos\": [\r\n        {\r\n            \"receiveMasterId\": 10773,\r\n            \"receiveAmount\": 1000.00,\r\n            \"vatAmount\": 150.00,\r\n            \"deductedVatAmount\": 50.00\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/purchase/add",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"purchase",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Insert with sp",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{   \"storeId\": 27,\r\n    \"transactionDate\": \"2023-11-20\",\r\n    \"vmId\": 1,\r\n    \"supplierId\": 39,\r\n    \"publishedDate\": \"2023-11-21\",\r\n    \"totalPurchaseAmount\": 90.999999,\r\n    \"totalVatAmount\": 9990.345347756,\r\n    \"totalVdsPaidAmount\": 200.46445,\r\n    \"totalDeductedVatAmount\": 400.34,\r\n    \"remarks\": \"This is a sample remark.\",\r\n    \"vdsPurchaseChild6D2RequestDtos\": [\r\n        {\r\n            \"receiveMasterId\": 10573,\r\n            \"receiveAmount\": 34635.37473,\r\n            \"vatAmount\": 3465.345,\r\n            \"deductedVatAmount\": 3465745.03440\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/purchase/vdsPurchase",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"purchase",
+										"vdsPurchase"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Vds Payment",
+					"item": [
+						{
+							"name": "get all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/payment/all?pageNo=1&pageSize=100&sortDirection=ASC&dbFieldName=id",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"payment",
+										"all"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "100"
+										},
+										{
+											"key": "sortDirection",
+											"value": "ASC"
+										},
+										{
+											"key": "dbFieldName",
+											"value": "id"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "insert",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{   \"storeId\": 29,\r\n    \"bankId\": 1,\r\n    \"bankBrunchId\": 1,\r\n    \"transactionDate\": \"2023-10-11T18:00:00.000+00:00\",\r\n    \"vatMonthId\": 1,\r\n    \"treasuryChallanNo\": \"test\",\r\n    \"fiscalYearId\": 1,\r\n    \"treasuryChallanDate\": \"2023-10-11T18:00:00.000+00:00\",\r\n    \"commissionerateId\": 1,\r\n    \"vatCodeId\": 1,\r\n    \"tcAcctItemId\": 1,\r\n    \"treasuryAmount\": 1.99,\r\n    \"vdsPayment6F1MasterRequestDtos\": [\r\n        {\r\n            \"totalPayableVatAmt\": 1000.00,\r\n            \"totalFineAmt\": 150.00,\r\n            \"totalPayableAmt\": 50.00,\r\n            \"remarks\": \"testing\",\r\n            \"vdsPayment6F2ChildRequestDtos\": [\r\n                {\r\n                    \"vdsPurchasesMasterId\":60,\r\n                    \"payableVatAmt\": 150.00,\r\n                    \"fineAmt\": 50.00,\r\n                    \"payableAmt\": 50.00\r\n                }\r\n            ]\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/payment/add",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"payment",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "insert Child",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{           \"branchId\": 95,\r\n            \"bankId\": 1,\r\n            \"bankBrunchId\": 1,\r\n             \"transactionDate\": \"2023-10-11T18:00:00.000+00:00\",\r\n           \"vatMonthId\": 1,\r\n            \"treasuryChallanNo\": \"test\",\r\n             \"fiscalYearId\": 1,\r\n            \"treasuryChallanDate\": \"2023-10-11T18:00:00.000+00:00\",\r\n            \"commissionerateId\": 1,\r\n            \"vatCodeId\": 1,\r\n            \"tcAcctItemId\": 1,\r\n         \r\n   \r\n    \"vdsPayment6F1MasterRequestDtos\": [\r\n        {\r\n            \r\n            \"totalPayableVatAmt\": 1000.00,\r\n            \"totalFineAmt\": 150.00,\r\n            \"totalPayableAmt\": 50.00,\r\n            \"remarks\": \"testing\",\r\n\r\n              \"vdsPayment6F2ChildRequestDtos\": [\r\n        {\r\n            \r\n            \"vdsPurchaseMasterId\": 8,\r\n            \"payableVatAmt\": 150.00,\r\n            \"fineAmt\": 50.00,\r\n            \"payableAmt\": 50.00\r\n        }\r\n       \r\n    ]\r\n        }\r\n       \r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/payment/add",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"payment",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get payment Dropdown",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/payment/drop-down",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"payment",
+										"drop-down"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get Dropdown For Child",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/payment/drop-down-child",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"payment",
+										"drop-down-child"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/payment/find/12",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"payment",
+										"find",
+										"12"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Vds Treasury challan",
+					"item": [
+						{
+							"name": "get all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/treasury/all?pageNo=1&pageSize=100&sortDirection=ASC&dbFieldName=id",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"treasury",
+										"all"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "100"
+										},
+										{
+											"key": "sortDirection",
+											"value": "ASC"
+										},
+										{
+											"key": "dbFieldName",
+											"value": "id"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get dropdown",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/treasury/drop-down",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"treasury",
+										"drop-down"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get Bank Drop-down",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/company-branch/drop-down",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"company-branch",
+										"drop-down"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get BankChild Drop-down",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/setting/api/v1/company-branch/drop-down",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"setting",
+										"api",
+										"v1",
+										"company-branch",
+										"drop-down"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/treasury/find/10354",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"treasury",
+										"find",
+										"10354"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get By Id without sp",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/treasury/get/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"treasury",
+										"get",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "insert",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {  \"storeId\": 8,\r\n                \"transactionDate\": \"2023-10-11T18:00:00.000+00:00\",\r\n                \"treasuryChallanNo\": \"test\",\r\n                \"fiscalYearId\": 1,\r\n                \"treasuryChallanDate\": \"2023-10-11T18:00:00.000+00:00\",\r\n                \"vatMonthId\": 1,\r\n                \"branchId\": 95,\r\n                \"bankId\": 1,\r\n                \"bankName\": \"The City Bank Ltd.\",\r\n                \"bankBrunchId\": 1,\r\n                \"bankBranchName\": \"Moghbazar\",\r\n                \"commissionerateId\": 1,\r\n                \"nameOfCommissionerate\": \"Customs Excise & VAT Commmissionerate Khulna\",\r\n                \"vatCodeId\": 1,\r\n                \"vatCode\": null,\r\n                \"vatCodeDetails\": \"0301\",\r\n                \"tcAcctItemId\": 2,\r\n                \"tcAmount\": 1.600,\r\n                \"remark\": \"test\"\r\n               \r\n            }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/treasury/add",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"treasury",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "insert With Sp",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {              \"branchId\": 95,\r\n                \"bankId\": 1,               \r\n                \"bankBranchId\": 1,\r\n                \"transactionDate\": \"2023-10-11T18:00:00.000+00:00\",                \r\n                \"fiscalYearId\": 1,\r\n                \"vatMonthId\": 1,\r\n                \"treasuryChallanNo\": \"ttt\",\r\n                \"treasuryChallanDate\": \"2023-10-11T18:00:00.000+00:00\",\r\n                \"commissionerateId\": 1,                                                            \r\n                \"nameOfCommissionerate\": \"Customs Excise & VAT Commmissionerate Khulna\",\r\n                \"vatCodeId\": 1,\r\n                \"tcAcctItemId\": 1,                             \r\n                \"tcAmount\": 1.600,\r\n                \"remark\": \"test\"\r\n               \r\n            }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/treasury/insert-treasury-with-sp",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"treasury",
+										"insert-treasury-with-sp"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Vds Due Penalty",
+					"item": [
+						{
+							"name": "get all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/due-penalty/all?pageNo=1&pageSize=52&sortDirection=DESC&dbFieldName=id",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"due-penalty",
+										"all"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "52"
+										},
+										{
+											"key": "sortDirection",
+											"value": "DESC"
+										},
+										{
+											"key": "dbFieldName",
+											"value": "id"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get Vat month",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/due-penalty/vat-month?selectedDate=2023-05-25T12:00:00",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"due-penalty",
+										"vat-month"
+									],
+									"query": [
+										{
+											"key": "selectedDate",
+											"value": "2023-05-25T12:00:00"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all without sp",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/due-penalty/list",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"due-penalty",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": " {\r\n                \r\n                \"storeId\": 27,\r\n                \"transactionDate\": \"2023-05-10T18:00:00.000+00:00\",              \r\n                \"vatMonthId\": 1,\r\n               \"penalty\": 2.2,\r\n                \"intOnUnpaidVat\": 4578.24,           \r\n                \"penaltyAmount\": 2.2,\r\n                \"payableExciseDuty\": 2.2,\r\n                \"payableDevSurcharge\": 2.2,\r\n                \"payableIctDevSurcharge\": 2.2,\r\n                \"payableHealthCareSurcharge\": 2.2,\r\n                \"payableEnvProtSurcharge\": 2.2,\r\n                \"monthlyProcessStatus\": 1,\r\n                \"remarks\": \"test2\"\r\n               \r\n            }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/due-penalty/add",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"due-penalty",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get drop down",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/due-penalty/drop-down",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"due-penalty",
+										"drop-down"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/due-penalty/find/2",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"due-penalty",
+										"find",
+										"2"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Vds Last Month",
+					"item": [
+						{
+							"name": "get all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/last-month-closing/all?pageNo=1&pageSize=100&sortDirection=ASC&dbFieldName=id",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"last-month-closing",
+										"all"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "100"
+										},
+										{
+											"key": "sortDirection",
+											"value": "ASC"
+										},
+										{
+											"key": "dbFieldName",
+											"value": "id"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get all withoutSp",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/last-month-closing/list?pageNo=0&pageSize=50&dbFieldName=id&sortDirection=DESC",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"last-month-closing",
+										"list"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "0"
+										},
+										{
+											"key": "pageSize",
+											"value": "50"
+										},
+										{
+											"key": "dbFieldName",
+											"value": "id"
+										},
+										{
+											"key": "sortDirection",
+											"value": "DESC"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get drop down",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/last-month-closing/drop-down",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"last-month-closing",
+										"drop-down"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/last-month-closing/find/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"last-month-closing",
+										"find",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get By Id without sp",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/last-month-closing/get/1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"last-month-closing",
+										"get",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get vmInfo",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "",
+										"value": "",
+										"type": "text",
+										"disabled": true
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "text"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/last-month-closing/vat-month?selectedDate=2023-05-25T12:00:00",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"last-month-closing",
+										"vat-month"
+									],
+									"query": [
+										{
+											"key": "selectedDate",
+											"value": "2023-05-25T12:00:00"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "insert",
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "selectedDate",
+										"value": "2023-11-25T12:00:00",
+										"type": "text"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\"storeId\": 8,\r\n         \"transactionDate\": \"2023-05-10T18:00:00.000+00:00\",\r\n        \"vatMonthId\": 1,\r\n        \r\n        \"lastMonthClosingBalanceVat\": 1.5,\r\n        \"lastMonthClosingBalanceSd\": 1.5\r\n        \r\n        \r\n    }",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/last-month-closing/add",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"last-month-closing",
+										"add"
+									],
+									"query": [
+										{
+											"key": "",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Vds Other Adjustment",
+					"item": [
+						{
+							"name": "get all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/other-adjust/all?pageNo=1&pageSize=100&sortDirection=ASC&dbFieldName=id",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"other-adjust",
+										"all"
+									],
+									"query": [
+										{
+											"key": "pageNo",
+											"value": "1"
+										},
+										{
+											"key": "pageSize",
+											"value": "100"
+										},
+										{
+											"key": "sortDirection",
+											"value": "ASC"
+										},
+										{
+											"key": "dbFieldName",
+											"value": "id"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get drop down",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/other-adjust/drop-down",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"other-adjust",
+										"drop-down"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get drop down Child",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/other-adjust/drop-down-child",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"other-adjust",
+										"drop-down-child"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/other-adjust/find/5",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"other-adjust",
+										"find",
+										"5"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Add",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n     \"storeId\": 8,\r\n     \"transactionDate\": \"2023-11-20\",\r\n      \"vmId\": 1,\r\n    \"adjustmentId\": 1,\r\n    \"certificateNo\": \"CERTt123\",\r\n    \"publishedDate\": \"2023-11-21\",\r\n    \"totalBilAmount\": 1000.00,\r\n    \"totalVatAmount\": 150.00,\r\n    \"totalAdjustableAmount\": 50.00,\r\n     \"remark\": \"This is a sample remark.\",\r\n   \r\n    \"vdsOtherChildRequestDtos\": [\r\n        {\r\n            \r\n            \"otherAdjustId\": 2,\r\n            \"billAmount\": 150.00,\r\n            \"vatAmount\": 50.00,\r\n             \"vatAdjustableAmount\": 50.00\r\n        }\r\n       \r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/other-adjust/add",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"other-adjust",
+										"add"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Test",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/commercial/api/v1/test/",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"commercial",
+								"api",
+								"v1",
+								"test",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Inventory",
+			"item": [
+				{
+					"name": "Local Sell",
+					"item": [
+						{
+							"name": "Get Index By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/seller/find?vdsSellerMasterId=0",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"seller",
+										"find"
+									],
+									"query": [
+										{
+											"key": "vdsSellerMasterId",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get All",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/inventory/api/v1/local-sells/list",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"inventory",
+										"api",
+										"v1",
+										"local-sells",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get All without Sp",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/seller/alls",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"seller",
+										"alls"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Insert",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"branchId\": 1,\r\n    \"vmId\": 1,\r\n    \"customerId\": 1,\r\n    \"certificateNo\": \"CERT123\",\r\n    \"publishedDate\": \"2023-11-21\",\r\n    \"transactionDate\": \"2023-11-20\",\r\n    \"totalIssueAmount\": 1000.00,\r\n    \"totalVatAmount\": 150.00,\r\n    \"totalDeductedVatAmount\": 50.00,\r\n    \"commisionerateId\": 1,\r\n    \"tcAcctCodeId\": 1,\r\n    \"accountCode\": \"ACC456\",\r\n    \"remarks\": \"This is a sample remark.\",\r\n    \"vdsSellerChildRequestDtos\": [\r\n        {\r\n            \"issueMasterId\": 1,\r\n            \"totalAmountLocalCurr\": 1000.00,\r\n            \"vatAmount\": 150.00,\r\n            \"deductedVatAmount\": 50.00\r\n        },\r\n        {\r\n            \"issueMasterId\": 1,\r\n            \"totalAmountLocalCurr\": 1000.00,\r\n            \"vatAmount\": 150.00,\r\n            \"deductedVatAmount\": 50.00\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/seller/add",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"seller",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get DropDown",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/seller/drop-down",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"seller",
+										"drop-down"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get DropDown Child",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/seller/drop-down-child",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"seller",
+										"drop-down-child"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "vds purchaser",
+					"item": [
+						{
+							"name": "get all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/purchase/list?sortOrder=ASC&sortField=id",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"purchase",
+										"list"
+									],
+									"query": [
+										{
+											"key": "sortOrder",
+											"value": "ASC"
+										},
+										{
+											"key": "sortField",
+											"value": "id"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get drop-down",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/seller/drop-down",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"seller",
+										"drop-down"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/purchase/find/6",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"purchase",
+										"find",
+										"6"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Vds Payment",
+					"item": [
+						{
+							"name": "get all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/payment/list?sortOrder=DESC&sortField=vdsPaymentMasterId",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"payment",
+										"list"
+									],
+									"query": [
+										{
+											"key": "sortOrder",
+											"value": "DESC"
+										},
+										{
+											"key": "sortField",
+											"value": "vdsPaymentMasterId"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get payment Dropdown",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/payment/drop-down",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"payment",
+										"drop-down"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/payment/find?vdsPaymentMasterId=12",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"payment",
+										"find"
+									],
+									"query": [
+										{
+											"key": "vdsPaymentMasterId",
+											"value": "12"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Vds Treasury challan",
+					"item": [
+						{
+							"name": "get all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/treasury/list?sortOrder=ASC&sortField=vdsTreasuryChallanMasterId",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"treasury",
+										"list"
+									],
+									"query": [
+										{
+											"key": "sortOrder",
+											"value": "ASC"
+										},
+										{
+											"key": "sortField",
+											"value": "vdsTreasuryChallanMasterId"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get dropdown",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/treasury/drop-down",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"treasury",
+										"drop-down"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/treasury/find?vdsTreasuryChallanMasterId=0",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"treasury",
+										"find"
+									],
+									"query": [
+										{
+											"key": "vdsTreasuryChallanMasterId",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Vds Due Penalty",
+					"item": [
+						{
+							"name": "get all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/due-penalty/list?sortOrder=DESC&sortField=transactionId",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"due-penalty",
+										"list"
+									],
+									"query": [
+										{
+											"key": "sortOrder",
+											"value": "DESC"
+										},
+										{
+											"key": "sortField",
+											"value": "transactionId"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get drop down",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/due-penalty/drop-down",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"due-penalty",
+										"drop-down"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/due-penalty/find?transactionId=0",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"due-penalty",
+										"find"
+									],
+									"query": [
+										{
+											"key": "transactionId",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Vds Last Month",
+					"item": [
+						{
+							"name": "get all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/last-month-closing/list?sortOrder=DESC&sortField=transactionId",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"last-month-closing",
+										"list"
+									],
+									"query": [
+										{
+											"key": "sortOrder",
+											"value": "DESC"
+										},
+										{
+											"key": "sortField",
+											"value": "transactionId"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get drop down",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/last-month-closing/drop-down",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"last-month-closing",
+										"drop-down"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/last-month-closing/find?transactionId=1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"last-month-closing",
+										"find"
+									],
+									"query": [
+										{
+											"key": "transactionId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Vds Other Adjustment",
+					"item": [
+						{
+							"name": "get all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/other-adjust/list?sortOrder=DESC&sortField=vdsOtherMasterId",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"other-adjust",
+										"list"
+									],
+									"query": [
+										{
+											"key": "sortOrder",
+											"value": "DESC"
+										},
+										{
+											"key": "sortField",
+											"value": "vdsOtherMasterId"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get drop down",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/other-adjust/drop-down",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"other-adjust",
+										"drop-down"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/other-adjust/find?vdsOtherMasterId=1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"other-adjust",
+										"find"
+									],
+									"query": [
+										{
+											"key": "vdsOtherMasterId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Test",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/commercial/api/v1/test/",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"commercial",
+								"api",
+								"v1",
+								"test",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Report",
+			"item": [
+				{
+					"name": "MushakSixOne",
+					"item": [
+						{
+							"name": "Get mushak 6to1",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/report/api/v1/mushak-six-one/gen-pdf",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"report",
+										"api",
+										"v1",
+										"mushak-six-one",
+										"gen-pdf"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get All",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/inventory/api/v1/local-sells/list",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"inventory",
+										"api",
+										"v1",
+										"local-sells",
+										"list"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get All without Sp",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/seller/alls",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"seller",
+										"alls"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Insert",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"branchId\": 1,\r\n    \"vmId\": 1,\r\n    \"customerId\": 1,\r\n    \"certificateNo\": \"CERT123\",\r\n    \"publishedDate\": \"2023-11-21\",\r\n    \"transactionDate\": \"2023-11-20\",\r\n    \"totalIssueAmount\": 1000.00,\r\n    \"totalVatAmount\": 150.00,\r\n    \"totalDeductedVatAmount\": 50.00,\r\n    \"commisionerateId\": 1,\r\n    \"tcAcctCodeId\": 1,\r\n    \"accountCode\": \"ACC456\",\r\n    \"remarks\": \"This is a sample remark.\",\r\n    \"vdsSellerChildRequestDtos\": [\r\n        {\r\n            \"issueMasterId\": 1,\r\n            \"totalAmountLocalCurr\": 1000.00,\r\n            \"vatAmount\": 150.00,\r\n            \"deductedVatAmount\": 50.00\r\n        },\r\n        {\r\n            \"issueMasterId\": 1,\r\n            \"totalAmountLocalCurr\": 1000.00,\r\n            \"vatAmount\": 150.00,\r\n            \"deductedVatAmount\": 50.00\r\n        }\r\n    ]\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/seller/add",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"seller",
+										"add"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get DropDown",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/seller/drop-down",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"seller",
+										"drop-down"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get DropDown Child",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/seller/drop-down-child",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"seller",
+										"drop-down-child"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "vds purchaser",
+					"item": [
+						{
+							"name": "get all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/purchase/list?sortOrder=ASC&sortField=id",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"purchase",
+										"list"
+									],
+									"query": [
+										{
+											"key": "sortOrder",
+											"value": "ASC"
+										},
+										{
+											"key": "sortField",
+											"value": "id"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get drop-down",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/seller/drop-down",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"seller",
+										"drop-down"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get by id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/purchase/find/6",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"purchase",
+										"find",
+										"6"
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Vds Payment",
+					"item": [
+						{
+							"name": "get all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/payment/list?sortOrder=DESC&sortField=vdsPaymentMasterId",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"payment",
+										"list"
+									],
+									"query": [
+										{
+											"key": "sortOrder",
+											"value": "DESC"
+										},
+										{
+											"key": "sortField",
+											"value": "vdsPaymentMasterId"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get payment Dropdown",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/payment/drop-down",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"payment",
+										"drop-down"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/payment/find?vdsPaymentMasterId=12",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"payment",
+										"find"
+									],
+									"query": [
+										{
+											"key": "vdsPaymentMasterId",
+											"value": "12"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Vds Treasury challan",
+					"item": [
+						{
+							"name": "get all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/treasury/list?sortOrder=ASC&sortField=vdsTreasuryChallanMasterId",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"treasury",
+										"list"
+									],
+									"query": [
+										{
+											"key": "sortOrder",
+											"value": "ASC"
+										},
+										{
+											"key": "sortField",
+											"value": "vdsTreasuryChallanMasterId"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get dropdown",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/treasury/drop-down",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"treasury",
+										"drop-down"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/treasury/find?vdsTreasuryChallanMasterId=0",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"treasury",
+										"find"
+									],
+									"query": [
+										{
+											"key": "vdsTreasuryChallanMasterId",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Vds Due Penalty",
+					"item": [
+						{
+							"name": "get all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/due-penalty/list?sortOrder=DESC&sortField=transactionId",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"due-penalty",
+										"list"
+									],
+									"query": [
+										{
+											"key": "sortOrder",
+											"value": "DESC"
+										},
+										{
+											"key": "sortField",
+											"value": "transactionId"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get drop down",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/due-penalty/drop-down",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"due-penalty",
+										"drop-down"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/due-penalty/find?transactionId=0",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"due-penalty",
+										"find"
+									],
+									"query": [
+										{
+											"key": "transactionId",
+											"value": "0"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Vds Last Month",
+					"item": [
+						{
+							"name": "get all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/last-month-closing/list?sortOrder=DESC&sortField=transactionId",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"last-month-closing",
+										"list"
+									],
+									"query": [
+										{
+											"key": "sortOrder",
+											"value": "DESC"
+										},
+										{
+											"key": "sortField",
+											"value": "transactionId"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get drop down",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/last-month-closing/drop-down",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"last-month-closing",
+										"drop-down"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/last-month-closing/find?transactionId=1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"last-month-closing",
+										"find"
+									],
+									"query": [
+										{
+											"key": "transactionId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Vds Other Adjustment",
+					"item": [
+						{
+							"name": "get all",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/other-adjust/list?sortOrder=DESC&sortField=vdsOtherMasterId",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"other-adjust",
+										"list"
+									],
+									"query": [
+										{
+											"key": "sortOrder",
+											"value": "DESC"
+										},
+										{
+											"key": "sortField",
+											"value": "vdsOtherMasterId"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get drop down",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/other-adjust/drop-down",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"other-adjust",
+										"drop-down"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "get By Id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{BASE_URL}}/commercial/api/v1/other-adjust/find?vdsOtherMasterId=1",
+									"host": [
+										"{{BASE_URL}}"
+									],
+									"path": [
+										"commercial",
+										"api",
+										"v1",
+										"other-adjust",
+										"find"
+									],
+									"query": [
+										{
+											"key": "vdsOtherMasterId",
+											"value": "1"
+										}
+									]
+								}
+							},
+							"response": []
+						}
+					]
+				},
+				{
+					"name": "Test",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/commercial/api/v1/test/",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"commercial",
+								"api",
+								"v1",
+								"test",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{TOKEN}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
