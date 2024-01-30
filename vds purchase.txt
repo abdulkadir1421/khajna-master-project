@@ -367,7 +367,113 @@ if(@DbFieldName IS NULL OR @DbFieldName = '')
 		
    
 END
+					get all list with searching system
+===========================================================================================
+USE [Khajna]
+GO
+/****** Object:  StoredProcedure [dbo].[sp_get_6d1_vds_purchase_list]    Script Date: 1/30/2024 10:29:02 AM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+ALTER PROCEDURE [dbo].[sp_get_6d1_vds_purchase_list]
+    @DbFieldName NVARCHAR(100),
+    @SortDirection NVARCHAR(10),
+    @Filter NVARCHAR(MAX)
+AS
+BEGIN
+    SET NOCOUNT ON;
 
+    DECLARE @Query NVARCHAR(MAX);
+
+    IF (@DbFieldName IS NULL OR @DbFieldName = '')
+    BEGIN
+        SET @DbFieldName = 'id';
+    END
+
+    IF (@SortDirection IS NULL OR @SortDirection = '')
+    BEGIN
+        SET @SortDirection = 'asc';
+    END
+	--EXEC [sp_get_6d1_vds_purchase_list] @DbFieldName ='', @SortDirection='',&filter=''
+
+    SET @Query = '
+        SELECT DISTINCT
+            VPM.[id] as id,
+            UST.[store_id] as storeId,
+            CSL.[sl_name] as storeName,
+            CSL.[branch_id] as branchId,
+            CBU.[b_u_name] as branchName,
+            VPM.[branch_id] as branchMasterId,
+            CBM1.[b_u_name] as branchMasterName,
+            VPM.[transaction_date] as transactionDate,
+            VPM.[vm_id] as vmId,
+            VM.[vm_info] as vatMonth,
+            VPM.[supplier_id] as supplierId,
+            SD.[supplier_name] as supplierName,
+            VPM.[certificate_no] as certificateNo,
+            VPM.[published_date] as publishedDate,
+            VPM.[tc_master_id] as tcMasterId,
+            TCM.[tc_no] as treasuryChallanNo,
+            TCM.[tc_date] as treasuryDate,
+            VPM.[total_recv_amt_wotax_local_curr] as totalPurchaseAmount,
+            VPM.[total_vat_amount] as totalVatAmount,
+            VPM.[total_deducted_vat_amount] as totalDeductedVateeAmount,
+            VPM.[total_vds_paid_amount] as totalVdsPaidAmount,
+            VPM.[is_paid] as isPaid,
+            VPM.[remarks] as remarks,
+            VPM.[created_at] as createdAt,
+            VPM.[updated_at] as updatedAt,
+            ISNULL(CreatedUser.[name], '''') as createdBy,
+            ISNULL(UpdatedUser.[name], '''') as updatedBy
+        FROM
+            [Khajna].[dbo].[6D1_vds_purchaser_master] VPM
+        JOIN
+            [Khajna].[dbo].[2J2_sv_vat_month_info] VM ON VPM.vm_id = VM.id
+        LEFT JOIN
+            [Khajna].[dbo].[3K2_supplier_details] SD ON VPM.supplier_id = SD.id
+        LEFT JOIN
+            [Khajna].[dbo].[6J1_treasury_challan_master] TCM ON VPM.tc_master_id = TCM.id
+        LEFT JOIN
+            [dbo].[3B1_company_branch_unit] CBM1 ON VPM.branch_id = CBM1.id
+        LEFT JOIN
+            [dbo].[1a3_users] CreatedUser ON VPM.created_by = CreatedUser.id
+        LEFT JOIN
+            [dbo].[1a3_users] UpdatedUser ON VPM.updated_by = UpdatedUser.id
+        LEFT JOIN
+            [dbo].[3C6_users_stores] UST ON VPM.created_by = UST.user_id
+        LEFT JOIN
+            [dbo].[3C1_company_store_location] CSL ON UST.store_id = CSL.id
+        LEFT JOIN
+            [dbo].[3B1_company_branch_unit] CBU ON CSL.branch_id = CBU.id ';
+
+    IF (@Filter IS NOT NULL AND @Filter <> '')
+    BEGIN
+        SET @Query = @Query + ' WHERE
+           
+          
+              VPM.[certificate_no] LIKE ''%' + @Filter + '%''
+			 OR SD.[supplier_name] LIKE ''%' + @Filter + '%''
+            ';
+    END
+
+    SET @Query = @Query + ' ORDER BY VPM.' + @DbFieldName + ' ' + @SortDirection;
+
+    EXEC sp_executesql @Query;
+END
+--OR VPM.[vm_id] LIKE ''%' + @Filter + '%''
+            
+--            OR VPM.[certificate_no] LIKE ''%' + @Filter + '%''
+--            OR VPM.[published_date] LIKE ''%' + @Filter + '%''
+           
+--            OR VPM.[total_recv_amt_wotax_local_curr] LIKE ''%' + @Filter + '%''
+--            OR VPM.[total_vat_amount] LIKE ''%' + @Filter + '%''
+--            OR VPM.[total_deducted_vat_amount] LIKE ''%' + @Filter + '%''
+--            OR VPM.[total_vds_paid_amount] LIKE ''%' + @Filter + '%''
+           
+--            OR VPM.[remarks] LIKE ''%' + @Filter + '%''
+
+============================================
 ============================================
 
 				dropdown for supplier 
